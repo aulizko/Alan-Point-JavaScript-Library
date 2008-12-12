@@ -1,0 +1,245 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html xmlns:yui="http://yuilibrary.com/rdf/1.0/yui.rdf#">
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+	<title>API: ap   ap.ordain-0.0.1.js  (YUI Library)</title>
+
+	<link rel="stylesheet" type="text/css" href="assets/reset-fonts-grids-min.css?stamp=1228895591.51" />
+	<link rel="stylesheet" type="text/css" href="assets/api.css?stamp=1228895591.51" />
+
+    <script type="text/javascript" src="assets/api-js?stamp=1228895591.51"></script>
+    <script type="text/javascript" src="assets/ac-js?stamp=1228895591.51"></script>
+</head>
+
+<body id="yahoo-com">
+
+<div id="doc3" class="yui-t2">
+	<div id="hd">
+        <h1><a href="http://developer.yahoo.com/yui/" title="Yahoo! UI Library">Yahoo! UI Library</a></h1>
+        <h3>ap&nbsp; <span class="subtitle">0.0.2</span></h3>
+        <a href="./index.html" title="Yahoo! UI Library">Yahoo! UI Library</a> 
+            &gt; <a href="./module_ap.html" title="ap">ap</a>
+                
+                 &gt; ap.ordain-0.0.1.js (source view) 
+        <form onsubmit="return false">
+            <div id="propertysearch">
+                Search: <input autocomplete="off" id="searchinput" />
+                <div id="searchresults">
+                    &nbsp;
+                </div>
+            </div>
+        </form>
+	</div>
+
+	<div id="bd">
+		<div id="yui-main">
+			<div class="yui-b">
+            <form action="#" name="yui-classopts-form" method="get" id="yui-classopts-form">
+                <fieldset>
+                    <legend>Filters</legend>
+                <span class="classopts"><input type="checkbox" name="show_private" id="show_private" /> <label for="show_private">Show Private</label></span>
+                <span class="classopts"><input type="checkbox" name="show_protected" id="show_protected" /> <label for="show_protected">Show Protected</label></span>
+                <span class="classopts"><input type="checkbox" name="show_deprecated" id="show_deprecated" /> <label for="show_deprecated">Show Deprecated</label></span>
+                </fieldset>
+            </form>
+
+                    <div id="srcout">
+                        <style>
+                            #doc3 .classopts { display:none; }
+                        </style>
+<div class="highlight" ><pre><span class="nx">AP</span><span class="o">.</span><span class="nx">add</span><span class="o">(</span><span class="s1">&#39;ordain&#39;</span><span class="o">,</span> <span class="k">function</span> <span class="o">(</span><span class="nx">A</span><span class="o">)</span> <span class="o">{</span>
+    <span class="k">var</span> <span class="nx">L</span> <span class="o">=</span> <span class="nx">A</span><span class="o">.</span><span class="nx">Lang</span><span class="o">;</span>
+
+    <span class="nx">A</span><span class="o">.</span><span class="nx">Ordain</span> <span class="o">=</span> <span class="k">function</span> <span class="o">()</span> <span class="o">{</span>
+        <span class="c">// Make Ordain able been used both factory and object models</span>
+<span class="c"></span>        <span class="k">var</span> <span class="nx">me</span> <span class="o">=</span> <span class="k">this</span> <span class="k">instanceof</span> <span class="nx">A</span><span class="o">.</span><span class="nx">Ordain</span> <span class="o">?</span> <span class="k">this</span> <span class="o">:</span> <span class="k">new</span> <span class="nx">A</span><span class="o">.</span><span class="nx">Ordain</span><span class="o">(),</span>
+            <span class="nx">clickHandlers</span> <span class="o">=</span> <span class="o">{},</span> <span class="nx">mouseOverHandlers</span> <span class="o">=</span> <span class="o">{},</span> <span class="nx">mouseOutHandlers</span> <span class="o">=</span> <span class="o">{},</span> <span class="nx">focusHandlers</span> <span class="o">=</span> <span class="o">{},</span> <span class="nx">blurHandlers</span> <span class="o">=</span> <span class="o">{},</span>
+            <span class="nx">keyUpHandlers</span> <span class="o">=</span> <span class="o">{},</span> <span class="nx">keyDownHandlers</span> <span class="o">=</span> <span class="o">{},</span> <span class="nx">keyPressHandlers</span> <span class="o">=</span> <span class="o">{},</span>
+
+            <span class="c">/**</span>
+<span class="c">             * @method process</span>
+<span class="c">             * @param selector {String} css selector for element</span>
+<span class="c">             * @param theEvent {String} type of the event</span>
+<span class="c">             * @param handler {Function} handler for the event</span>
+<span class="c">             * @param context {Object} context for the handler function (opt)</span>
+<span class="c">             *</span>
+<span class="c">             * Also, you can pass all this params as object with same field, or several object or array of objects</span>
+<span class="c">             */</span>
+            <span class="nx">process</span> <span class="o">=</span> <span class="k">function</span> <span class="o">()</span> <span class="o">{</span>
+                <span class="k">var</span> <span class="nx">a</span> <span class="o">=</span> <span class="nx">arguments</span><span class="o">[</span><span class="m">0</span><span class="o">],</span> <span class="nx">length</span> <span class="o">=</span> <span class="nx">arguments</span><span class="o">.</span><span class="nx">length</span><span class="o">;</span>
+
+                <span class="k">if</span> <span class="o">(</span><span class="nx">L</span><span class="o">.</span><span class="nx">isString</span><span class="o">(</span><span class="nx">a</span><span class="o">))</span> <span class="o">{</span>
+                    <span class="k">this</span><span class="o">.</span><span class="nx">declare</span><span class="o">(</span><span class="nx">arguments</span><span class="o">);</span>
+                    <span class="k">return</span> <span class="k">this</span><span class="o">;</span>
+                <span class="o">}</span>
+
+                <span class="k">if</span> <span class="o">(</span><span class="nx">L</span><span class="o">.</span><span class="nx">isArray</span><span class="o">(</span><span class="nx">a</span><span class="o">))</span> <span class="o">{</span>
+                    <span class="nx">A</span><span class="o">.</span><span class="nb">Array</span><span class="o">.</span><span class="nx">each</span><span class="o">(</span><span class="nx">a</span><span class="o">,</span> <span class="k">function</span> <span class="o">(</span><span class="nx">o</span><span class="o">)</span> <span class="o">{</span>
+                        <span class="k">this</span><span class="o">.</span><span class="nx">declare</span><span class="o">(</span><span class="nx">o</span><span class="o">.</span><span class="nx">selector</span><span class="o">,</span> <span class="nx">o</span><span class="o">.</span><span class="nx">event</span><span class="o">,</span> <span class="nx">o</span><span class="o">.</span><span class="nx">handler</span><span class="o">,</span>  <span class="nx">o</span><span class="o">.</span><span class="nx">context</span><span class="o">);</span>
+                    <span class="o">},</span> <span class="k">this</span><span class="o">);</span>
+
+                    <span class="k">return</span> <span class="k">this</span><span class="o">;</span>
+                <span class="o">}</span>
+
+                <span class="k">if</span> <span class="o">(</span><span class="nx">L</span><span class="o">.</span><span class="nx">isObject</span><span class="o">(</span><span class="nx">a</span><span class="o">))</span> <span class="o">{</span>
+                    <span class="c">// check if there is more than one object</span>
+<span class="c"></span>                    <span class="k">if</span> <span class="o">(</span><span class="nx">length</span> <span class="o">==</span> <span class="m">1</span><span class="o">)</span> <span class="o">{</span>
+                        <span class="k">this</span><span class="o">.</span><span class="nx">declare</span><span class="o">(</span><span class="nx">a</span><span class="o">.</span><span class="nx">selector</span><span class="o">,</span> <span class="nx">a</span><span class="o">.</span><span class="nx">event</span><span class="o">,</span> <span class="nx">a</span><span class="o">.</span><span class="nx">handler</span><span class="o">,</span> <span class="nx">a</span><span class="o">.</span><span class="nx">context</span><span class="o">);</span>
+                        <span class="k">return</span> <span class="k">this</span><span class="o">;</span>
+                    <span class="o">}</span> <span class="k">else</span> <span class="o">{</span>
+                        <span class="nx">A</span><span class="o">.</span><span class="nb">Array</span><span class="o">.</span><span class="nx">each</span><span class="o">(</span><span class="nx">arguments</span><span class="o">,</span> <span class="k">function</span> <span class="o">(</span><span class="nx">o</span><span class="o">)</span> <span class="o">{</span>
+                            <span class="k">this</span><span class="o">.</span><span class="nx">declare</span><span class="o">(</span><span class="nx">o</span><span class="o">.</span><span class="nx">selector</span><span class="o">,</span> <span class="nx">o</span><span class="o">.</span><span class="nx">event</span><span class="o">,</span> <span class="nx">o</span><span class="o">.</span><span class="nx">handler</span><span class="o">,</span>  <span class="nx">o</span><span class="o">.</span><span class="nx">context</span><span class="o">);</span>
+                        <span class="o">},</span> <span class="k">this</span><span class="o">);</span>
+                        <span class="k">return</span> <span class="k">this</span><span class="o">;</span>
+                    <span class="o">}</span>
+                <span class="o">}</span>
+            <span class="o">},</span>
+
+            <span class="nx">declare</span> <span class="o">=</span> <span class="k">function</span> <span class="o">(</span><span class="nx">sel</span><span class="o">,</span> <span class="nx">evt</span><span class="o">,</span> <span class="nx">handler</span><span class="o">,</span> <span class="nx">context</span><span class="o">)</span> <span class="o">{</span>
+                <span class="k">var</span> <span class="nx">hnd</span> <span class="o">=</span> <span class="k">this</span><span class="o">[</span><span class="nx">evt</span><span class="o">];</span>
+                <span class="k">if</span><span class="o">(!</span><span class="nx">hnd</span><span class="o">[</span><span class="nx">sel</span><span class="o">])</span> <span class="o">{</span><span class="nx">hnd</span><span class="o">[</span><span class="nx">sel</span><span class="o">]=[];}</span>
+                <span class="nx">hnd</span><span class="o">.</span><span class="nx">push</span><span class="o">({</span> <span class="nx">handler</span> <span class="o">:</span> <span class="nx">handler</span><span class="o">,</span> <span class="nx">context</span> <span class="o">:</span> <span class="nx">context</span> <span class="o">});</span>
+            <span class="o">},</span>
+
+            <span class="nx">defineTarget</span> <span class="o">=</span> <span class="k">function</span> <span class="o">(</span><span class="c">/* Event */</span><span class="nx">evt</span><span class="o">,</span> <span class="c">/*String*/</span><span class="nx">condition</span><span class="o">)</span> <span class="o">{</span>
+                <span class="k">var</span> <span class="nx">elem</span><span class="o">;</span>
+
+                <span class="k">if</span> <span class="o">(</span><span class="nx">evt</span><span class="o">.</span><span class="nx">target</span><span class="o">)</span> <span class="o">{</span>
+                    <span class="nx">elem</span> <span class="o">=</span> <span class="nx">evt</span><span class="o">.</span><span class="nx">target</span><span class="o">;</span>
+                <span class="o">}</span> <span class="k">else</span> <span class="o">{</span>
+                    <span class="k">if</span> <span class="o">(</span><span class="nx">evt</span><span class="o">.</span><span class="nx">srcElement</span><span class="o">)</span> <span class="o">{</span>
+                        <span class="nx">elem</span> <span class="o">=</span> <span class="nx">evt</span><span class="o">.</span><span class="nx">srcElement</span><span class="o">;</span>
+                    <span class="o">}</span>
+                <span class="o">}</span>
+                <span class="c">// defeat Safari bug</span>
+<span class="c"></span>                <span class="k">if</span> <span class="o">(</span><span class="nx">elem</span><span class="o">.</span><span class="nx">nodeType</span> <span class="o">==</span> <span class="m">3</span><span class="o">)</span> <span class="o">{</span>
+                    <span class="nx">elem</span> <span class="o">=</span> <span class="nx">elem</span><span class="o">.</span><span class="nx">parentNode</span><span class="o">;</span>
+                <span class="o">}</span>
+
+                <span class="k">if</span> <span class="o">(</span><span class="nx">L</span><span class="o">.</span><span class="nx">isUndefined</span><span class="o">(</span><span class="nx">elem</span><span class="o">))</span> <span class="o">{</span>
+                    <span class="k">return</span> <span class="kc">null</span><span class="o">;</span>
+                <span class="o">}</span>
+
+                <span class="c">// work with classes</span>
+<span class="c"></span>                <span class="k">if</span> <span class="o">(</span><span class="nx">$</span><span class="o">(</span><span class="nx">elem</span><span class="o">).</span><span class="nx">is</span><span class="o">(</span><span class="nx">condition</span><span class="o">))</span> <span class="o">{</span>
+                    <span class="k">return</span> <span class="nx">elem</span><span class="o">;</span>
+                <span class="o">}</span> <span class="k">else</span> <span class="o">{</span>
+                    <span class="k">return</span> <span class="nx">$</span><span class="o">(</span><span class="nx">elem</span><span class="o">).</span><span class="nx">parents</span><span class="o">(</span><span class="nx">condition</span><span class="o">);</span>
+                <span class="o">}</span>
+            <span class="o">},</span>
+
+            <span class="nx">delegate</span> <span class="o">=</span> <span class="k">function</span> <span class="o">(</span><span class="nx">selectionHandlers</span><span class="o">,</span> <span class="nx">evt</span><span class="o">)</span> <span class="o">{</span>
+                <span class="k">var</span> <span class="nx">sel</span><span class="o">,</span> <span class="nx">target</span><span class="o">,</span> <span class="nx">handlers</span><span class="o">,</span> <span class="nx">q</span> <span class="o">=</span> <span class="nx">A</span><span class="o">.</span><span class="nx">Queue</span><span class="o">();</span>
+
+                <span class="k">for</span> <span class="o">(</span><span class="nx">sel</span> <span class="k">in</span> <span class="nx">selectionHandlers</span><span class="o">)</span> <span class="o">{</span>
+                    <span class="nx">target</span> <span class="o">=</span> <span class="nx">defineTarget</span><span class="o">(</span><span class="nx">evt</span><span class="o">,</span> <span class="nx">sel</span><span class="o">);</span>
+                    <span class="k">if</span> <span class="o">(</span><span class="nx">target</span> <span class="o">===</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span> <span class="k">continue</span><span class="o">;</span> <span class="o">}</span>
+                    <span class="nx">handlers</span> <span class="o">=</span> <span class="nx">selectionHandlers</span><span class="o">[</span><span class="nx">sel</span><span class="o">];</span>
+                    <span class="nx">A</span><span class="o">.</span><span class="nb">Array</span><span class="o">(</span><span class="nx">handlers</span><span class="o">,</span> <span class="k">function</span> <span class="o">(</span><span class="nx">o</span><span class="o">)</span> <span class="o">{</span>
+                        <span class="k">var</span> <span class="nx">c</span> <span class="o">=</span> <span class="o">{};</span>
+                        <span class="nx">c</span><span class="o">.</span><span class="nx">fn</span> <span class="o">=</span> <span class="k">function</span> <span class="o">()</span> <span class="o">{</span> <span class="nx">o</span><span class="o">.</span><span class="nx">handler</span><span class="o">(</span><span class="nx">target</span><span class="o">,</span> <span class="nx">evt</span><span class="o">);</span> <span class="o">};</span>
+                        <span class="k">if</span> <span class="o">(</span><span class="nx">o</span><span class="o">.</span><span class="nx">context</span><span class="o">)</span> <span class="o">{</span>
+                            <span class="nx">c</span><span class="o">.</span><span class="nx">context</span> <span class="o">=</span> <span class="nx">o</span><span class="o">.</span><span class="nx">context</span><span class="o">;</span>
+                        <span class="o">}</span>
+                        <span class="nx">q</span><span class="o">.</span><span class="nx">add</span><span class="o">(</span><span class="nx">c</span><span class="o">);</span>
+                    <span class="o">},</span> <span class="k">this</span><span class="o">);</span>
+                <span class="o">}</span>
+                <span class="nx">q</span><span class="o">.</span><span class="nx">run</span><span class="o">();</span>
+            <span class="o">};</span>
+
+        <span class="nx">$</span><span class="o">(</span><span class="nb">document</span><span class="o">).</span><span class="nx">click</span><span class="o">(</span><span class="k">function</span> <span class="o">(</span><span class="nx">e</span><span class="o">)</span> <span class="o">{</span><span class="nx">delegate</span><span class="o">(</span><span class="nx">clickHandlers</span><span class="o">,</span> <span class="nx">e</span><span class="o">);});</span>
+        <span class="nx">$</span><span class="o">(</span><span class="nb">document</span><span class="o">).</span><span class="nx">mouseover</span><span class="o">(</span><span class="k">function</span> <span class="o">(</span><span class="nx">e</span><span class="o">)</span> <span class="o">{</span><span class="nx">delegate</span><span class="o">(</span><span class="nx">mouseOverHandlers</span><span class="o">,</span> <span class="nx">e</span><span class="o">);});</span>
+        <span class="nx">$</span><span class="o">(</span><span class="nb">document</span><span class="o">).</span><span class="nx">mouseout</span><span class="o">(</span><span class="k">function</span> <span class="o">(</span><span class="nx">e</span><span class="o">)</span> <span class="o">{</span><span class="nx">delegate</span><span class="o">(</span><span class="nx">mouseOutHandlers</span><span class="o">,</span> <span class="nx">e</span><span class="o">);});</span>
+        <span class="nx">$</span><span class="o">(</span><span class="nb">document</span><span class="o">).</span><span class="nx">focus</span><span class="o">(</span><span class="k">function</span> <span class="o">(</span><span class="nx">e</span><span class="o">)</span> <span class="o">{</span><span class="nx">delegate</span><span class="o">(</span><span class="nx">focusHandlers</span><span class="o">,</span> <span class="nx">e</span><span class="o">);});</span>
+        <span class="nx">$</span><span class="o">(</span><span class="nb">document</span><span class="o">).</span><span class="nx">blur</span><span class="o">(</span><span class="k">function</span> <span class="o">(</span><span class="nx">e</span><span class="o">)</span> <span class="o">{</span><span class="nx">delegate</span><span class="o">(</span><span class="nx">blurHandlers</span><span class="o">,</span> <span class="nx">e</span><span class="o">);});</span>
+        <span class="nx">$</span><span class="o">(</span><span class="nb">document</span><span class="o">).</span><span class="nx">keydown</span><span class="o">(</span><span class="k">function</span> <span class="o">(</span><span class="nx">e</span><span class="o">)</span> <span class="o">{</span><span class="nx">delegate</span><span class="o">(</span><span class="nx">keyDownHandlers</span><span class="o">,</span> <span class="nx">e</span><span class="o">);});</span>
+        <span class="nx">$</span><span class="o">(</span><span class="nb">document</span><span class="o">).</span><span class="nx">keypress</span><span class="o">(</span><span class="k">function</span> <span class="o">(</span><span class="nx">e</span><span class="o">)</span> <span class="o">{</span><span class="nx">delegate</span><span class="o">(</span><span class="nx">keyPressHandlers</span><span class="o">,</span> <span class="nx">e</span><span class="o">);});</span>
+        <span class="nx">$</span><span class="o">(</span><span class="nb">document</span><span class="o">).</span><span class="nx">keyup</span><span class="o">(</span><span class="k">function</span> <span class="o">(</span><span class="nx">e</span><span class="o">)</span> <span class="o">{</span><span class="nx">delegate</span><span class="o">(</span><span class="nx">keyUpHandlers</span><span class="o">,</span> <span class="nx">e</span><span class="o">);});</span>
+
+
+
+        <span class="k">return</span> <span class="nx">process</span><span class="o">.</span><span class="nx">apply</span><span class="o">(</span><span class="nx">me</span><span class="o">,</span> <span class="nx">arguments</span><span class="o">);</span>
+    <span class="o">};</span>
+
+    <span class="nx">A</span><span class="o">.</span><span class="nx">Ordain</span><span class="o">.</span><span class="nx">prototype</span> <span class="o">=</span> <span class="o">{</span>
+        <span class="nx">click</span> <span class="o">:</span> <span class="k">function</span> <span class="o">(</span><span class="nx">sel</span><span class="o">,</span> <span class="nx">handler</span><span class="o">,</span> <span class="nx">context</span><span class="o">)</span> <span class="o">{</span>
+            <span class="nx">declare</span><span class="o">(</span><span class="nx">sel</span><span class="o">,</span> <span class="s1">&#39;click&#39;</span><span class="o">,</span> <span class="nx">handler</span><span class="o">,</span> <span class="nx">context</span><span class="o">);</span>
+        <span class="o">},</span>
+        <span class="nx">hover</span> <span class="o">:</span> <span class="k">function</span> <span class="o">(</span><span class="nx">sel</span><span class="o">,</span> <span class="nx">overHandler</span><span class="o">,</span> <span class="nx">outHandler</span><span class="o">,</span> <span class="nx">context</span><span class="o">)</span> <span class="o">{</span>
+            <span class="nx">declare</span><span class="o">(</span><span class="nx">sel</span><span class="o">,</span> <span class="s1">&#39;mouseover&#39;</span><span class="o">,</span> <span class="nx">overHandler</span><span class="o">,</span> <span class="nx">context</span><span class="o">);</span>
+            <span class="nx">declare</span><span class="o">(</span><span class="nx">sel</span><span class="o">,</span> <span class="s1">&#39;mouseout&#39;</span><span class="o">,</span> <span class="nx">outHandler</span><span class="o">,</span> <span class="nx">context</span><span class="o">);</span>
+        <span class="o">},</span>
+        <span class="nx">focus</span> <span class="o">:</span> <span class="k">function</span> <span class="o">(</span><span class="nx">sel</span><span class="o">,</span> <span class="nx">focusHandler</span><span class="o">,</span> <span class="nx">blurHandler</span><span class="o">,</span> <span class="nx">context</span><span class="o">)</span> <span class="o">{</span>
+            <span class="nx">declare</span><span class="o">(</span><span class="nx">sel</span><span class="o">,</span> <span class="s1">&#39;focus&#39;</span><span class="o">,</span> <span class="nx">focusHandler</span><span class="o">,</span> <span class="nx">context</span><span class="o">);</span>
+            <span class="nx">declare</span><span class="o">(</span><span class="nx">sel</span><span class="o">,</span> <span class="s1">&#39;blur&#39;</span><span class="o">,</span> <span class="nx">blurHandler</span><span class="o">,</span> <span class="nx">context</span><span class="o">);</span>
+        <span class="o">},</span>
+        <span class="nx">key</span> <span class="o">:</span> <span class="k">function</span> <span class="o">(</span><span class="nx">sel</span><span class="o">,</span> <span class="nx">downHandler</span><span class="o">,</span> <span class="nx">pressHandler</span><span class="o">,</span> <span class="nx">upHandler</span><span class="o">,</span> <span class="nx">context</span><span class="o">)</span> <span class="o">{</span>
+            <span class="nx">declare</span><span class="o">(</span><span class="nx">sel</span><span class="o">,</span> <span class="s1">&#39;keyDown&#39;</span><span class="o">,</span> <span class="nx">downHandler</span><span class="o">,</span> <span class="nx">context</span><span class="o">);</span>
+            <span class="nx">declare</span><span class="o">(</span><span class="nx">sel</span><span class="o">,</span> <span class="s1">&#39;keyPress&#39;</span><span class="o">,</span> <span class="nx">pressHandler</span><span class="o">,</span> <span class="nx">context</span><span class="o">);</span>
+            <span class="nx">declare</span><span class="o">(</span><span class="nx">sel</span><span class="o">,</span> <span class="s1">&#39;keyUp&#39;</span><span class="o">,</span> <span class="nx">upHandler</span><span class="o">,</span> <span class="nx">context</span><span class="o">);</span>
+        <span class="o">}</span>
+    <span class="o">};</span>
+<span class="o">},</span> <span class="s1">&#39;0.0.1&#39;</span><span class="o">);</span>
+</pre></div>
+                    </div>
+			</div>
+		</div>
+		<div class="yui-b">
+            <div class="nav">
+
+                    <div id="moduleList" class="module">
+                        <h4>Modules</h4>
+                        <ul class="content">
+                                <li class="selected"><a href="module_ap.html" title="ap">ap</a></li>
+                                <li class=""><a href="module_cookie.html" title="cookie">cookie</a></li>
+                                <li class=""><a href="module_history.html" title="history">history</a></li>
+                                <li class=""><a href="module_imageloader.html" title="imageloader">imageloader</a></li>
+                                <li class=""><a href="module_json.html" title="json">json</a></li>
+                                <li class=""><a href="module_queue.html" title="queue">queue</a></li>
+                                <li class=""><a href="module_spinner.html" title="spinner">spinner</a></li>
+                                <li class=""><a href="module_supreme.html" title="supreme">supreme</a></li>
+                        </ul>
+                    </div>
+
+                    <div id="classList" class="module">
+                        <h4>Classes</h4>
+                        <ul class="content">
+                                <li class=""><a href="AP.html" title="AP">AP</a></li>
+                                <li class=""><a href="AP~array.html" title="AP~array">AP~array</a></li>
+                                <li class=""><a href="AP~Lang.html" title="AP~Lang">AP~Lang</a></li>
+                                <li class=""><a href="AP~object.html" title="AP~object">AP~object</a></li>
+                                <li class=""><a href="Log.html" title="Log">Log</a></li>
+                                <li class=""><a href="Observer.html" title="Observer">Observer</a></li>
+                                <li class=""><a href="String.html" title="String">String</a></li>
+                                <li class=""><a href="StringBuffer.html" title="StringBuffer">StringBuffer</a></li>
+                        </ul>
+                    </div>
+
+                    <div id="fileList" class="module">
+                        <h4>Files</h4>
+                        <ul class="content">        
+                                <li class=""><a href="ap.base-0.0.1.js.html" title="ap.base-0.0.1.js">ap.base-0.0.1.js</a></li>
+                                <li class=""><a href="ap.cookie-0.0.1.js.html" title="ap.cookie-0.0.1.js">ap.cookie-0.0.1.js</a></li>
+                                <li class="selected"><a href="ap.ordain-0.0.1.js.html" title="ap.ordain-0.0.1.js">ap.ordain-0.0.1.js</a></li>
+                                <li class=""><a href="ap.queue-0.0.1.js.html" title="ap.queue-0.0.1.js">ap.queue-0.0.1.js</a></li>
+                                <li class=""><a href="ap.supreme-0.0.1.js.html" title="ap.supreme-0.0.1.js">ap.supreme-0.0.1.js</a></li>
+                        </ul>
+                    </div>
+
+
+
+
+
+            </div>
+		</div>
+	</div>
+	<div id="ft">
+        <hr />
+        Copyright &copy; 2008 Yahoo! Inc. All rights reserved.
+	</div>
+</div>
+<script type="text/javascript">
+    ALL_YUI_PROPS = [{"url": "AP.html#method_add", "access": "", "host": "AP", "type": "method", "name": "add"}, {"url": "StringBuffer.html#method_add", "access": "", "host": "StringBuffer", "type": "method", "name": "add"}, {"url": "AP.html#method_applyTo", "access": "", "host": "AP", "type": "method", "name": "applyTo"}, {"url": "AP~array.html#method_Array", "access": "", "host": "AP~array", "type": "method", "name": "Array"}, {"url": "AP~array.html#method_Array.each", "access": "", "host": "AP~array", "type": "method", "name": "Array.each"}, {"url": "AP~array.html#method_Array.hash", "access": "", "host": "AP~array", "type": "method", "name": "Array.hash"}, {"url": "AP~array.html#method_Array.indexOf", "access": "", "host": "AP~array", "type": "method", "name": "Array.indexOf"}, {"url": "AP~array.html#method_Array.test", "access": "", "host": "AP~array", "type": "method", "name": "Array.test"}, {"url": "AP.html#method__configureEnvinronment", "access": "private", "host": "AP", "type": "method", "name": "_configureEnvinronment"}, {"url": "AP~array.html#method_equal", "access": "", "host": "AP~array", "type": "method", "name": "equal"}, {"url": "AP~object.html#method_equal", "access": "", "host": "AP~object", "type": "method", "name": "equal"}, {"url": "AP~array.html#method_filter", "access": "", "host": "AP~array", "type": "method", "name": "filter"}, {"url": "AP.html#method_guid", "access": "", "host": "AP", "type": "method", "name": "guid"}, {"url": "AP.html#property__iefix", "access": "private", "host": "AP", "type": "property", "name": "_iefix"}, {"url": "AP.html#method__init", "access": "private", "host": "AP", "type": "method", "name": "_init"}, {"url": "AP~Lang.html#method_isArray", "access": "", "host": "AP~Lang", "type": "method", "name": "isArray"}, {"url": "AP~Lang.html#method_isBoolean", "access": "", "host": "AP~Lang", "type": "method", "name": "isBoolean"}, {"url": "AP~Lang.html#method_isDate", "access": "", "host": "AP~Lang", "type": "method", "name": "isDate"}, {"url": "AP~Lang.html#method_isEmpty", "access": "", "host": "AP~Lang", "type": "method", "name": "isEmpty"}, {"url": "AP~Lang.html#method_isFunction", "access": "", "host": "AP~Lang", "type": "method", "name": "isFunction"}, {"url": "AP~Lang.html#method_isNull", "access": "", "host": "AP~Lang", "type": "method", "name": "isNull"}, {"url": "AP~Lang.html#method_isNumber", "access": "", "host": "AP~Lang", "type": "method", "name": "isNumber"}, {"url": "AP~Lang.html#method_isObject", "access": "", "host": "AP~Lang", "type": "method", "name": "isObject"}, {"url": "AP~Lang.html#method_isString", "access": "", "host": "AP~Lang", "type": "method", "name": "isString"}, {"url": "AP~Lang.html#method_isUndefined", "access": "", "host": "AP~Lang", "type": "method", "name": "isUndefined"}, {"url": "AP~Lang.html#method_isValue", "access": "", "host": "AP~Lang", "type": "method", "name": "isValue"}, {"url": "Log.html#method_log", "access": "", "host": "Log", "type": "method", "name": "log"}, {"url": "AP~array.html#method_map", "access": "", "host": "AP~array", "type": "method", "name": "map"}, {"url": "AP.html#method_merge", "access": "", "host": "AP", "type": "method", "name": "merge"}, {"url": "AP.html#method_mix", "access": "", "host": "AP", "type": "method", "name": "mix"}, {"url": "AP.html#method_namespace", "access": "", "host": "AP", "type": "method", "name": "namespace"}, {"url": "AP~object.html#method_Object.each", "access": "", "host": "AP~object", "type": "method", "name": "Object.each"}, {"url": "AP~object.html#method_Object.keys", "access": "", "host": "AP~object", "type": "method", "name": "Object.keys"}, {"url": "Observer.html#method_process", "access": "", "host": "Observer", "type": "method", "name": "process"}, {"url": "AP.html#method__setup", "access": "private", "host": "AP", "type": "method", "name": "_setup"}, {"url": "AP.html#method_stamp", "access": "", "host": "AP", "type": "method", "name": "stamp"}, {"url": "StringBuffer.html#method_toString", "access": "", "host": "StringBuffer", "type": "method", "name": "toString"}, {"url": "AP~Lang.html#method_trim", "access": "", "host": "AP~Lang", "type": "method", "name": "trim"}, {"url": "AP~array.html#method_unique", "access": "", "host": "AP~array", "type": "method", "name": "unique"}, {"url": "AP.html#method_use", "access": "", "host": "AP", "type": "method", "name": "use"}, {"url": "StringBuffer.html#property_{Array} buffer", "access": "private", "host": "StringBuffer", "type": "property", "name": "{Array} buffer"}, {"url": "StringBuffer.html#property_{Number} index", "access": "private", "host": "StringBuffer", "type": "property", "name": "{Number} index"}];
+</script>
+</body>
+</html>

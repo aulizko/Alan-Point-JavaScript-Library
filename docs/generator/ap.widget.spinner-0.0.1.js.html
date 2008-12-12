@@ -1,0 +1,250 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html xmlns:yui="http://yuilibrary.com/rdf/1.0/yui.rdf#">
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+	<title>API: supreme   ap.widget.spinner-0.0.1.js  (YUI Library)</title>
+
+	<link rel="stylesheet" type="text/css" href="assets/reset-fonts-grids-min.css?stamp=1228895591.48" />
+	<link rel="stylesheet" type="text/css" href="assets/api.css?stamp=1228895591.48" />
+
+    <script type="text/javascript" src="assets/api-js?stamp=1228895591.48"></script>
+    <script type="text/javascript" src="assets/ac-js?stamp=1228895591.48"></script>
+</head>
+
+<body id="yahoo-com">
+
+<div id="doc3" class="yui-t2">
+	<div id="hd">
+        <h1><a href="http://developer.yahoo.com/yui/" title="Yahoo! UI Library">Yahoo! UI Library</a></h1>
+        <h3>supreme&nbsp; <span class="subtitle">0.0.2</span></h3>
+        <a href="./index.html" title="Yahoo! UI Library">Yahoo! UI Library</a> 
+            &gt; <a href="./module_supreme.html" title="supreme">supreme</a>
+                
+                 &gt; ap.widget.spinner-0.0.1.js (source view) 
+        <form onsubmit="return false">
+            <div id="propertysearch">
+                Search: <input autocomplete="off" id="searchinput" />
+                <div id="searchresults">
+                    &nbsp;
+                </div>
+            </div>
+        </form>
+	</div>
+
+	<div id="bd">
+		<div id="yui-main">
+			<div class="yui-b">
+            <form action="#" name="yui-classopts-form" method="get" id="yui-classopts-form">
+                <fieldset>
+                    <legend>Filters</legend>
+                <span class="classopts"><input type="checkbox" name="show_private" id="show_private" /> <label for="show_private">Show Private</label></span>
+                <span class="classopts"><input type="checkbox" name="show_protected" id="show_protected" /> <label for="show_protected">Show Protected</label></span>
+                <span class="classopts"><input type="checkbox" name="show_deprecated" id="show_deprecated" /> <label for="show_deprecated">Show Deprecated</label></span>
+                </fieldset>
+            </form>
+
+                    <div id="srcout">
+                        <style>
+                            #doc3 .classopts { display:none; }
+                        </style>
+<div class="highlight" ><pre><span class="c">/**</span>
+<span class="c"> * Really fast and memory-leaks safe spinner widget. </span>
+<span class="c"> * @module spinner</span>
+<span class="c"> */</span>
+<span class="nx">AP</span><span class="o">.</span><span class="nx">add</span><span class="o">(</span><span class="s1">&#39;spinner&#39;</span><span class="o">,</span> <span class="k">function</span> <span class="o">(</span><span class="nx">A</span><span class="o">)</span> <span class="o">{</span>
+    <span class="c">// global container for that module</span>
+<span class="c"></span>    <span class="nx">A</span><span class="o">.</span><span class="nx">Spinner</span> <span class="o">=</span> <span class="nx">A</span><span class="o">.</span><span class="nx">Spinner</span> <span class="o">||</span> <span class="o">{};</span>
+    
+    <span class="nx">A</span><span class="o">.</span><span class="nx">Spinner</span><span class="o">.</span><span class="nx">CONSTANT</span> <span class="o">=</span> <span class="o">{</span>
+        <span class="nx">KEY</span> <span class="o">:</span> <span class="o">{</span>
+            <span class="nx">BACKSPACE</span><span class="o">:</span> <span class="m">8</span><span class="o">,</span>
+            <span class="nx">END</span><span class="o">:</span> <span class="m">35</span><span class="o">,</span>
+            <span class="nx">HOME</span><span class="o">:</span> <span class="m">36</span><span class="o">,</span>
+            <span class="nx">LEFT</span><span class="o">:</span> <span class="m">37</span><span class="o">,</span>
+            <span class="nx">PERIOD</span><span class="o">:</span> <span class="m">190</span><span class="o">,</span>
+            <span class="nx">RIGHT</span><span class="o">:</span> <span class="m">39</span><span class="o">,</span>
+            <span class="nx">TAB</span><span class="o">:</span> <span class="m">9</span>
+        <span class="o">}</span>
+    <span class="o">};</span>
+    
+    <span class="c">// references to all instances of spinner</span>
+<span class="c"></span>    <span class="nx">A</span><span class="o">.</span><span class="nx">Spinner</span><span class="o">.</span><span class="nx">instances</span> <span class="o">=</span> <span class="o">{};</span>
+    
+    <span class="c">/**</span>
+<span class="c">     * Single spinner object. Ideal if spinner alone on page, or spinners cannot be unified into one container</span>
+<span class="c">     * @class SpinnerOnSteroids</span>
+<span class="c">     * @constructor</span>
+<span class="c">     * @param html {Object} object with properties:</span>
+<span class="c">     * &lt;ul&gt;&lt;li&gt;container {jQuery} jQuery reference to html element (container)&lt;/li&gt;</span>
+<span class="c">     * &lt;li&gt;input {jQuery} jQuery reference to input element&lt;/li&gt;</span>
+<span class="c">     * &lt;li&gt;up {jQuery} jQuery reference to increase control&lt;/li&gt;</span>
+<span class="c">     * &lt;li&gt;down {jQuery} jQuery reference to decrease control&lt;/li&gt;&lt;/ul&gt;</span>
+<span class="c">     * @param callback {Function} function which invocated every time when spinner value changed. </span>
+<span class="c">     * Spinner object as it is will be passed to callback function as first parameter.</span>
+<span class="c">     * @param context {Object} object which will be passed to callback function as this element. </span>
+<span class="c">     * @param step {Number} by this number input value will be changed every time user clicks on control</span>
+<span class="c">     * @param min {Number} min value of input. Default to 0.</span>
+<span class="c">     * @param max {Number} max value of input. Default to 255.</span>
+<span class="c">     */</span>
+    <span class="nx">A</span><span class="o">.</span><span class="nx">Spinner</span><span class="o">.</span><span class="nx">SpinnerOnSteroids</span> <span class="o">=</span> <span class="k">function</span> <span class="o">(</span><span class="nx">html</span><span class="o">,</span> <span class="nx">callback</span><span class="o">,</span> <span class="nx">context</span><span class="o">,</span> <span class="nx">step</span><span class="o">,</span> <span class="nx">min</span><span class="o">,</span> <span class="nx">max</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">this</span><span class="o">.</span><span class="nx">container</span> <span class="o">=</span> <span class="nx">html</span><span class="o">.</span><span class="nx">container</span><span class="o">;</span>
+        <span class="k">this</span><span class="o">.</span><span class="nx">input</span> <span class="o">=</span> <span class="nx">html</span><span class="o">.</span><span class="nx">input</span><span class="o">;</span>
+        <span class="k">this</span><span class="o">.</span><span class="nx">value</span> <span class="o">=</span> <span class="k">this</span><span class="o">.</span><span class="nx">input</span><span class="o">.</span><span class="nx">val</span><span class="o">()</span> <span class="o">-</span> <span class="m">0</span><span class="o">;</span>
+        <span class="k">this</span><span class="o">.</span><span class="nx">up</span> <span class="o">=</span> <span class="nx">html</span><span class="o">.</span><span class="nx">up</span><span class="o">;</span>
+        <span class="k">this</span><span class="o">.</span><span class="nx">down</span> <span class="o">=</span> <span class="nx">html</span><span class="o">.</span><span class="nx">down</span><span class="o">;</span>
+        <span class="k">this</span><span class="o">.</span><span class="nx">callback</span> <span class="o">=</span> <span class="k">function</span> <span class="o">()</span> <span class="o">{</span> <span class="nx">callback</span><span class="o">.</span><span class="nx">call</span><span class="o">((</span><span class="nx">context</span><span class="o">)</span> <span class="o">?</span> <span class="nx">context</span> <span class="o">:</span> <span class="nx">A</span><span class="o">.</span><span class="nx">config</span><span class="o">.</span><span class="nx">win</span><span class="o">,</span> <span class="k">this</span><span class="o">);</span> <span class="o">};</span>
+        <span class="k">this</span><span class="o">.</span><span class="nx">step</span> <span class="o">=</span> <span class="nx">step</span> <span class="o">||</span> <span class="m">1</span><span class="o">;</span>
+        <span class="k">this</span><span class="o">.</span><span class="nx">min</span> <span class="o">=</span> <span class="nx">min</span> <span class="o">||</span> <span class="o">(</span><span class="k">this</span><span class="o">.</span><span class="nx">input</span><span class="o">.</span><span class="nx">attr</span><span class="o">(</span><span class="s1">&#39;minValue&#39;</span><span class="o">)</span> <span class="o">-</span> <span class="m">0</span><span class="o">)</span> <span class="o">||</span> <span class="m">0</span><span class="o">;</span>
+        <span class="k">this</span><span class="o">.</span><span class="nx">max</span> <span class="o">=</span> <span class="nx">max</span> <span class="o">||</span> <span class="o">(</span><span class="k">this</span><span class="o">.</span><span class="nx">input</span><span class="o">.</span><span class="nx">attr</span><span class="o">(</span><span class="s1">&#39;maxValue&#39;</span><span class="o">)</span> <span class="o">-</span> <span class="m">0</span><span class="o">)</span> <span class="o">||</span> <span class="m">255</span><span class="o">;</span>
+        
+        <span class="k">this</span><span class="o">.</span><span class="nx">initialize</span><span class="o">();</span>
+        
+    <span class="o">};</span>
+    
+    <span class="nx">A</span><span class="o">.</span><span class="nx">Spinner</span><span class="o">.</span><span class="nx">SpinnerOnSteroids</span><span class="o">.</span><span class="nx">prototype</span><span class="o">.</span><span class="nx">initialize</span> <span class="o">=</span> <span class="k">function</span><span class="o">()</span> <span class="o">{</span>
+        <span class="c">// register this instance on the A.spinner.instances module</span>
+<span class="c"></span>        <span class="nx">A</span><span class="o">.</span><span class="nx">stamp</span><span class="o">(</span><span class="k">this</span><span class="o">);</span>
+        <span class="nx">A</span><span class="o">.</span><span class="nx">Spinner</span><span class="o">.</span><span class="nx">instances</span><span class="o">[</span><span class="k">this</span><span class="o">.</span><span class="nx">_apid</span><span class="o">]</span> <span class="o">=</span> <span class="k">this</span><span class="o">;</span>
+        <span class="k">this</span><span class="o">.</span><span class="nx">container</span><span class="o">.</span><span class="nx">attr</span><span class="o">(</span><span class="s1">&#39;id&#39;</span><span class="o">,</span> <span class="k">this</span><span class="o">.</span><span class="nx">_apid</span><span class="o">);</span>
+        <span class="c">// bind event listeners to the html elements;</span>
+<span class="c"></span>        <span class="k">this</span><span class="o">.</span><span class="nx">bindEventListeners</span><span class="o">();</span>
+    <span class="o">};</span>
+    
+    <span class="nx">A</span><span class="o">.</span><span class="nx">Spinner</span><span class="o">.</span><span class="nx">SpinnerOnSteroids</span><span class="o">.</span><span class="nx">prototype</span><span class="o">.</span><span class="nx">bindEventListeners</span> <span class="o">=</span> <span class="k">function</span><span class="o">()</span> <span class="o">{</span>
+        <span class="k">var</span> <span class="nx">self</span> <span class="o">=</span> <span class="k">this</span><span class="o">;</span>
+        <span class="k">this</span><span class="o">.</span><span class="nx">up</span><span class="o">.</span><span class="nx">click</span><span class="o">(</span><span class="k">function</span> <span class="o">(</span><span class="nx">e</span><span class="o">)</span> <span class="o">{</span> <span class="k">return</span> <span class="nx">self</span><span class="o">.</span><span class="nx">upClickHandler</span><span class="o">(</span><span class="nx">e</span><span class="o">);</span> <span class="o">});</span>
+        
+        <span class="k">this</span><span class="o">.</span><span class="nx">down</span><span class="o">.</span><span class="nx">click</span><span class="o">(</span><span class="k">function</span> <span class="o">(</span><span class="nx">e</span><span class="o">)</span> <span class="o">{</span> <span class="k">return</span> <span class="nx">self</span><span class="o">.</span><span class="nx">downClickHandler</span><span class="o">(</span><span class="nx">e</span><span class="o">);</span> <span class="o">});</span>
+        
+        <span class="k">this</span><span class="o">.</span><span class="nx">input</span><span class="o">.</span><span class="nx">keypress</span><span class="o">(</span><span class="k">function</span> <span class="o">(</span><span class="nx">e</span><span class="o">)</span> <span class="o">{</span> <span class="k">return</span> <span class="nx">self</span><span class="o">.</span><span class="nx">keypressHandler</span><span class="o">(</span><span class="nx">e</span><span class="o">);</span> <span class="o">});</span>
+        
+        <span class="k">this</span><span class="o">.</span><span class="nx">input</span><span class="o">.</span><span class="nx">keyup</span><span class="o">(</span><span class="k">function</span> <span class="o">(</span><span class="nx">e</span><span class="o">)</span> <span class="o">{</span> <span class="k">return</span> <span class="nx">self</span><span class="o">.</span><span class="nx">keyupHandler</span><span class="o">(</span><span class="nx">e</span><span class="o">);</span> <span class="o">});</span>
+    <span class="o">};</span>
+    
+    <span class="nx">A</span><span class="o">.</span><span class="nx">Spinner</span><span class="o">.</span><span class="nx">SpinnerOnSteroids</span><span class="o">.</span><span class="nx">prototype</span><span class="o">.</span><span class="nx">upClickHandler</span> <span class="o">=</span> <span class="k">function</span> <span class="o">(</span><span class="nx">e</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">var</span> <span class="nx">oldValue</span> <span class="o">=</span> <span class="k">this</span><span class="o">.</span><span class="nx">value</span><span class="o">,</span> <span class="nx">newValue</span> <span class="o">=</span> <span class="nx">oldValue</span> <span class="o">+</span> <span class="k">this</span><span class="o">.</span><span class="nx">step</span><span class="o">;</span>
+        
+        <span class="nx">newValue</span> <span class="o">=</span> <span class="o">(</span><span class="nx">newValue</span> <span class="o">&gt;</span> <span class="k">this</span><span class="o">.</span><span class="nx">max</span><span class="o">)</span> <span class="o">?</span> <span class="k">this</span><span class="o">.</span><span class="nx">max</span> <span class="o">:</span> <span class="nx">newValue</span><span class="o">;</span>
+        
+        <span class="k">if</span> <span class="o">(</span><span class="nx">newValue</span> <span class="o">!=</span> <span class="nx">oldValue</span><span class="o">)</span> <span class="o">{</span>
+            <span class="k">this</span><span class="o">.</span><span class="nx">value</span> <span class="o">=</span> <span class="nx">newValue</span><span class="o">;</span>
+            <span class="k">this</span><span class="o">.</span><span class="nx">input</span><span class="o">.</span><span class="nx">val</span><span class="o">(</span><span class="k">this</span><span class="o">.</span><span class="nx">value</span><span class="o">);</span>
+            <span class="k">this</span><span class="o">.</span><span class="nx">callback</span><span class="o">();</span>
+        <span class="o">}</span>
+        
+        <span class="k">if</span> <span class="o">(</span><span class="nx">e</span><span class="o">.</span><span class="nx">preventDefault</span><span class="o">)</span> <span class="o">{</span> <span class="nx">e</span><span class="o">.</span><span class="nx">preventDefault</span><span class="o">();</span> <span class="o">}</span>
+        <span class="k">return</span> <span class="kc">false</span><span class="o">;</span>
+    <span class="o">};</span>
+    
+    <span class="nx">A</span><span class="o">.</span><span class="nx">Spinner</span><span class="o">.</span><span class="nx">SpinnerOnSteroids</span><span class="o">.</span><span class="nx">prototype</span><span class="o">.</span><span class="nx">downClickHandler</span> <span class="o">=</span> <span class="k">function</span> <span class="o">(</span><span class="nx">e</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">var</span> <span class="nx">oldValue</span> <span class="o">=</span> <span class="k">this</span><span class="o">.</span><span class="nx">value</span><span class="o">,</span> <span class="nx">newValue</span> <span class="o">=</span> <span class="nx">oldValue</span> <span class="o">-</span> <span class="k">this</span><span class="o">.</span><span class="nx">step</span><span class="o">;</span>
+        
+        <span class="nx">newValue</span> <span class="o">=</span> <span class="o">(</span><span class="nx">newValue</span> <span class="o">&lt;</span> <span class="k">this</span><span class="o">.</span><span class="nx">min</span><span class="o">)</span> <span class="o">?</span> <span class="k">this</span><span class="o">.</span><span class="nx">min</span> <span class="o">:</span> <span class="nx">newValue</span><span class="o">;</span>
+        
+        <span class="k">if</span> <span class="o">(</span><span class="nx">newValue</span> <span class="o">!=</span> <span class="nx">oldValue</span><span class="o">)</span> <span class="o">{</span>
+            <span class="k">this</span><span class="o">.</span><span class="nx">value</span> <span class="o">=</span> <span class="nx">newValue</span><span class="o">;</span>
+            <span class="k">this</span><span class="o">.</span><span class="nx">input</span><span class="o">.</span><span class="nx">val</span><span class="o">(</span><span class="k">this</span><span class="o">.</span><span class="nx">value</span><span class="o">);</span>
+            <span class="k">this</span><span class="o">.</span><span class="nx">callback</span><span class="o">();</span>
+        <span class="o">}</span>
+        
+        <span class="k">if</span> <span class="o">(</span><span class="nx">e</span><span class="o">.</span><span class="nx">preventDefault</span><span class="o">)</span> <span class="o">{</span> <span class="nx">e</span><span class="o">.</span><span class="nx">preventDefault</span><span class="o">();</span> <span class="o">}</span>
+        <span class="k">return</span> <span class="kc">false</span><span class="o">;</span>
+    <span class="o">};</span>
+    
+    <span class="nx">A</span><span class="o">.</span><span class="nx">Spinner</span><span class="o">.</span><span class="nx">SpinnerOnSteroids</span><span class="o">.</span><span class="nx">prototype</span><span class="o">.</span><span class="nx">keypressHandler</span> <span class="o">=</span> <span class="k">function</span><span class="o">(</span><span class="nx">e</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">var</span> <span class="nx">output</span><span class="o">,</span> <span class="nx">K</span> <span class="o">=</span> <span class="nx">A</span><span class="o">.</span><span class="nx">Spinner</span><span class="o">.</span><span class="nx">CONSTANT</span><span class="o">.</span><span class="nx">KEY</span><span class="o">,</span> <span class="nx">newValue</span><span class="o">,</span> <span class="nx">charCode</span> <span class="o">=</span> <span class="nx">e</span><span class="o">.</span><span class="nx">which</span><span class="o">;</span>
+        <span class="c">// block unwanted keys</span>
+<span class="c"></span>        <span class="nx">output</span> <span class="o">=</span> <span class="kc">false</span><span class="o">;</span>
+        <span class="nx">AP</span><span class="o">.</span><span class="nb">Object</span><span class="o">.</span><span class="nx">each</span><span class="o">(</span><span class="nx">K</span><span class="o">,</span> <span class="k">function</span> <span class="o">(</span><span class="nx">keyCode</span><span class="o">)</span> <span class="o">{</span>
+            <span class="k">if</span> <span class="o">(</span><span class="nx">e</span><span class="o">.</span><span class="nx">keyCode</span> <span class="o">==</span> <span class="nx">keyCode</span><span class="o">)</span> <span class="o">{</span>
+                <span class="nx">output</span> <span class="o">=</span> <span class="kc">true</span><span class="o">;</span>
+            <span class="o">}</span>
+        <span class="o">},</span> <span class="k">this</span><span class="o">);</span>
+
+        <span class="k">if</span> <span class="o">(</span><span class="nx">output</span> <span class="o">||</span> <span class="o">(</span><span class="nx">charCode</span> <span class="o">&gt;=</span> <span class="m">48</span> <span class="o">&amp;&amp;</span> <span class="nx">charCode</span> <span class="o">&lt;=</span> <span class="m">57</span><span class="o">)</span> <span class="o">||</span> <span class="o">(</span><span class="sr">/[0-9]/</span><span class="o">).</span><span class="nx">test</span><span class="o">(</span><span class="nb">String</span><span class="o">.</span><span class="nx">fromCharCode</span><span class="o">(</span><span class="nx">charCode</span><span class="o">)))</span> <span class="o">{</span>
+            <span class="k">return</span> <span class="kc">true</span><span class="o">;</span>
+        <span class="o">}</span>
+        
+        <span class="k">if</span> <span class="o">(</span><span class="nx">e</span><span class="o">.</span><span class="nx">preventDefault</span><span class="o">)</span> <span class="o">{</span>
+            <span class="nx">e</span><span class="o">.</span><span class="nx">preventDefault</span><span class="o">();</span>
+        <span class="o">}</span>
+        <span class="k">return</span> <span class="kc">false</span><span class="o">;</span>
+    <span class="o">};</span>
+    
+    <span class="nx">A</span><span class="o">.</span><span class="nx">Spinner</span><span class="o">.</span><span class="nx">SpinnerOnSteroids</span><span class="o">.</span><span class="nx">prototype</span><span class="o">.</span><span class="nx">keyupHandler</span> <span class="o">=</span> <span class="k">function</span> <span class="o">(</span><span class="nx">e</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">var</span> <span class="nx">newValue</span><span class="o">;</span>
+        <span class="nx">newValue</span> <span class="o">=</span> <span class="k">this</span><span class="o">.</span><span class="nx">input</span><span class="o">.</span><span class="nx">val</span><span class="o">()</span> <span class="o">-</span> <span class="m">0</span><span class="o">;</span>
+        <span class="nx">newValue</span> <span class="o">=</span> <span class="o">(</span><span class="nx">newValue</span> <span class="o">&gt;</span> <span class="k">this</span><span class="o">.</span><span class="nx">max</span><span class="o">)</span> <span class="o">?</span> <span class="k">this</span><span class="o">.</span><span class="nx">max</span> <span class="o">:</span> <span class="o">((</span><span class="nx">newValue</span> <span class="o">&lt;</span> <span class="k">this</span><span class="o">.</span><span class="nx">min</span><span class="o">)</span> <span class="o">?</span> <span class="k">this</span><span class="o">.</span><span class="nx">min</span> <span class="o">:</span> <span class="nx">newValue</span><span class="o">);</span>
+        
+        <span class="k">this</span><span class="o">.</span><span class="nx">value</span> <span class="o">=</span> <span class="nx">newValue</span><span class="o">;</span>
+        <span class="k">this</span><span class="o">.</span><span class="nx">input</span><span class="o">.</span><span class="nx">val</span><span class="o">(</span><span class="nx">newValue</span><span class="o">);</span>
+        <span class="k">this</span><span class="o">.</span><span class="nx">callback</span><span class="o">();</span>
+    <span class="o">};</span>
+    
+    <span class="nx">A</span><span class="o">.</span><span class="nx">Spinner</span><span class="o">.</span><span class="nx">SpinnerOnSteroids</span><span class="o">.</span><span class="nx">prototype</span><span class="o">.</span><span class="nx">cleanup</span> <span class="o">=</span> <span class="k">function</span><span class="o">()</span> <span class="o">{</span>
+        <span class="k">this</span><span class="o">.</span><span class="nx">input</span><span class="o">.</span><span class="nx">val</span><span class="o">(</span><span class="k">this</span><span class="o">.</span><span class="nx">min</span><span class="o">);</span>
+        <span class="k">this</span><span class="o">.</span><span class="nx">value</span> <span class="o">=</span> <span class="k">this</span><span class="o">.</span><span class="nx">min</span><span class="o">;</span>
+    <span class="o">};</span>
+    
+    
+    <span class="nx">A</span><span class="o">.</span><span class="nx">Spinner</span><span class="o">.</span><span class="nx">SpinnerOnSteroids</span><span class="o">.</span><span class="nx">prototype</span><span class="o">.</span><span class="nx">remove</span> <span class="o">=</span> <span class="k">function</span><span class="o">()</span> <span class="o">{</span>
+        <span class="k">this</span><span class="o">.</span><span class="nx">container</span><span class="o">.</span><span class="nx">remove</span><span class="o">();</span>
+        <span class="nx">A</span><span class="o">.</span><span class="nx">Spinner</span><span class="o">.</span><span class="nx">instances</span><span class="o">[</span><span class="k">this</span><span class="o">.</span><span class="nx">_apid</span><span class="o">]</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+        <span class="nx">delete</span> <span class="nx">A</span><span class="o">.</span><span class="nx">Spinner</span><span class="o">.</span><span class="nx">instances</span><span class="o">[</span><span class="k">this</span><span class="o">.</span><span class="nx">_apid</span><span class="o">];</span>
+    <span class="o">};</span>
+    
+    
+<span class="o">},</span> <span class="s1">&#39;0.0.1&#39;</span><span class="o">);</span>
+</pre></div>
+                    </div>
+			</div>
+		</div>
+		<div class="yui-b">
+            <div class="nav">
+
+                    <div id="moduleList" class="module">
+                        <h4>Modules</h4>
+                        <ul class="content">
+                                <li class=""><a href="module_ap.html" title="ap">ap</a></li>
+                                <li class=""><a href="module_cookie.html" title="cookie">cookie</a></li>
+                                <li class=""><a href="module_history.html" title="history">history</a></li>
+                                <li class=""><a href="module_imageloader.html" title="imageloader">imageloader</a></li>
+                                <li class=""><a href="module_json.html" title="json">json</a></li>
+                                <li class=""><a href="module_queue.html" title="queue">queue</a></li>
+                                <li class=""><a href="module_spinner.html" title="spinner">spinner</a></li>
+                                <li class="selected"><a href="module_supreme.html" title="supreme">supreme</a></li>
+                        </ul>
+                    </div>
+
+                    <div id="classList" class="module">
+                        <h4>Classes</h4>
+                        <ul class="content">
+                                <li class=""><a href="Supreme.html" title="Supreme">Supreme</a></li>
+                        </ul>
+                    </div>
+
+                    <div id="fileList" class="module">
+                        <h4>Files</h4>
+                        <ul class="content">        
+                                <li class=""><a href="ap.timer-0.0.1.js.html" title="ap.timer-0.0.1.js">ap.timer-0.0.1.js</a></li>
+                                <li class="selected"><a href="ap.widget.spinner-0.0.1.js.html" title="ap.widget.spinner-0.0.1.js">ap.widget.spinner-0.0.1.js</a></li>
+                        </ul>
+                    </div>
+
+
+
+
+
+            </div>
+		</div>
+	</div>
+	<div id="ft">
+        <hr />
+        Copyright &copy; 2008 Yahoo! Inc. All rights reserved.
+	</div>
+</div>
+<script type="text/javascript">
+    ALL_YUI_PROPS = [{"url": "Supreme.html#method_add", "access": "", "host": "Supreme", "type": "method", "name": "add"}, {"url": "Supreme.html#method_later", "access": "", "host": "Supreme", "type": "method", "name": "later"}, {"url": "Supreme.html#property_p", "access": "protected", "host": "Supreme", "type": "property", "name": "p"}, {"url": "Supreme.html#method_run", "access": "", "host": "Supreme", "type": "method", "name": "run"}, {"url": "Supreme.html#method_unload", "access": "protected", "host": "Supreme", "type": "method", "name": "unload"}];
+</script>
+</body>
+</html>

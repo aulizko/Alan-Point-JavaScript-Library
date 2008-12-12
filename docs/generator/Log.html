@@ -1,0 +1,230 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html xmlns:yui="http://yuilibrary.com/rdf/1.0/yui.rdf#">
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+	<title>API: ap  Log   (YUI Library)</title>
+
+	<link rel="stylesheet" type="text/css" href="assets/reset-fonts-grids-min.css?stamp=1228895591.51" />
+	<link rel="stylesheet" type="text/css" href="assets/api.css?stamp=1228895591.51" />
+
+    <script type="text/javascript" src="assets/api-js?stamp=1228895591.51"></script>
+    <script type="text/javascript" src="assets/ac-js?stamp=1228895591.51"></script>
+</head>
+
+<body id="yahoo-com">
+
+<div id="doc3" class="yui-t2">
+	<div id="hd">
+        <h1><a href="http://developer.yahoo.com/yui/" title="Yahoo! UI Library">Yahoo! UI Library</a></h1>
+        <h3>ap&nbsp; <span class="subtitle">0.0.2</span></h3>
+        <a href="./index.html" title="Yahoo! UI Library">Yahoo! UI Library</a> 
+            &gt; <a href="./module_ap.html" title="ap">ap</a>
+                 &gt; Log 
+                
+        <form onsubmit="return false">
+            <div id="propertysearch">
+                Search: <input autocomplete="off" id="searchinput" />
+                <div id="searchresults">
+                    &nbsp;
+                </div>
+            </div>
+        </form>
+	</div>
+
+	<div id="bd">
+		<div id="yui-main">
+			<div class="yui-b">
+            <form action="#" name="yui-classopts-form" method="get" id="yui-classopts-form">
+                <fieldset>
+                    <legend>Filters</legend>
+                <span class="classopts"><input type="checkbox" name="show_private" id="show_private" /> <label for="show_private">Show Private</label></span>
+                <span class="classopts"><input type="checkbox" name="show_protected" id="show_protected" /> <label for="show_protected">Show Protected</label></span>
+                <span class="classopts"><input type="checkbox" name="show_deprecated" id="show_deprecated" /> <label for="show_deprecated">Show Deprecated</label></span>
+                </fieldset>
+            </form>
+
+                    <h2>
+                        
+
+                        
+                        
+                            Class <b property="yui:name">Log</b>
+                        <span class="extends">
+                        </span>
+
+                    </h2>
+                    <!-- class tree goes here -->
+                    
+                
+  
+
+                    <div class="summary description" property="yui:description">
+                        AP universal logger
+                    </div>
+
+                    
+                    <div rel="yui:properties" resource="#properties">
+
+                    </div>
+
+                    <div rel="yui:methods" resource="#methods">
+                        <div class="section method details">
+                            <h3 id="methods">Methods</h3>
+                            <div class="content">
+                                    <div class="" rel="yui:method" resource="#method_log">
+                                    <h4>
+                                        <a name="method_log">log</a></h4>
+                                    <div class="detail" >
+                                        <code>
+                                        
+                                        
+                                        
+                                        AP
+                                            <strong property="yui:name">log</strong>
+                                           (
+                                                
+                                                        
+                                                         msg
+                                                    
+                                                
+                                                        , 
+                                                         cat
+                                                    
+                                                
+                                                        , 
+                                                         src
+                                                    
+                                                
+                                            )
+                                        </code>
+                                        
+                                        <div class="description" property="yui:description">
+                                            If the 'debug' config is true, a 'ap:log' event will be
+dispatched, which the logger widget and anything else
+can consume.  If the 'useConsole' config is true, it will
+write to the browser console if available.
+                                        </div>
+
+                                        <div class="description">
+
+                                                <dl rel="yui:parameters">
+                                                    <dt>Parameters:</dt>
+                                                        <dd rel="yui:parameter">
+                                                        <code><span property="yui:name">msg</span>
+                                                        &lt;<span property="yui:type">String</span>&gt;
+                                                        </code>
+                                                        <span property="yui:description">  The message to log.</span>
+                                                        </dd>
+                                                        <dd rel="yui:parameter">
+                                                        <code><span property="yui:name">cat</span>
+                                                        &lt;<span property="yui:type">String</span>&gt;
+                                                        </code>
+                                                        <span property="yui:description">  The log category for the message.  Default
+categories are "info", "warn", "error", time".
+Custom categories can be used as well. (opt)</span>
+                                                        </dd>
+                                                        <dd rel="yui:parameter">
+                                                        <code><span property="yui:name">src</span>
+                                                        &lt;<span property="yui:type">String</span>&gt;
+                                                        </code>
+                                                        <span property="yui:description">  The source of the the message (opt)</span>
+                                                        </dd>
+                                                </dl>
+
+                                                <dl>
+                                                    <dt>Returns:
+                                                    <code property="yui:return">
+                                                        AP
+                                                    </code></dt>
+                                                    <dd property="yui:returnInfo">AP instance</dd>
+                                                </dl>
+
+
+             
+
+                                        </div>
+
+                                    </div>
+                                    <hr />
+                                    </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div rel="yui:events" resource="#events">
+
+
+                    </div>
+
+                    <div rel="yui:attributes" resource="#configattributes">
+
+                    </div>
+
+			</div>
+		</div>
+		<div class="yui-b">
+            <div class="nav">
+
+                    <div id="moduleList" class="module">
+                        <h4>Modules</h4>
+                        <ul class="content">
+                                <li class="selected"><a href="module_ap.html" title="ap">ap</a></li>
+                                <li class=""><a href="module_cookie.html" title="cookie">cookie</a></li>
+                                <li class=""><a href="module_history.html" title="history">history</a></li>
+                                <li class=""><a href="module_imageloader.html" title="imageloader">imageloader</a></li>
+                                <li class=""><a href="module_json.html" title="json">json</a></li>
+                                <li class=""><a href="module_queue.html" title="queue">queue</a></li>
+                                <li class=""><a href="module_spinner.html" title="spinner">spinner</a></li>
+                                <li class=""><a href="module_supreme.html" title="supreme">supreme</a></li>
+                        </ul>
+                    </div>
+
+                    <div id="classList" class="module">
+                        <h4>Classes</h4>
+                        <ul class="content">
+                                <li class=""><a href="AP.html" title="AP">AP</a></li>
+                                <li class=""><a href="AP~array.html" title="AP~array">AP~array</a></li>
+                                <li class=""><a href="AP~Lang.html" title="AP~Lang">AP~Lang</a></li>
+                                <li class=""><a href="AP~object.html" title="AP~object">AP~object</a></li>
+                                <li class="selected"><a href="Log.html" title="Log">Log</a></li>
+                                <li class=""><a href="Observer.html" title="Observer">Observer</a></li>
+                                <li class=""><a href="String.html" title="String">String</a></li>
+                                <li class=""><a href="StringBuffer.html" title="StringBuffer">StringBuffer</a></li>
+                        </ul>
+                    </div>
+
+                    <div id="fileList" class="module">
+                        <h4>Files</h4>
+                        <ul class="content">        
+                                <li class=""><a href="ap.base-0.0.1.js.html" title="ap.base-0.0.1.js">ap.base-0.0.1.js</a></li>
+                                <li class=""><a href="ap.cookie-0.0.1.js.html" title="ap.cookie-0.0.1.js">ap.cookie-0.0.1.js</a></li>
+                                <li class=""><a href="ap.ordain-0.0.1.js.html" title="ap.ordain-0.0.1.js">ap.ordain-0.0.1.js</a></li>
+                                <li class=""><a href="ap.queue-0.0.1.js.html" title="ap.queue-0.0.1.js">ap.queue-0.0.1.js</a></li>
+                                <li class=""><a href="ap.supreme-0.0.1.js.html" title="ap.supreme-0.0.1.js">ap.supreme-0.0.1.js</a></li>
+                        </ul>
+                    </div>
+
+
+                    <div id="methodsList" class="module">
+                        <h4>Methods</h4>
+                        <ul class="content">        
+                                <li class=""><a href="#method_log" title="log">log</a></li>
+                        </ul>
+                    </div>
+
+
+
+            </div>
+		</div>
+	</div>
+	<div id="ft">
+        <hr />
+        Copyright &copy; 2008 Yahoo! Inc. All rights reserved.
+	</div>
+</div>
+<script type="text/javascript">
+    ALL_YUI_PROPS = [{"url": "AP.html#method_add", "access": "", "host": "AP", "type": "method", "name": "add"}, {"url": "AP.html#method_applyTo", "access": "", "host": "AP", "type": "method", "name": "applyTo"}, {"url": "AP.html#method__configureEnvinronment", "access": "private", "host": "AP", "type": "method", "name": "_configureEnvinronment"}, {"url": "AP.html#method_guid", "access": "", "host": "AP", "type": "method", "name": "guid"}, {"url": "AP.html#property__iefix", "access": "private", "host": "AP", "type": "property", "name": "_iefix"}, {"url": "AP.html#method__init", "access": "private", "host": "AP", "type": "method", "name": "_init"}, {"url": "Log.html#method_log", "access": "", "host": "Log", "type": "method", "name": "log"}, {"url": "AP.html#method_merge", "access": "", "host": "AP", "type": "method", "name": "merge"}, {"url": "AP.html#method_mix", "access": "", "host": "AP", "type": "method", "name": "mix"}, {"url": "AP.html#method_namespace", "access": "", "host": "AP", "type": "method", "name": "namespace"}, {"url": "AP.html#method__setup", "access": "private", "host": "AP", "type": "method", "name": "_setup"}, {"url": "AP.html#method_stamp", "access": "", "host": "AP", "type": "method", "name": "stamp"}, {"url": "AP.html#method_use", "access": "", "host": "AP", "type": "method", "name": "use"}];
+</script>
+</body>
+</html>

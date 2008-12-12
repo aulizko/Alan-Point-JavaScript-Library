@@ -1,0 +1,105 @@
+<div class="highlight" ><pre><span class="nx">AP</span><span class="o">.</span><span class="nx">add</span><span class="o">(</span><span class="s1">&#39;supreme&#39;</span><span class="o">,</span> <span class="k">function</span><span class="o">(</span><span class="nx">A</span><span class="o">)</span> <span class="o">{</span>
+    <span class="k">var</span> <span class="nx">L</span> <span class="o">=</span> <span class="nx">A</span><span class="o">.</span><span class="nx">Lang</span><span class="o">,</span> <span class="nx">q</span> <span class="o">=</span> <span class="nx">A</span><span class="o">.</span><span class="nx">Queue</span><span class="o">(),</span> <span class="nx">Ar</span> <span class="o">=</span> <span class="nx">A</span><span class="o">.</span><span class="nb">Array</span><span class="o">;</span>
+    <span class="c">/**</span>
+<span class="c">     * Manager of the project-related objects.</span>
+<span class="c">     * Each object execute initialize or destroy method depend on reason param.</span>
+<span class="c">     * @module supreme</span>
+<span class="c">     * @class Supreme</span>
+<span class="c">     * @constructor</span>
+<span class="c">     * @param subject* {Object} Any number of objects</span>
+<span class="c">     */</span>
+    <span class="nx">A</span><span class="o">.</span><span class="nx">Supreme</span> <span class="o">=</span> <span class="k">function</span> <span class="o">()</span> <span class="o">{</span>
+        <span class="c">/**</span>
+<span class="c">         * The callback queue</span>
+<span class="c">         * @property p</span>
+<span class="c">         * @type {Array}</span>
+<span class="c">         * @protected</span>
+<span class="c">         */</span>
+        <span class="k">var</span> <span class="nx">pool</span> <span class="o">=</span> <span class="o">[],</span> <span class="nx">setted</span> <span class="o">=</span> <span class="kc">false</span><span class="o">;</span>
+
+        <span class="k">if</span> <span class="o">(!</span><span class="nx">setted</span><span class="o">)</span> <span class="o">{</span>
+            <span class="nx">$</span><span class="o">(</span><span class="nb">window</span><span class="o">).</span><span class="nx">unload</span><span class="o">(</span><span class="k">function</span> <span class="o">()</span> <span class="o">{</span><span class="nx">AP</span><span class="o">.</span><span class="nx">Supreme</span><span class="o">.</span><span class="nx">unload</span><span class="o">();});</span>
+            <span class="nx">setted</span> <span class="o">=</span> <span class="kc">true</span><span class="o">;</span>
+        <span class="o">}</span>
+        
+        <span class="c">// todo: remove binding to the magericshop namespace</span>
+<span class="c"></span>        <span class="nx">namespace</span> <span class="o">=</span> <span class="s1">&#39;projects.MagericShop&#39;</span><span class="o">;</span>
+        
+        <span class="k">return</span> <span class="o">{</span>
+            <span class="c">/**</span>
+<span class="c">             * Add any number of subjects. Each of them have next properties:</span>
+<span class="c">             * &lt;ul&gt;</span>
+<span class="c">             * &lt;li&gt;&lt;code&gt;reason&lt;/code&gt; {Boolean} - is that object needed on current page.&lt;/li&gt;</span>
+<span class="c">             * &lt;li&gt;&lt;code&gt;obj&lt;/code&gt; {Object | Function} - object we working with. This object must have three properties:</span>
+<span class="c">             * &lt;ul&gt;&lt;li&gt;&lt;code&gt;initialize&lt;/code&gt; {Function} - function which initialize object (todo: make this opt)&lt;/li&gt;</span>
+<span class="c">             * &lt;li&gt;&lt;code&gt;destroy&lt;/code&gt; {Function} - method which destroyes all cached variables, remove memory links and </span>
+<span class="c">             * synchronize with server if needed&lt;/li&gt;</span>
+<span class="c">             * &lt;li&gt;&lt;code&gt;className&lt;/code&gt; {String} or &lt;code&gt;getClassName&lt;/code&gt; {Function} - public property or method which </span>
+<span class="c">             * equal project name on the current namespace. Used to delete property from current namspace.&lt;/li&gt;&lt;/ul&gt;&lt;/li&gt;&lt;/ul&gt;</span>
+<span class="c">             * @method add</span>
+<span class="c">             * @param subject* {Object} Any number of objects</span>
+<span class="c">             * @return {Supreme} the Supreme instance</span>
+<span class="c">             */</span>
+            <span class="nx">add</span> <span class="o">:</span> <span class="k">function</span><span class="o">(){</span>
+                <span class="k">var</span> <span class="nx">subjects</span> <span class="o">=</span> <span class="nx">Ar</span><span class="o">(</span><span class="nx">arguments</span><span class="o">,</span> <span class="m">0</span><span class="o">,</span> <span class="kc">true</span><span class="o">);</span>
+                <span class="nx">pool</span><span class="o">.</span><span class="nx">splice</span><span class="o">.</span><span class="nx">apply</span><span class="o">(</span><span class="nx">pool</span><span class="o">,[</span><span class="nx">pool</span><span class="o">.</span><span class="nx">length</span><span class="o">,</span><span class="m">0</span><span class="o">].</span><span class="nx">concat</span><span class="o">(</span><span class="nx">subjects</span><span class="o">));</span>
+
+                <span class="k">return</span> <span class="k">this</span><span class="o">;</span>
+            <span class="o">},</span>
+
+            <span class="c">/**</span>
+<span class="c">             * Execute initializers and destroyers of pooled objects with help of Queue object</span>
+<span class="c">             * This method also remove destroyed objects from current namespace and from pool.</span>
+<span class="c">             * @method run</span>
+<span class="c">             * @return {Supreme} the Supreme instance</span>
+<span class="c">             */</span>
+            <span class="nx">run</span><span class="o">:</span> <span class="k">function</span><span class="o">()</span> <span class="o">{</span>
+                <span class="k">var</span> <span class="nx">obj</span><span class="o">,</span> <span class="nx">reason</span><span class="o">,</span>
+                    <span class="nx">length</span> <span class="o">=</span> <span class="nx">pool</span><span class="o">.</span><span class="nx">length</span><span class="o">,</span> <span class="nx">i</span> <span class="o">=</span> <span class="m">0</span><span class="o">,</span> <span class="nx">data</span><span class="o">;</span>
+                <span class="k">for</span> <span class="o">(;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">length</span><span class="o">;</span> <span class="nx">i</span><span class="o">++)</span> <span class="o">{</span>
+                    <span class="nx">subject</span> <span class="o">=</span> <span class="nx">pool</span><span class="o">[</span><span class="nx">i</span><span class="o">];</span>
+                    <span class="nx">obj</span> <span class="o">=</span> <span class="nx">subject</span><span class="o">.</span><span class="nx">obj</span><span class="o">;</span>
+                    <span class="nx">reason</span> <span class="o">=</span> <span class="nx">subject</span><span class="o">.</span><span class="nx">wanted</span><span class="o">;</span>
+                    <span class="nx">data</span> <span class="o">=</span> <span class="nx">subject</span><span class="o">.</span><span class="nx">data</span><span class="o">;</span>
+                    
+                    <span class="k">if</span> <span class="o">(</span><span class="nx">reason</span><span class="o">)</span> <span class="o">{</span>
+                        <span class="k">if</span> <span class="o">(</span><span class="nx">data</span><span class="o">)</span> <span class="o">{</span>
+                            <span class="nx">q</span><span class="o">.</span><span class="nx">add</span><span class="o">({</span> <span class="nx">fn</span><span class="o">:</span> <span class="k">function</span> <span class="o">()</span> <span class="o">{</span><span class="nx">obj</span><span class="o">.</span><span class="nx">initialize</span><span class="o">(</span><span class="nx">data</span><span class="o">);},</span> <span class="nx">context</span><span class="o">:</span> <span class="nx">obj</span><span class="o">});</span>
+                        <span class="o">}</span> <span class="k">else</span> <span class="o">{</span>
+                            <span class="nx">q</span><span class="o">.</span><span class="nx">add</span><span class="o">(</span><span class="k">function</span> <span class="o">()</span> <span class="o">{</span> <span class="nx">obj</span><span class="o">.</span><span class="nx">initialize</span><span class="o">();</span> <span class="o">});</span>
+                        <span class="o">}</span>
+                    <span class="o">}</span> <span class="k">else</span> <span class="o">{</span>
+                        <span class="k">if</span> <span class="o">(!</span><span class="nx">L</span><span class="o">.</span><span class="nx">isUndefined</span><span class="o">(</span><span class="nx">obj</span><span class="o">))</span> <span class="o">{</span>
+                            <span class="k">if</span> <span class="o">(!</span><span class="nx">L</span><span class="o">.</span><span class="nx">isUndefined</span><span class="o">(</span><span class="nx">obj</span><span class="o">.</span><span class="nx">destroy</span><span class="o">)</span> <span class="o">&amp;&amp;</span> <span class="nx">L</span><span class="o">.</span><span class="nx">isFunction</span><span class="o">(</span><span class="nx">obj</span><span class="o">.</span><span class="nx">destroy</span><span class="o">))</span> <span class="o">{</span>
+                                <span class="nx">q</span><span class="o">.</span><span class="nx">add</span><span class="o">(</span><span class="k">function</span> <span class="o">()</span> <span class="o">{</span><span class="nx">obj</span><span class="o">.</span><span class="nx">destroy</span><span class="o">();});</span>
+                            <span class="o">}</span>
+
+                            <span class="nx">q</span><span class="o">.</span><span class="nx">add</span><span class="o">({</span> <span class="nx">fn</span><span class="o">:</span> <span class="k">function</span><span class="o">()</span> <span class="o">{</span>
+                                <span class="nx">delete</span> <span class="nx">AP</span><span class="o">.</span><span class="nx">Supreme</span><span class="o">.</span><span class="nx">namespace</span><span class="o">[(</span><span class="nx">obj</span><span class="o">.</span><span class="nx">className</span><span class="o">)</span> <span class="o">?</span> <span class="nx">obj</span><span class="o">.</span><span class="nx">className</span> <span class="o">:</span> <span class="nx">obj</span><span class="o">.</span><span class="nx">getClassName</span><span class="o">()];</span>
+                                <span class="nx">AP</span><span class="o">.</span><span class="nx">Supreme</span><span class="o">.</span><span class="nx">pool</span><span class="o">.</span><span class="nx">splice</span><span class="o">(</span><span class="nx">i</span><span class="o">,</span> <span class="m">1</span><span class="o">);</span>
+                            <span class="o">},</span> <span class="nx">context</span><span class="o">:</span> <span class="k">this</span><span class="o">});</span>
+                        <span class="o">}</span>
+                    <span class="o">}</span>
+                <span class="o">}</span>
+
+                <span class="nx">q</span><span class="o">.</span><span class="nx">run</span><span class="o">();</span>
+                <span class="k">return</span> <span class="k">this</span><span class="o">;</span>
+            <span class="o">},</span>
+
+            <span class="c">/**</span>
+<span class="c">             * Call destroy method of the pooled objects. It executes only on window.unload event.</span>
+<span class="c">             * @methdo unload</span>
+<span class="c">             * @protected</span>
+<span class="c">             */</span>
+            <span class="nx">unload</span><span class="o">:</span> <span class="k">function</span><span class="o">(){</span>
+                <span class="nx">Ar</span><span class="o">.</span><span class="nx">each</span><span class="o">(</span><span class="nx">pool</span><span class="o">,</span> <span class="k">function</span><span class="o">(</span><span class="nx">subject</span><span class="o">)</span> <span class="o">{</span>
+                    <span class="k">if</span> <span class="o">(!</span><span class="nx">L</span><span class="o">.</span><span class="nx">isUndefined</span><span class="o">(</span><span class="nx">subject</span><span class="o">.</span><span class="nx">obj</span><span class="o">.</span><span class="nx">destroy</span><span class="o">))</span> <span class="o">{</span>
+                        <span class="nx">subject</span><span class="o">.</span><span class="nx">obj</span><span class="o">.</span><span class="nx">destroy</span><span class="o">();</span>
+                    <span class="o">}</span>
+                <span class="o">},</span> <span class="k">this</span><span class="o">);</span>
+            <span class="o">}</span>
+        <span class="o">};</span>
+    <span class="o">}();</span>
+    
+<span class="o">},</span> <span class="s1">&#39;0.0.1&#39;</span><span class="o">);</span>
+</pre></div>

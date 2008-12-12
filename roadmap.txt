@@ -1,0 +1,103 @@
+Список требований:
+1. Никаких глобальных объектов, кроме AP
+2. Очень простое подключение модулей и сабмодулей.
+3. Очень желательно соблюсти баланс между отсутствие функции-инициализатора (в YUI это плохо) и отсутствием версионности и контроля зависимостей.
+4. Очень желательно избежать пиздеца с AP.use
+5. Должен быть свой очень быстрый движок css-selector'ов с инвалидирующимся кэшем.
+6. Должен иметь свой мега-способ определения браузера.
+7. Каждый класс должен быть полностью затестенным.
+8. Никаких изменений базовых объектов вроде Array, Object и прочего.
+
+Примерная иерархия классов:
+Base
+  namespace
+  browser
+    engine
+    version
+    platform
+  lambda
+  stamp
+  merge, mix?
+  Object
+    each
+    clear
+    object (return object based on provided argument, see ap.base)
+    keys
+    equal
+    filter
+    map
+    some
+    every
+    indexOf
+  Array
+    each
+    filter
+    map
+    some
+    every
+    foldl
+    foldr
+    unique
+    clean
+    array (return array based on provided argument)
+    indexOf
+    hash
+    erase
+    empty
+  Lang
+    full support with chk
+  Class - we need to consider it in a very deep level. Merge, implement, extend and all that - maybe we can stop with that.
+  String
+    unescapeHTML
+    escape (use native)
+    pluralize
+    trim
+    hexToRgb
+    toInt
+  StringBuffer
+    add
+    ToString
+    empty
+  Number
+    times
+  Request (IO?)
+    query server
+    parse response
+  FX???
+  DOM
+    getMatchingTarget (move to ordain)
+    getMatchingTargetFast (same as above)
+    setInnerHTML
+    empty
+    query
+    attr
+    remove
+  Cookie
+    get
+    getSub(S)
+    set
+    setSub(s)
+    remove
+  History
+  Timer
+    later
+    cancel
+  ImageLoader
+  Ordain
+    work with DOM.query and Event
+  JSON
+    encode
+    decode
+  Queue (maybe, chain?)
+  Supreme
+    add
+    run
+  Observer (or use event utility to implement fireEvent and all that with our objects)
+  Mediator (or scoped Observer)
+  Widget
+    Spinner
+    ImageGallery
+    Wysiwyg
+    MultiUploader
+  Logger
+  Profiler

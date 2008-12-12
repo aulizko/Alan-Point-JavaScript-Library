@@ -1,0 +1,137 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html xmlns:yui="http://yuilibrary.com/rdf/1.0/yui.rdf#">
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+	<title>API: imageloader   (YUI Library)</title>
+
+	<link rel="stylesheet" type="text/css" href="assets/reset-fonts-grids-min.css?stamp=1228895591.75" />
+	<link rel="stylesheet" type="text/css" href="assets/api.css?stamp=1228895591.75" />
+
+    <script type="text/javascript" src="assets/api-js?stamp=1228895591.75"></script>
+    <script type="text/javascript" src="assets/ac-js?stamp=1228895591.75"></script>
+</head>
+
+<body id="yahoo-com">
+
+<div id="doc3" class="yui-t2">
+	<div id="hd">
+        <h1><a href="http://developer.yahoo.com/yui/" title="Yahoo! UI Library">Yahoo! UI Library</a></h1>
+        <h3>imageloader&nbsp; <span class="subtitle">0.0.2</span></h3>
+        <a href="./index.html" title="Yahoo! UI Library">Yahoo! UI Library</a> 
+            &gt; <a href="./module_imageloader.html" title="imageloader">imageloader</a>
+                
+                
+        <form onsubmit="return false">
+            <div id="propertysearch">
+                Search: <input autocomplete="off" id="searchinput" />
+                <div id="searchresults">
+                    &nbsp;
+                </div>
+            </div>
+        </form>
+	</div>
+
+	<div id="bd">
+		<div id="yui-main">
+			<div class="yui-b">
+            <form action="#" name="yui-classopts-form" method="get" id="yui-classopts-form">
+                <fieldset>
+                    <legend>Filters</legend>
+                <span class="classopts"><input type="checkbox" name="show_private" id="show_private" /> <label for="show_private">Show Private</label></span>
+                <span class="classopts"><input type="checkbox" name="show_protected" id="show_protected" /> <label for="show_protected">Show Protected</label></span>
+                <span class="classopts"><input type="checkbox" name="show_deprecated" id="show_deprecated" /> <label for="show_deprecated">Show Deprecated</label></span>
+                </fieldset>
+            </form>
+
+                   
+                    <h3>Module: imageloader
+                    
+
+
+                    </h3>
+                    <div class="description summary">
+                        The image loader is a framework to dynamically load images
+according to certain triggers, enabling faster load times
+and a more responsive UI.
+                    </div>
+
+
+
+                <div class="yui-gc">
+                    <div class="yui-u first">
+
+                            <p>This module contains the following classes:</p>
+                            <script>
+                            //var YUI_CLASS_LIST = [{"extends": {"superclass": {}, "events": {}, "configs": {}, "properties": {}, "methods": {}}, "description": "Provides AP.JSON.parse method to take JSON strings and return native\nJavaScript objects.\nThe JSON Utility provides methods to serialize JavaScript objects into\nJSON strings and parse JavaScript objects from strings containing JSON data.\nThree modules are available for inclusion:\n<ol>\n<li>1. <code>json-parse<\/code> for parsing JSON strings into native JavaScript data<\/li>\n<li>2. <code>json-stringify<\/code> for stringification of JavaScript objects into JSON strings<\/li>\n<li>3. <code>json<\/code> for both parsing and stringification<\/li>\n<\/ol>\nBoth <code>json-parse<\/code> and <code>json-stringify<\/code> create functions in a static JSON class under your AP instance (e.g. A.JSON.parse(..)).", "guessedname": "AP.JSON", "name": "AP.JSON"}, {"extends": {"superclass": {"ImageLoader.image": "ImageLoader.image"}, "events": {}, "configs": {}, "properties": {}, "methods": {"ImageLoader.image": [{"access": "private", "deprecated": false, "name": "_applyUrl"}]}}, "description": "Background image object. A background image is one whose URL is specified by \"background-image\" in the element's style", "guessedname": "ImageLoader.backgroundImage", "name": "ImageLoader.backgroundImage"}, {"extends": {"superclass": {}, "events": {}, "configs": {}, "properties": {}, "methods": {}}, "description": "A group for images. A group can have one time limit and a series of triggers. \nThus the images belonging to this group must share these constraints.\nUsage: <ul><li>Custom event: <code>var imageGroup = AP.ImageLoader.group('goodsItemsLoaded');<\/code><\/li>\n<li>DOM event: <code>var imageGroup = AP.ImageLoader.group({event: {el: 'goodsList', action: 'click'}});<\/code><\/li>\n<li>timeuot only: <code>var imageGroup = AP.ImageLoader.group(2);<\/code><\/li> \n<li>both timeout and event present: <code>var imageGroup = AP.ImageLoader.group({event: 'goodsItemLoaded', timeout: 2});<\/code><\/li><\/ul>", "guessedname": "ImageLoader.group", "name": "ImageLoader.group"}, {"extends": {"superclass": {}, "events": {}, "configs": {}, "properties": {}, "methods": {}}, "description": "Source image object. A source image is one whose URL is specified by a src attribute in the DOM element", "guessedname": "ImageLoader.image", "name": "ImageLoader.image"}, {"extends": {"superclass": {}, "events": {}, "configs": {}, "properties": {}, "methods": {}}, "description": "Base class for image objects to be registered with the groups\nmust be overrided by child class", "guessedname": "ImageLoader.imgObj", "name": "ImageLoader.imgObj"}, {"extends": {"superclass": {"ImageLoader.imgObj": "ImageLoader.imgObj"}, "events": {}, "configs": {}, "properties": {"ImageLoader.imgObj": [{"access": "private", "deprecated": false, "name": "_fetched"}, {"access": "", "deprecated": false, "name": "el"}, {"access": "", "deprecated": false, "name": "height"}, {"access": "", "deprecated": false, "name": "setVisible"}, {"access": "", "deprecated": false, "name": "url"}, {"access": "", "deprecated": false, "name": "width"}]}, "methods": {"ImageLoader.imgObj": [{"access": "", "deprecated": false, "name": "fetch"}]}}, "description": "PNG background image object. A PNG background image is one whose URL is specified through AlphaImageLoader or by \"background-image\" in the element's style", "guessedname": "ImageLoader.pngBgImgObj", "name": "ImageLoader.pngBgImgObj"}];
+                            </script>
+                            <div id="splash_classList">
+                                <ul>
+                                    <li><a href="AP.JSON.html" title="AP.JSON" id="class_0">AP.JSON</a></li>
+                                    <li><a href="ImageLoader.backgroundImage.html" title="ImageLoader.backgroundImage" id="class_1">ImageLoader.backgroundImage</a></li>
+                                    <li><a href="ImageLoader.group.html" title="ImageLoader.group" id="class_2">ImageLoader.group</a></li>
+                                    <li><a href="ImageLoader.image.html" title="ImageLoader.image" id="class_3">ImageLoader.image</a></li>
+                                    <li><a href="ImageLoader.imgObj.html" title="ImageLoader.imgObj" id="class_4">ImageLoader.imgObj</a></li>
+                                    <li><a href="ImageLoader.pngBgImgObj.html" title="ImageLoader.pngBgImgObj" id="class_5">ImageLoader.pngBgImgObj</a></li>
+                                </ul>
+                            </div>
+                    </div>
+                    <div class="yui-u">
+
+                        </div>
+                </div>
+
+			</div>
+		</div>
+		<div class="yui-b">
+            <div class="nav">
+
+                    <div id="moduleList" class="module">
+                        <h4>Modules</h4>
+                        <ul class="content">
+                                <li class=""><a href="module_ap.html" title="ap">ap</a></li>
+                                <li class=""><a href="module_cookie.html" title="cookie">cookie</a></li>
+                                <li class=""><a href="module_history.html" title="history">history</a></li>
+                                <li class="selected"><a href="module_imageloader.html" title="imageloader">imageloader</a></li>
+                                <li class=""><a href="module_json.html" title="json">json</a></li>
+                                <li class=""><a href="module_queue.html" title="queue">queue</a></li>
+                                <li class=""><a href="module_spinner.html" title="spinner">spinner</a></li>
+                                <li class=""><a href="module_supreme.html" title="supreme">supreme</a></li>
+                        </ul>
+                    </div>
+
+                    <div id="classList" class="module">
+                        <h4>Classes</h4>
+                        <ul class="content">
+                                <li class=""><a href="AP.JSON.html" title="AP.JSON">AP.JSON</a></li>
+                                <li class=""><a href="ImageLoader.backgroundImage.html" title="ImageLoader.backgroundImage">ImageLoader.backgroundImage</a></li>
+                                <li class=""><a href="ImageLoader.group.html" title="ImageLoader.group">ImageLoader.group</a></li>
+                                <li class=""><a href="ImageLoader.image.html" title="ImageLoader.image">ImageLoader.image</a></li>
+                                <li class=""><a href="ImageLoader.imgObj.html" title="ImageLoader.imgObj">ImageLoader.imgObj</a></li>
+                                <li class=""><a href="ImageLoader.pngBgImgObj.html" title="ImageLoader.pngBgImgObj">ImageLoader.pngBgImgObj</a></li>
+                        </ul>
+                    </div>
+
+                    <div id="fileList" class="module">
+                        <h4>Files</h4>
+                        <ul class="content">        
+                                <li class=""><a href="ap.json-0.0.1.js.html" title="ap.json-0.0.1.js">ap.json-0.0.1.js</a></li>
+                        </ul>
+                    </div>
+
+
+
+
+
+            </div>
+		</div>
+	</div>
+	<div id="ft">
+        <hr />
+        Copyright &copy; 2008 Yahoo! Inc. All rights reserved.
+	</div>
+</div>
+<script type="text/javascript">
+    ALL_YUI_PROPS = [{"url": "ImageLoader.group.html#method_addImage", "access": "", "host": "ImageLoader.group", "type": "method", "name": "addImage"}, {"url": "ImageLoader.group.html#method_addTrigger", "access": "", "host": "ImageLoader.group", "type": "method", "name": "addTrigger"}, {"url": "ImageLoader.backgroundImage.html#method__applyUrl", "access": "private", "host": "ImageLoader.backgroundImage", "type": "method", "name": "_applyUrl"}, {"url": "ImageLoader.image.html#method__applyUrl", "access": "private", "host": "ImageLoader.image", "type": "method", "name": "_applyUrl"}, {"url": "ImageLoader.pngBgImgObj.html#method__applyUrl", "access": "private", "host": "ImageLoader.pngBgImgObj", "type": "method", "name": "_applyUrl"}, {"url": "ImageLoader.group.html#property__customTriggers", "access": "private", "host": "ImageLoader.group", "type": "property", "name": "_customTriggers"}, {"url": "ImageLoader.imgObj.html#property_el", "access": "", "host": "ImageLoader.imgObj", "type": "property", "name": "el"}, {"url": "ImageLoader.group.html#method_fetch", "access": "", "host": "ImageLoader.group", "type": "method", "name": "fetch"}, {"url": "ImageLoader.imgObj.html#method_fetch", "access": "", "host": "ImageLoader.imgObj", "type": "method", "name": "fetch"}, {"url": "ImageLoader.imgObj.html#property__fetched", "access": "private", "host": "ImageLoader.imgObj", "type": "property", "name": "_fetched"}, {"url": "ImageLoader.imgObj.html#property_height", "access": "", "host": "ImageLoader.imgObj", "type": "property", "name": "height"}, {"url": "ImageLoader.group.html#property__imgObjects", "access": "private", "host": "ImageLoader.group", "type": "property", "name": "_imgObjects"}, {"url": "ImageLoader.group.html#method__onloadTasks", "access": "private", "host": "ImageLoader.group", "type": "method", "name": "_onloadTasks"}, {"url": "AP.JSON.html#method_parse", "access": "", "host": "AP.JSON", "type": "method", "name": "parse"}, {"url": "ImageLoader.pngBgImgObj.html#property_props", "access": "", "host": "ImageLoader.pngBgImgObj", "type": "property", "name": "props"}, {"url": "AP.JSON.html#method__revive", "access": "private", "host": "AP.JSON", "type": "method", "name": "_revive"}, {"url": "ImageLoader.imgObj.html#property_setVisible", "access": "", "host": "ImageLoader.imgObj", "type": "property", "name": "setVisible"}, {"url": "ImageLoader.group.html#property__timeout", "access": "private", "host": "ImageLoader.group", "type": "property", "name": "_timeout"}, {"url": "ImageLoader.group.html#property_timeoutLen", "access": "", "host": "ImageLoader.group", "type": "property", "name": "timeoutLen"}, {"url": "ImageLoader.group.html#property__triggers", "access": "private", "host": "ImageLoader.group", "type": "property", "name": "_triggers"}, {"url": "ImageLoader.imgObj.html#property_url", "access": "", "host": "ImageLoader.imgObj", "type": "property", "name": "url"}, {"url": "ImageLoader.imgObj.html#property_width", "access": "", "host": "ImageLoader.imgObj", "type": "property", "name": "width"}, {"url": "AP.JSON.html#property_{RegExp} _BRACKETS", "access": "private", "host": "AP.JSON", "type": "property", "name": "{RegExp} _BRACKETS"}, {"url": "AP.JSON.html#property_{RegExp} _ESCAPES", "access": "private", "host": "AP.JSON", "type": "property", "name": "{RegExp} _ESCAPES"}, {"url": "AP.JSON.html#property_{RegExp} _INVALID", "access": "private", "host": "AP.JSON", "type": "property", "name": "{RegExp} _INVALID"}, {"url": "AP.JSON.html#property_{RegExp} _UNICODE_EXCEPTIONS", "access": "private", "host": "AP.JSON", "type": "property", "name": "{RegExp} _UNICODE_EXCEPTIONS"}, {"url": "AP.JSON.html#property_{RegExp} _VALUES", "access": "private", "host": "AP.JSON", "type": "property", "name": "{RegExp} _VALUES"}];
+</script>
+</body>
+</html>

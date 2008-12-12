@@ -1,0 +1,216 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html xmlns:yui="http://yuilibrary.com/rdf/1.0/yui.rdf#">
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+	<title>API: ap   ap.supreme-0.0.1.js  (YUI Library)</title>
+
+	<link rel="stylesheet" type="text/css" href="assets/reset-fonts-grids-min.css?stamp=1228895591.51" />
+	<link rel="stylesheet" type="text/css" href="assets/api.css?stamp=1228895591.51" />
+
+    <script type="text/javascript" src="assets/api-js?stamp=1228895591.51"></script>
+    <script type="text/javascript" src="assets/ac-js?stamp=1228895591.51"></script>
+</head>
+
+<body id="yahoo-com">
+
+<div id="doc3" class="yui-t2">
+	<div id="hd">
+        <h1><a href="http://developer.yahoo.com/yui/" title="Yahoo! UI Library">Yahoo! UI Library</a></h1>
+        <h3>ap&nbsp; <span class="subtitle">0.0.2</span></h3>
+        <a href="./index.html" title="Yahoo! UI Library">Yahoo! UI Library</a> 
+            &gt; <a href="./module_ap.html" title="ap">ap</a>
+                
+                 &gt; ap.supreme-0.0.1.js (source view) 
+        <form onsubmit="return false">
+            <div id="propertysearch">
+                Search: <input autocomplete="off" id="searchinput" />
+                <div id="searchresults">
+                    &nbsp;
+                </div>
+            </div>
+        </form>
+	</div>
+
+	<div id="bd">
+		<div id="yui-main">
+			<div class="yui-b">
+            <form action="#" name="yui-classopts-form" method="get" id="yui-classopts-form">
+                <fieldset>
+                    <legend>Filters</legend>
+                <span class="classopts"><input type="checkbox" name="show_private" id="show_private" /> <label for="show_private">Show Private</label></span>
+                <span class="classopts"><input type="checkbox" name="show_protected" id="show_protected" /> <label for="show_protected">Show Protected</label></span>
+                <span class="classopts"><input type="checkbox" name="show_deprecated" id="show_deprecated" /> <label for="show_deprecated">Show Deprecated</label></span>
+                </fieldset>
+            </form>
+
+                    <div id="srcout">
+                        <style>
+                            #doc3 .classopts { display:none; }
+                        </style>
+<div class="highlight" ><pre><span class="nx">AP</span><span class="o">.</span><span class="nx">add</span><span class="o">(</span><span class="s1">&#39;supreme&#39;</span><span class="o">,</span> <span class="k">function</span><span class="o">(</span><span class="nx">A</span><span class="o">)</span> <span class="o">{</span>
+    <span class="k">var</span> <span class="nx">L</span> <span class="o">=</span> <span class="nx">A</span><span class="o">.</span><span class="nx">Lang</span><span class="o">,</span> <span class="nx">q</span> <span class="o">=</span> <span class="nx">A</span><span class="o">.</span><span class="nx">Queue</span><span class="o">(),</span> <span class="nx">Ar</span> <span class="o">=</span> <span class="nx">A</span><span class="o">.</span><span class="nb">Array</span><span class="o">;</span>
+    <span class="c">/**</span>
+<span class="c">     * Manager of the project-related objects.</span>
+<span class="c">     * Each object execute initialize or destroy method depend on reason param.</span>
+<span class="c">     * @module supreme</span>
+<span class="c">     * @class Supreme</span>
+<span class="c">     * @constructor</span>
+<span class="c">     * @param subject* {Object} Any number of objects</span>
+<span class="c">     */</span>
+    <span class="nx">A</span><span class="o">.</span><span class="nx">Supreme</span> <span class="o">=</span> <span class="k">function</span> <span class="o">()</span> <span class="o">{</span>
+        <span class="c">/**</span>
+<span class="c">         * The callback queue</span>
+<span class="c">         * @property p</span>
+<span class="c">         * @type {Array}</span>
+<span class="c">         * @protected</span>
+<span class="c">         */</span>
+        <span class="k">var</span> <span class="nx">pool</span> <span class="o">=</span> <span class="o">[],</span> <span class="nx">setted</span> <span class="o">=</span> <span class="kc">false</span><span class="o">;</span>
+
+        <span class="k">if</span> <span class="o">(!</span><span class="nx">setted</span><span class="o">)</span> <span class="o">{</span>
+            <span class="nx">$</span><span class="o">(</span><span class="nb">window</span><span class="o">).</span><span class="nx">unload</span><span class="o">(</span><span class="k">function</span> <span class="o">()</span> <span class="o">{</span><span class="nx">AP</span><span class="o">.</span><span class="nx">Supreme</span><span class="o">.</span><span class="nx">unload</span><span class="o">();});</span>
+            <span class="nx">setted</span> <span class="o">=</span> <span class="kc">true</span><span class="o">;</span>
+        <span class="o">}</span>
+        
+        <span class="c">// todo: remove binding to the magericshop namespace</span>
+<span class="c"></span>        <span class="nx">namespace</span> <span class="o">=</span> <span class="s1">&#39;projects.MagericShop&#39;</span><span class="o">;</span>
+        
+        <span class="k">return</span> <span class="o">{</span>
+            <span class="c">/**</span>
+<span class="c">             * Add any number of subjects. Each of them have next properties:</span>
+<span class="c">             * &lt;ul&gt;</span>
+<span class="c">             * &lt;li&gt;&lt;code&gt;reason&lt;/code&gt; {Boolean} - is that object needed on current page.&lt;/li&gt;</span>
+<span class="c">             * &lt;li&gt;&lt;code&gt;obj&lt;/code&gt; {Object | Function} - object we working with. This object must have three properties:</span>
+<span class="c">             * &lt;ul&gt;&lt;li&gt;&lt;code&gt;initialize&lt;/code&gt; {Function} - function which initialize object (todo: make this opt)&lt;/li&gt;</span>
+<span class="c">             * &lt;li&gt;&lt;code&gt;destroy&lt;/code&gt; {Function} - method which destroyes all cached variables, remove memory links and </span>
+<span class="c">             * synchronize with server if needed&lt;/li&gt;</span>
+<span class="c">             * &lt;li&gt;&lt;code&gt;className&lt;/code&gt; {String} or &lt;code&gt;getClassName&lt;/code&gt; {Function} - public property or method which </span>
+<span class="c">             * equal project name on the current namespace. Used to delete property from current namspace.&lt;/li&gt;&lt;/ul&gt;&lt;/li&gt;&lt;/ul&gt;</span>
+<span class="c">             * @method add</span>
+<span class="c">             * @param subject* {Object} Any number of objects</span>
+<span class="c">             * @return {Supreme} the Supreme instance</span>
+<span class="c">             */</span>
+            <span class="nx">add</span> <span class="o">:</span> <span class="k">function</span><span class="o">(){</span>
+                <span class="k">var</span> <span class="nx">subjects</span> <span class="o">=</span> <span class="nx">Ar</span><span class="o">(</span><span class="nx">arguments</span><span class="o">,</span> <span class="m">0</span><span class="o">,</span> <span class="kc">true</span><span class="o">);</span>
+                <span class="nx">pool</span><span class="o">.</span><span class="nx">splice</span><span class="o">.</span><span class="nx">apply</span><span class="o">(</span><span class="nx">pool</span><span class="o">,[</span><span class="nx">pool</span><span class="o">.</span><span class="nx">length</span><span class="o">,</span><span class="m">0</span><span class="o">].</span><span class="nx">concat</span><span class="o">(</span><span class="nx">subjects</span><span class="o">));</span>
+
+                <span class="k">return</span> <span class="k">this</span><span class="o">;</span>
+            <span class="o">},</span>
+
+            <span class="c">/**</span>
+<span class="c">             * Execute initializers and destroyers of pooled objects with help of Queue object</span>
+<span class="c">             * This method also remove destroyed objects from current namespace and from pool.</span>
+<span class="c">             * @method run</span>
+<span class="c">             * @return {Supreme} the Supreme instance</span>
+<span class="c">             */</span>
+            <span class="nx">run</span><span class="o">:</span> <span class="k">function</span><span class="o">()</span> <span class="o">{</span>
+                <span class="k">var</span> <span class="nx">obj</span><span class="o">,</span> <span class="nx">reason</span><span class="o">,</span>
+                    <span class="nx">length</span> <span class="o">=</span> <span class="nx">pool</span><span class="o">.</span><span class="nx">length</span><span class="o">,</span> <span class="nx">i</span> <span class="o">=</span> <span class="m">0</span><span class="o">,</span> <span class="nx">data</span><span class="o">;</span>
+                <span class="k">for</span> <span class="o">(;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">length</span><span class="o">;</span> <span class="nx">i</span><span class="o">++)</span> <span class="o">{</span>
+                    <span class="nx">subject</span> <span class="o">=</span> <span class="nx">pool</span><span class="o">[</span><span class="nx">i</span><span class="o">];</span>
+                    <span class="nx">obj</span> <span class="o">=</span> <span class="nx">subject</span><span class="o">.</span><span class="nx">obj</span><span class="o">;</span>
+                    <span class="nx">reason</span> <span class="o">=</span> <span class="nx">subject</span><span class="o">.</span><span class="nx">wanted</span><span class="o">;</span>
+                    <span class="nx">data</span> <span class="o">=</span> <span class="nx">subject</span><span class="o">.</span><span class="nx">data</span><span class="o">;</span>
+                    
+                    <span class="k">if</span> <span class="o">(</span><span class="nx">reason</span><span class="o">)</span> <span class="o">{</span>
+                        <span class="k">if</span> <span class="o">(</span><span class="nx">data</span><span class="o">)</span> <span class="o">{</span>
+                            <span class="nx">q</span><span class="o">.</span><span class="nx">add</span><span class="o">({</span> <span class="nx">fn</span><span class="o">:</span> <span class="k">function</span> <span class="o">()</span> <span class="o">{</span><span class="nx">obj</span><span class="o">.</span><span class="nx">initialize</span><span class="o">(</span><span class="nx">data</span><span class="o">);},</span> <span class="nx">context</span><span class="o">:</span> <span class="nx">obj</span><span class="o">});</span>
+                        <span class="o">}</span> <span class="k">else</span> <span class="o">{</span>
+                            <span class="nx">q</span><span class="o">.</span><span class="nx">add</span><span class="o">(</span><span class="k">function</span> <span class="o">()</span> <span class="o">{</span> <span class="nx">obj</span><span class="o">.</span><span class="nx">initialize</span><span class="o">();</span> <span class="o">});</span>
+                        <span class="o">}</span>
+                    <span class="o">}</span> <span class="k">else</span> <span class="o">{</span>
+                        <span class="k">if</span> <span class="o">(!</span><span class="nx">L</span><span class="o">.</span><span class="nx">isUndefined</span><span class="o">(</span><span class="nx">obj</span><span class="o">))</span> <span class="o">{</span>
+                            <span class="k">if</span> <span class="o">(!</span><span class="nx">L</span><span class="o">.</span><span class="nx">isUndefined</span><span class="o">(</span><span class="nx">obj</span><span class="o">.</span><span class="nx">destroy</span><span class="o">)</span> <span class="o">&amp;&amp;</span> <span class="nx">L</span><span class="o">.</span><span class="nx">isFunction</span><span class="o">(</span><span class="nx">obj</span><span class="o">.</span><span class="nx">destroy</span><span class="o">))</span> <span class="o">{</span>
+                                <span class="nx">q</span><span class="o">.</span><span class="nx">add</span><span class="o">(</span><span class="k">function</span> <span class="o">()</span> <span class="o">{</span><span class="nx">obj</span><span class="o">.</span><span class="nx">destroy</span><span class="o">();});</span>
+                            <span class="o">}</span>
+
+                            <span class="nx">q</span><span class="o">.</span><span class="nx">add</span><span class="o">({</span> <span class="nx">fn</span><span class="o">:</span> <span class="k">function</span><span class="o">()</span> <span class="o">{</span>
+                                <span class="nx">delete</span> <span class="nx">AP</span><span class="o">.</span><span class="nx">Supreme</span><span class="o">.</span><span class="nx">namespace</span><span class="o">[(</span><span class="nx">obj</span><span class="o">.</span><span class="nx">className</span><span class="o">)</span> <span class="o">?</span> <span class="nx">obj</span><span class="o">.</span><span class="nx">className</span> <span class="o">:</span> <span class="nx">obj</span><span class="o">.</span><span class="nx">getClassName</span><span class="o">()];</span>
+                                <span class="nx">AP</span><span class="o">.</span><span class="nx">Supreme</span><span class="o">.</span><span class="nx">pool</span><span class="o">.</span><span class="nx">splice</span><span class="o">(</span><span class="nx">i</span><span class="o">,</span> <span class="m">1</span><span class="o">);</span>
+                            <span class="o">},</span> <span class="nx">context</span><span class="o">:</span> <span class="k">this</span><span class="o">});</span>
+                        <span class="o">}</span>
+                    <span class="o">}</span>
+                <span class="o">}</span>
+
+                <span class="nx">q</span><span class="o">.</span><span class="nx">run</span><span class="o">();</span>
+                <span class="k">return</span> <span class="k">this</span><span class="o">;</span>
+            <span class="o">},</span>
+
+            <span class="c">/**</span>
+<span class="c">             * Call destroy method of the pooled objects. It executes only on window.unload event.</span>
+<span class="c">             * @methdo unload</span>
+<span class="c">             * @protected</span>
+<span class="c">             */</span>
+            <span class="nx">unload</span><span class="o">:</span> <span class="k">function</span><span class="o">(){</span>
+                <span class="nx">Ar</span><span class="o">.</span><span class="nx">each</span><span class="o">(</span><span class="nx">pool</span><span class="o">,</span> <span class="k">function</span><span class="o">(</span><span class="nx">subject</span><span class="o">)</span> <span class="o">{</span>
+                    <span class="k">if</span> <span class="o">(!</span><span class="nx">L</span><span class="o">.</span><span class="nx">isUndefined</span><span class="o">(</span><span class="nx">subject</span><span class="o">.</span><span class="nx">obj</span><span class="o">.</span><span class="nx">destroy</span><span class="o">))</span> <span class="o">{</span>
+                        <span class="nx">subject</span><span class="o">.</span><span class="nx">obj</span><span class="o">.</span><span class="nx">destroy</span><span class="o">();</span>
+                    <span class="o">}</span>
+                <span class="o">},</span> <span class="k">this</span><span class="o">);</span>
+            <span class="o">}</span>
+        <span class="o">};</span>
+    <span class="o">}();</span>
+    
+<span class="o">},</span> <span class="s1">&#39;0.0.1&#39;</span><span class="o">);</span>
+</pre></div>
+                    </div>
+			</div>
+		</div>
+		<div class="yui-b">
+            <div class="nav">
+
+                    <div id="moduleList" class="module">
+                        <h4>Modules</h4>
+                        <ul class="content">
+                                <li class="selected"><a href="module_ap.html" title="ap">ap</a></li>
+                                <li class=""><a href="module_cookie.html" title="cookie">cookie</a></li>
+                                <li class=""><a href="module_history.html" title="history">history</a></li>
+                                <li class=""><a href="module_imageloader.html" title="imageloader">imageloader</a></li>
+                                <li class=""><a href="module_json.html" title="json">json</a></li>
+                                <li class=""><a href="module_queue.html" title="queue">queue</a></li>
+                                <li class=""><a href="module_spinner.html" title="spinner">spinner</a></li>
+                                <li class=""><a href="module_supreme.html" title="supreme">supreme</a></li>
+                        </ul>
+                    </div>
+
+                    <div id="classList" class="module">
+                        <h4>Classes</h4>
+                        <ul class="content">
+                                <li class=""><a href="AP.html" title="AP">AP</a></li>
+                                <li class=""><a href="AP~array.html" title="AP~array">AP~array</a></li>
+                                <li class=""><a href="AP~Lang.html" title="AP~Lang">AP~Lang</a></li>
+                                <li class=""><a href="AP~object.html" title="AP~object">AP~object</a></li>
+                                <li class=""><a href="Log.html" title="Log">Log</a></li>
+                                <li class=""><a href="Observer.html" title="Observer">Observer</a></li>
+                                <li class=""><a href="String.html" title="String">String</a></li>
+                                <li class=""><a href="StringBuffer.html" title="StringBuffer">StringBuffer</a></li>
+                        </ul>
+                    </div>
+
+                    <div id="fileList" class="module">
+                        <h4>Files</h4>
+                        <ul class="content">        
+                                <li class=""><a href="ap.base-0.0.1.js.html" title="ap.base-0.0.1.js">ap.base-0.0.1.js</a></li>
+                                <li class=""><a href="ap.cookie-0.0.1.js.html" title="ap.cookie-0.0.1.js">ap.cookie-0.0.1.js</a></li>
+                                <li class=""><a href="ap.ordain-0.0.1.js.html" title="ap.ordain-0.0.1.js">ap.ordain-0.0.1.js</a></li>
+                                <li class=""><a href="ap.queue-0.0.1.js.html" title="ap.queue-0.0.1.js">ap.queue-0.0.1.js</a></li>
+                                <li class="selected"><a href="ap.supreme-0.0.1.js.html" title="ap.supreme-0.0.1.js">ap.supreme-0.0.1.js</a></li>
+                        </ul>
+                    </div>
+
+
+
+
+
+            </div>
+		</div>
+	</div>
+	<div id="ft">
+        <hr />
+        Copyright &copy; 2008 Yahoo! Inc. All rights reserved.
+	</div>
+</div>
+<script type="text/javascript">
+    ALL_YUI_PROPS = [{"url": "AP.html#method_add", "access": "", "host": "AP", "type": "method", "name": "add"}, {"url": "StringBuffer.html#method_add", "access": "", "host": "StringBuffer", "type": "method", "name": "add"}, {"url": "AP.html#method_applyTo", "access": "", "host": "AP", "type": "method", "name": "applyTo"}, {"url": "AP~array.html#method_Array", "access": "", "host": "AP~array", "type": "method", "name": "Array"}, {"url": "AP~array.html#method_Array.each", "access": "", "host": "AP~array", "type": "method", "name": "Array.each"}, {"url": "AP~array.html#method_Array.hash", "access": "", "host": "AP~array", "type": "method", "name": "Array.hash"}, {"url": "AP~array.html#method_Array.indexOf", "access": "", "host": "AP~array", "type": "method", "name": "Array.indexOf"}, {"url": "AP~array.html#method_Array.test", "access": "", "host": "AP~array", "type": "method", "name": "Array.test"}, {"url": "AP.html#method__configureEnvinronment", "access": "private", "host": "AP", "type": "method", "name": "_configureEnvinronment"}, {"url": "AP~array.html#method_equal", "access": "", "host": "AP~array", "type": "method", "name": "equal"}, {"url": "AP~object.html#method_equal", "access": "", "host": "AP~object", "type": "method", "name": "equal"}, {"url": "AP~array.html#method_filter", "access": "", "host": "AP~array", "type": "method", "name": "filter"}, {"url": "AP.html#method_guid", "access": "", "host": "AP", "type": "method", "name": "guid"}, {"url": "AP.html#property__iefix", "access": "private", "host": "AP", "type": "property", "name": "_iefix"}, {"url": "AP.html#method__init", "access": "private", "host": "AP", "type": "method", "name": "_init"}, {"url": "AP~Lang.html#method_isArray", "access": "", "host": "AP~Lang", "type": "method", "name": "isArray"}, {"url": "AP~Lang.html#method_isBoolean", "access": "", "host": "AP~Lang", "type": "method", "name": "isBoolean"}, {"url": "AP~Lang.html#method_isDate", "access": "", "host": "AP~Lang", "type": "method", "name": "isDate"}, {"url": "AP~Lang.html#method_isEmpty", "access": "", "host": "AP~Lang", "type": "method", "name": "isEmpty"}, {"url": "AP~Lang.html#method_isFunction", "access": "", "host": "AP~Lang", "type": "method", "name": "isFunction"}, {"url": "AP~Lang.html#method_isNull", "access": "", "host": "AP~Lang", "type": "method", "name": "isNull"}, {"url": "AP~Lang.html#method_isNumber", "access": "", "host": "AP~Lang", "type": "method", "name": "isNumber"}, {"url": "AP~Lang.html#method_isObject", "access": "", "host": "AP~Lang", "type": "method", "name": "isObject"}, {"url": "AP~Lang.html#method_isString", "access": "", "host": "AP~Lang", "type": "method", "name": "isString"}, {"url": "AP~Lang.html#method_isUndefined", "access": "", "host": "AP~Lang", "type": "method", "name": "isUndefined"}, {"url": "AP~Lang.html#method_isValue", "access": "", "host": "AP~Lang", "type": "method", "name": "isValue"}, {"url": "Log.html#method_log", "access": "", "host": "Log", "type": "method", "name": "log"}, {"url": "AP~array.html#method_map", "access": "", "host": "AP~array", "type": "method", "name": "map"}, {"url": "AP.html#method_merge", "access": "", "host": "AP", "type": "method", "name": "merge"}, {"url": "AP.html#method_mix", "access": "", "host": "AP", "type": "method", "name": "mix"}, {"url": "AP.html#method_namespace", "access": "", "host": "AP", "type": "method", "name": "namespace"}, {"url": "AP~object.html#method_Object.each", "access": "", "host": "AP~object", "type": "method", "name": "Object.each"}, {"url": "AP~object.html#method_Object.keys", "access": "", "host": "AP~object", "type": "method", "name": "Object.keys"}, {"url": "Observer.html#method_process", "access": "", "host": "Observer", "type": "method", "name": "process"}, {"url": "AP.html#method__setup", "access": "private", "host": "AP", "type": "method", "name": "_setup"}, {"url": "AP.html#method_stamp", "access": "", "host": "AP", "type": "method", "name": "stamp"}, {"url": "StringBuffer.html#method_toString", "access": "", "host": "StringBuffer", "type": "method", "name": "toString"}, {"url": "AP~Lang.html#method_trim", "access": "", "host": "AP~Lang", "type": "method", "name": "trim"}, {"url": "AP~array.html#method_unique", "access": "", "host": "AP~array", "type": "method", "name": "unique"}, {"url": "AP.html#method_use", "access": "", "host": "AP", "type": "method", "name": "use"}, {"url": "StringBuffer.html#property_{Array} buffer", "access": "private", "host": "StringBuffer", "type": "property", "name": "{Array} buffer"}, {"url": "StringBuffer.html#property_{Number} index", "access": "private", "host": "StringBuffer", "type": "property", "name": "{Number} index"}];
+</script>
+</body>
+</html>

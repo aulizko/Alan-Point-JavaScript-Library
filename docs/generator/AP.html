@@ -1,0 +1,923 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html xmlns:yui="http://yuilibrary.com/rdf/1.0/yui.rdf#">
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+	<title>API: ap  AP   (YUI Library)</title>
+
+	<link rel="stylesheet" type="text/css" href="assets/reset-fonts-grids-min.css?stamp=1228895591.51" />
+	<link rel="stylesheet" type="text/css" href="assets/api.css?stamp=1228895591.51" />
+
+    <script type="text/javascript" src="assets/api-js?stamp=1228895591.51"></script>
+    <script type="text/javascript" src="assets/ac-js?stamp=1228895591.51"></script>
+</head>
+
+<body id="yahoo-com">
+
+<div id="doc3" class="yui-t2">
+	<div id="hd">
+        <h1><a href="http://developer.yahoo.com/yui/" title="Yahoo! UI Library">Yahoo! UI Library</a></h1>
+        <h3>ap&nbsp; <span class="subtitle">0.0.2</span></h3>
+        <a href="./index.html" title="Yahoo! UI Library">Yahoo! UI Library</a> 
+            &gt; <a href="./module_ap.html" title="ap">ap</a>
+                 &gt; AP 
+                
+        <form onsubmit="return false">
+            <div id="propertysearch">
+                Search: <input autocomplete="off" id="searchinput" />
+                <div id="searchresults">
+                    &nbsp;
+                </div>
+            </div>
+        </form>
+	</div>
+
+	<div id="bd">
+		<div id="yui-main">
+			<div class="yui-b">
+            <form action="#" name="yui-classopts-form" method="get" id="yui-classopts-form">
+                <fieldset>
+                    <legend>Filters</legend>
+                <span class="classopts"><input type="checkbox" name="show_private" id="show_private" /> <label for="show_private">Show Private</label></span>
+                <span class="classopts"><input type="checkbox" name="show_protected" id="show_protected" /> <label for="show_protected">Show Protected</label></span>
+                <span class="classopts"><input type="checkbox" name="show_deprecated" id="show_deprecated" /> <label for="show_deprecated">Show Deprecated</label></span>
+                </fieldset>
+            </form>
+
+                    <h2>
+                        
+
+                        
+                        
+                            Class <b property="yui:name">AP</b>
+                        <span class="extends">
+                        </span>
+
+                    </h2>
+                    <!-- class tree goes here -->
+                    
+                
+  
+
+                    <div class="summary description" property="yui:description">
+                        The AP global namespace object. If AP is already defined,
+existing AP object will not be overwritten so that defined
+namespaces are preserved.
+                    </div>
+
+                        <div class="section constructor details" rel="yui:constructor" resource="#constructor">
+                        <h3 id="constructor">Constructor</h3>
+                        <div class="content">
+                            <div class="detail">
+                                <strong property="yui:name">AP</strong>
+                                <code>
+                                    (
+  
+                                        
+                                                
+                                                o
+                                    )
+                                </code>
+                                <div class="description">
+                                        <dl rel="yui:parameters">
+                                            <dt>Parameters:</dt>
+                                                <dd rel="yui:parameter">
+                                                    <code><span property="yui:name">o</span>
+                                                    &lt;<span property="yui:type">object</span>&gt;
+                                                    </code>
+                                                    <span property="yui:description"> Optional configuration object.  Options:
+<ul>
+<li>------------------------------------------------------------------------</li>
+<li>Global:</li>
+<li>------------------------------------------------------------------------</li>
+<li>debug:
+Turn debug statements on or off</li>
+<li>win:
+The target window/frame</li>
+</ul></span>
+                                                </dd>
+                                        </dl>
+                                    
+                                    
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div rel="yui:properties" resource="#properties">
+                        <div class="section field details">
+                            <h3 id="properties">Properties</h3>
+                            <div class="content">
+                                    <div class="private" rel="yui:property" resource="#property__iefix">
+                                    <h4><a name="property__iefix" property="yui:name">_iefix</a>
+                                        - <code>private <span property="yui:type">object</span></code>
+                                    </h4>
+                                    <div class="detail">
+                                        <div class="description" property="yui:description">
+                                            IE will not enumerate native functions in a derived object even if the
+function was overridden.  This is a workaround for specific functions
+we care about on the Object prototype.
+                                        </div>
+                                    </div>
+     
+                                        
+
+
+                                    <hr />
+                                    </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div rel="yui:methods" resource="#methods">
+                        <div class="section method details">
+                            <h3 id="methods">Methods</h3>
+                            <div class="content">
+                                    <div class="private" rel="yui:method" resource="#method__configureEnvinronment">
+                                    <h4>
+                                        <a name="method__configureEnvinronment">_configureEnvinronment</a></h4>
+                                    <div class="detail" >
+                                        <code>
+                                         private 
+                                        
+                                        
+                                        void
+                                            <strong property="yui:name">_configureEnvinronment</strong>
+                                           (
+                                            )
+                                        </code>
+                                        
+                                        <div class="description" property="yui:description">
+                                            Makes development a lot easier.
+Defines free from conflicts shortcut $ for jQuery
+                                        </div>
+
+                                        <div class="description">
+
+
+                                                <dl>
+                                                    <dt>Returns:
+                                                    <code property="yui:return">
+                                                        void
+                                                    </code></dt>
+                                                    <dd property="yui:returnInfo"></dd>
+                                                </dl>
+
+
+             
+
+                                        </div>
+
+                                    </div>
+                                    <hr />
+                                    </div>
+                                    <div class="private" rel="yui:method" resource="#method__init">
+                                    <h4>
+                                        <a name="method__init">_init</a></h4>
+                                    <div class="detail" >
+                                        <code>
+                                         private 
+                                        
+                                        
+                                        void
+                                            <strong property="yui:name">_init</strong>
+                                           (
+                                                
+                                                        
+                                                         o
+                                                    
+                                                
+                                            )
+                                        </code>
+                                        
+                                        <div class="description" property="yui:description">
+                                            Initialize this AP instance
+                                        </div>
+
+                                        <div class="description">
+
+                                                <dl rel="yui:parameters">
+                                                    <dt>Parameters:</dt>
+                                                        <dd rel="yui:parameter">
+                                                        <code><span property="yui:name">o</span>
+                                                        &lt;<span property="yui:type">object</span>&gt;
+                                                        </code>
+                                                        <span property="yui:description"> config options. For details, @see <AP></span>
+                                                        </dd>
+                                                </dl>
+
+                                                <dl>
+                                                    <dt>Returns:
+                                                    <code property="yui:return">
+                                                        void
+                                                    </code></dt>
+                                                    <dd property="yui:returnInfo"></dd>
+                                                </dl>
+
+
+             
+
+                                        </div>
+
+                                    </div>
+                                    <hr />
+                                    </div>
+                                    <div class="private" rel="yui:method" resource="#method__setup">
+                                    <h4>
+                                        <a name="method__setup">_setup</a></h4>
+                                    <div class="detail" >
+                                        <code>
+                                         private 
+                                        
+                                        
+                                        void
+                                            <strong property="yui:name">_setup</strong>
+                                           (
+                                            )
+                                        </code>
+                                        
+                                        <div class="description" property="yui:description">
+                                            Finishes the instance setup. Attaches whatever modules were defined
+when the ap modules was registered. Load utilites, if any.
+                                        </div>
+
+                                        <div class="description">
+
+
+                                                <dl>
+                                                    <dt>Returns:
+                                                    <code property="yui:return">
+                                                        void
+                                                    </code></dt>
+                                                    <dd property="yui:returnInfo"></dd>
+                                                </dl>
+
+
+             
+
+                                        </div>
+
+                                    </div>
+                                    <hr />
+                                    </div>
+                                    <div class="" rel="yui:method" resource="#method_add">
+                                    <h4>
+                                        <a name="method_add">add</a></h4>
+                                    <div class="detail" >
+                                        <code>
+                                        
+                                        
+                                        
+                                        AP
+                                            <strong property="yui:name">add</strong>
+                                           (
+                                                
+                                                        
+                                                         name
+                                                    
+                                                
+                                                        , 
+                                                         namespace
+                                                    
+                                                
+                                                        , 
+                                                         fn
+                                                    
+                                                
+                                                        , 
+                                                         version
+                                                    
+                                                
+                                            )
+                                        </code>
+                                        
+                                        <div class="description" property="yui:description">
+                                            Register a module
+                                        </div>
+
+                                        <div class="description">
+
+                                                <dl rel="yui:parameters">
+                                                    <dt>Parameters:</dt>
+                                                        <dd rel="yui:parameter">
+                                                        <code><span property="yui:name">name</span>
+                                                        &lt;<span property="yui:type">String</span>&gt;
+                                                        </code>
+                                                        <span property="yui:description">  module name</span>
+                                                        </dd>
+                                                        <dd rel="yui:parameter">
+                                                        <code><span property="yui:name">namespace</span>
+                                                        &lt;<span property="yui:type">String</span>&gt;
+                                                        </code>
+                                                        <span property="yui:description">  name space for the module</span>
+                                                        </dd>
+                                                        <dd rel="yui:parameter">
+                                                        <code><span property="yui:name">fn</span>
+                                                        &lt;<span property="yui:type">Function</span>&gt;
+                                                        </code>
+                                                        <span property="yui:description">  entry point into the module that
+is used to bind module to the AP instance</span>
+                                                        </dd>
+                                                        <dd rel="yui:parameter">
+                                                        <code><span property="yui:name">version</span>
+                                                        &lt;<span property="yui:type">String</span>&gt;
+                                                        </code>
+                                                        <span property="yui:description">  version string</span>
+                                                        </dd>
+                                                </dl>
+
+                                                <dl>
+                                                    <dt>Returns:
+                                                    <code property="yui:return">
+                                                        AP
+                                                    </code></dt>
+                                                    <dd property="yui:returnInfo">the AP instance</dd>
+                                                </dl>
+
+
+             
+
+                                        </div>
+
+                                    </div>
+                                    <hr />
+                                    </div>
+                                    <div class="" rel="yui:method" resource="#method_applyTo">
+                                    <h4>
+                                        <a name="method_applyTo">applyTo</a></h4>
+                                    <div class="detail" >
+                                        <code>
+                                        
+                                        
+                                        
+                                        object
+                                            <strong property="yui:name">applyTo</strong>
+                                           (
+                                                
+                                                        
+                                                         id
+                                                    
+                                                
+                                                        , 
+                                                         method
+                                                    
+                                                
+                                                        , 
+                                                         args
+                                                    
+                                                
+                                            )
+                                        </code>
+                                        
+                                        <div class="description" property="yui:description">
+                                            Executes a method on a AP instance with
+the specified id if the specified method is whitelisted.
+                                        </div>
+
+                                        <div class="description">
+
+                                                <dl rel="yui:parameters">
+                                                    <dt>Parameters:</dt>
+                                                        <dd rel="yui:parameter">
+                                                        <code><span property="yui:name">id</span>
+                                                        &lt;<span property="yui:type">String</span>&gt;
+                                                        </code>
+                                                        <span property="yui:description">  the AP instance id</span>
+                                                        </dd>
+                                                        <dd rel="yui:parameter">
+                                                        <code><span property="yui:name">method</span>
+                                                        &lt;<span property="yui:type">String</span>&gt;
+                                                        </code>
+                                                        <span property="yui:description">  the name of the method to exectute.
+Ex: 'Object.keys'</span>
+                                                        </dd>
+                                                        <dd rel="yui:parameter">
+                                                        <code><span property="yui:name">args</span>
+                                                        &lt;<span property="yui:type">Array</span>&gt;
+                                                        </code>
+                                                        <span property="yui:description">  the arguments to apply to the method</span>
+                                                        </dd>
+                                                </dl>
+
+                                                <dl>
+                                                    <dt>Returns:
+                                                    <code property="yui:return">
+                                                        object
+                                                    </code></dt>
+                                                    <dd property="yui:returnInfo">the return value from the applied method or null</dd>
+                                                </dl>
+
+
+             
+
+                                        </div>
+
+                                    </div>
+                                    <hr />
+                                    </div>
+                                    <div class="" rel="yui:method" resource="#method_guid">
+                                    <h4>
+                                        <a name="method_guid">guid</a></h4>
+                                    <div class="detail" >
+                                        <code>
+                                        
+                                        
+                                        
+                                        String
+                                            <strong property="yui:name">guid</strong>
+                                           (
+                                                
+                                                        
+                                                         pre
+                                                    
+                                                
+                                            )
+                                        </code>
+                                        
+                                        <div class="description" property="yui:description">
+                                            Generate an id that is unique among all AP instances
+                                        </div>
+
+                                        <div class="description">
+
+                                                <dl rel="yui:parameters">
+                                                    <dt>Parameters:</dt>
+                                                        <dd rel="yui:parameter">
+                                                        <code><span property="yui:name">pre</span>
+                                                        &lt;<span property="yui:type">String</span>&gt;
+                                                        </code>
+                                                        <span property="yui:description">  optional guid prefix</span>
+                                                        </dd>
+                                                </dl>
+
+                                                <dl>
+                                                    <dt>Returns:
+                                                    <code property="yui:return">
+                                                        String
+                                                    </code></dt>
+                                                    <dd property="yui:returnInfo">the guid</dd>
+                                                </dl>
+
+
+             
+
+                                        </div>
+
+                                    </div>
+                                    <hr />
+                                    </div>
+                                    <div class="" rel="yui:method" resource="#method_merge">
+                                    <h4>
+                                        <a name="method_merge">merge</a></h4>
+                                    <div class="detail" >
+                                        <code>
+                                        
+                                        
+                                        
+                                        object
+                                            <strong property="yui:name">merge</strong>
+                                           (
+                                                
+                                                        
+                                                         arguments
+                                                    
+                                                
+                                            )
+                                        </code>
+                                        
+                                        <div class="description" property="yui:description">
+                                            Returns a new object containing all of the properties of
+all the supplied objects.  The properties from later objects
+will overwrite those in earlier objects.  Passing in a
+single object will create a shallow copy of it.  For a deep
+copy, use clone.
+                                        </div>
+
+                                        <div class="description">
+
+                                                <dl rel="yui:parameters">
+                                                    <dt>Parameters:</dt>
+                                                        <dd rel="yui:parameter">
+                                                        <code><span property="yui:name">arguments</span>
+                                                        &lt;<span property="yui:type">Obje ct*</span>&gt;
+                                                        </code>
+                                                        <span property="yui:description">  the objects to merge</span>
+                                                        </dd>
+                                                </dl>
+
+                                                <dl>
+                                                    <dt>Returns:
+                                                    <code property="yui:return">
+                                                        object
+                                                    </code></dt>
+                                                    <dd property="yui:returnInfo">the new merged object</dd>
+                                                </dl>
+
+
+             
+
+                                        </div>
+
+                                    </div>
+                                    <hr />
+                                    </div>
+                                    <div class="" rel="yui:method" resource="#method_mix">
+                                    <h4>
+                                        <a name="method_mix">mix</a></h4>
+                                    <div class="detail" >
+                                        <code>
+                                        
+                                        
+                                        
+                                        object
+                                            <strong property="yui:name">mix</strong>
+                                           (
+                                                
+                                                        
+                                                         r
+                                                    
+                                                
+                                                        , 
+                                                         s
+                                                    
+                                                
+                                                        , 
+                                                         ov
+                                                    
+                                                
+                                                        , 
+                                                         wl
+                                                    
+                                                
+                                                        , 
+                                                         mode
+                                                    
+                                                
+                                                        , 
+                                                         merge
+                                                    
+                                                
+                                            )
+                                        </code>
+                                        
+                                        <div class="description" property="yui:description">
+                                            Applies the supplier's properties to the receiver.  By default
+all prototype and static propertes on the supplier are applied
+to the corresponding spot on the receiver.  By default all
+properties are applied, and a property that is already on the
+reciever will not be overwritten.  The default behavior can
+be modified by supplying the appropriate parameters.
+todo add constants for the modes
+                                        </div>
+
+                                        <div class="description">
+
+                                                <dl rel="yui:parameters">
+                                                    <dt>Parameters:</dt>
+                                                        <dd rel="yui:parameter">
+                                                        <code><span property="yui:name">r</span>
+                                                        &lt;<span property="yui:type">Function</span>&gt;
+                                                        </code>
+                                                        <span property="yui:description">  the object to receive the augmentation</span>
+                                                        </dd>
+                                                        <dd rel="yui:parameter">
+                                                        <code><span property="yui:name">s</span>
+                                                        &lt;<span property="yui:type">Function</span>&gt;
+                                                        </code>
+                                                        <span property="yui:description">  the object that supplies the properties to augment</span>
+                                                        </dd>
+                                                        <dd rel="yui:parameter">
+                                                        <code><span property="yui:name">ov</span>
+                                                        &lt;<span property="yui:type">boolean</span>&gt;
+                                                        </code>
+                                                        <span property="yui:description">  if true, properties already on the receiver
+will be overwritten if found on the supplier.</span>
+                                                        </dd>
+                                                        <dd rel="yui:parameter">
+                                                        <code><span property="yui:name">wl</span>
+                                                        &lt;<span property="yui:type">string[]</span>&gt;
+                                                        </code>
+                                                        <span property="yui:description">  a whitelist.  If supplied, only properties in
+this list will be applied to the receiver.</span>
+                                                        </dd>
+                                                        <dd rel="yui:parameter">
+                                                        <code><span property="yui:name">mode</span>
+                                                        &lt;<span property="yui:type">int</span>&gt;
+                                                        </code>
+                                                        <span property="yui:description"> what should be copies, and to where
+default(0): object to object
+1: prototype to prototype (old augment)
+2: prototype to prototype and object props (new augment)
+3: prototype to object
+4: object to prototype</span>
+                                                        </dd>
+                                                        <dd rel="yui:parameter">
+                                                        <code><span property="yui:name">merge</span>
+                                                        &lt;<span property="yui:type">boolean</span>&gt;
+                                                        </code>
+                                                        <span property="yui:description">  merge objects instead of overwriting/ignoring
+Used by A.aggregate</span>
+                                                        </dd>
+                                                </dl>
+
+                                                <dl>
+                                                    <dt>Returns:
+                                                    <code property="yui:return">
+                                                        object
+                                                    </code></dt>
+                                                    <dd property="yui:returnInfo">the augmented object
+todo review for PR2</dd>
+                                                </dl>
+
+
+             
+
+                                        </div>
+
+                                    </div>
+                                    <hr />
+                                    </div>
+                                    <div class="" rel="yui:method" resource="#method_namespace">
+                                    <h4>
+                                        <a name="method_namespace">namespace</a></h4>
+                                    <div class="detail" >
+                                        <code>
+                                        
+                                        
+                                        
+                                        object
+                                            <strong property="yui:name">namespace</strong>
+                                           (
+                                                
+                                                        
+                                                         arguments
+                                                    
+                                                
+                                            )
+                                        </code>
+                                        
+                                        <div class="description" property="yui:description">
+                                            Returns the namespace specified and creates it if it doesn't exist
+<pre>
+AP.namespace("property.package");
+AP.namespace("AP.property.package");
+</pre>
+Either of the above would create AP.property, then
+AP.property.package
+Be careful when naming packages. Reserved words may work in some browsers
+and not others. For instance, the following will fail in Safari:
+<pre>
+AP.namespace("really.long.nested.namespace");
+</pre>
+This fails because "long" is a future reserved word in ECMAScript
+                                        </div>
+
+                                        <div class="description">
+
+                                                <dl rel="yui:parameters">
+                                                    <dt>Parameters:</dt>
+                                                        <dd rel="yui:parameter">
+                                                        <code><span property="yui:name">arguments</span>
+                                                        &lt;<span property="yui:type">string*</span>&gt;
+                                                        </code>
+                                                        <span property="yui:description"> 1-n namespaces to create</span>
+                                                        </dd>
+                                                </dl>
+
+                                                <dl>
+                                                    <dt>Returns:
+                                                    <code property="yui:return">
+                                                        object
+                                                    </code></dt>
+                                                    <dd property="yui:returnInfo">A reference to the last namespace object created</dd>
+                                                </dl>
+
+
+             
+
+                                        </div>
+
+                                    </div>
+                                    <hr />
+                                    </div>
+                                    <div class="" rel="yui:method" resource="#method_stamp">
+                                    <h4>
+                                        <a name="method_stamp">stamp</a></h4>
+                                    <div class="detail" >
+                                        <code>
+                                        
+                                        
+                                        
+                                        String
+                                            <strong property="yui:name">stamp</strong>
+                                           (
+                                                
+                                                        
+                                                         o
+                                                    
+                                                
+                                            )
+                                        </code>
+                                        
+                                        <div class="description" property="yui:description">
+                                            Stamps an object with a guid.  If the object already
+has one, a new one is not created
+                                        </div>
+
+                                        <div class="description">
+
+                                                <dl rel="yui:parameters">
+                                                    <dt>Parameters:</dt>
+                                                        <dd rel="yui:parameter">
+                                                        <code><span property="yui:name">o</span>
+                                                        &lt;<span property="yui:type">object</span>&gt;
+                                                        </code>
+                                                        <span property="yui:description"> The object to stamp</span>
+                                                        </dd>
+                                                </dl>
+
+                                                <dl>
+                                                    <dt>Returns:
+                                                    <code property="yui:return">
+                                                        String
+                                                    </code></dt>
+                                                    <dd property="yui:returnInfo">The object's guid</dd>
+                                                </dl>
+
+
+             
+
+                                        </div>
+
+                                    </div>
+                                    <hr />
+                                    </div>
+                                    <div class="" rel="yui:method" resource="#method_use">
+                                    <h4>
+                                        <a name="method_use">use</a></h4>
+                                    <div class="detail" >
+                                        <code>
+                                        
+                                        
+                                        
+                                        AP
+                                            <strong property="yui:name">use</strong>
+                                           (
+                                                
+                                                        
+                                                         modules*
+                                                    
+                                                
+                                                        , 
+                                                         *callback
+                                                    
+                                                
+                                            )
+                                        </code>
+                                        
+                                        <div class="description" property="yui:description">
+                                            Bind a module to a AP instance
+                                        </div>
+
+                                        <div class="description">
+
+                                                <dl rel="yui:parameters">
+                                                    <dt>Parameters:</dt>
+                                                        <dd rel="yui:parameter">
+                                                        <code><span property="yui:name">modules*</span>
+                                                        &lt;<span property="yui:type">String</span>&gt;
+                                                        </code>
+                                                        <span property="yui:description">  1-n modules to bind (uses arguments array)</span>
+                                                        </dd>
+                                                        <dd rel="yui:parameter">
+                                                        <code><span property="yui:name">*callback</span>
+                                                        &lt;<span property="yui:type">function</span>&gt;
+                                                        </code>
+                                                        <span property="yui:description">  callback function executed when
+the instance has the required functionality.  If included, it
+must be the last parameter.
+<pre>
+AP().use('dragdrop')
+AP().use('dragdrop:2.4.0'); // specific version
+AP().use('dragdrop:2.4.0-'); // at least this version
+AP().use('dragdrop:2.4.0-2.9999.9999'); // version range
+AP().use('*'); // use all available modules
+AP().use('lang+dump+substitute'); // use lang and some plugins
+AP().use('lang+*'); // use lang and all known plugins
+</pre></span>
+                                                        </dd>
+                                                </dl>
+
+                                                <dl>
+                                                    <dt>Returns:
+                                                    <code property="yui:return">
+                                                        AP
+                                                    </code></dt>
+                                                    <dd property="yui:returnInfo">the AP instance</dd>
+                                                </dl>
+
+
+             
+
+                                        </div>
+
+                                    </div>
+                                    <hr />
+                                    </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div rel="yui:events" resource="#events">
+
+
+                    </div>
+
+                    <div rel="yui:attributes" resource="#configattributes">
+
+                    </div>
+
+			</div>
+		</div>
+		<div class="yui-b">
+            <div class="nav">
+
+                    <div id="moduleList" class="module">
+                        <h4>Modules</h4>
+                        <ul class="content">
+                                <li class="selected"><a href="module_ap.html" title="ap">ap</a></li>
+                                <li class=""><a href="module_cookie.html" title="cookie">cookie</a></li>
+                                <li class=""><a href="module_history.html" title="history">history</a></li>
+                                <li class=""><a href="module_imageloader.html" title="imageloader">imageloader</a></li>
+                                <li class=""><a href="module_json.html" title="json">json</a></li>
+                                <li class=""><a href="module_queue.html" title="queue">queue</a></li>
+                                <li class=""><a href="module_spinner.html" title="spinner">spinner</a></li>
+                                <li class=""><a href="module_supreme.html" title="supreme">supreme</a></li>
+                        </ul>
+                    </div>
+
+                    <div id="classList" class="module">
+                        <h4>Classes</h4>
+                        <ul class="content">
+                                <li class="selected"><a href="AP.html" title="AP">AP</a></li>
+                                <li class=""><a href="AP~array.html" title="AP~array">AP~array</a></li>
+                                <li class=""><a href="AP~Lang.html" title="AP~Lang">AP~Lang</a></li>
+                                <li class=""><a href="AP~object.html" title="AP~object">AP~object</a></li>
+                                <li class=""><a href="Log.html" title="Log">Log</a></li>
+                                <li class=""><a href="Observer.html" title="Observer">Observer</a></li>
+                                <li class=""><a href="String.html" title="String">String</a></li>
+                                <li class=""><a href="StringBuffer.html" title="StringBuffer">StringBuffer</a></li>
+                        </ul>
+                    </div>
+
+                    <div id="fileList" class="module">
+                        <h4>Files</h4>
+                        <ul class="content">        
+                                <li class=""><a href="ap.base-0.0.1.js.html" title="ap.base-0.0.1.js">ap.base-0.0.1.js</a></li>
+                                <li class=""><a href="ap.cookie-0.0.1.js.html" title="ap.cookie-0.0.1.js">ap.cookie-0.0.1.js</a></li>
+                                <li class=""><a href="ap.ordain-0.0.1.js.html" title="ap.ordain-0.0.1.js">ap.ordain-0.0.1.js</a></li>
+                                <li class=""><a href="ap.queue-0.0.1.js.html" title="ap.queue-0.0.1.js">ap.queue-0.0.1.js</a></li>
+                                <li class=""><a href="ap.supreme-0.0.1.js.html" title="ap.supreme-0.0.1.js">ap.supreme-0.0.1.js</a></li>
+                        </ul>
+                    </div>
+
+                    <div id="propertyList" class="module">
+                        <h4>Properties</h4>
+                        <ul class="content">        
+                                <li class="private"><a href="#property__iefix" title="_iefix">_iefix</a></li>
+                        </ul>
+                    </div>
+
+                    <div id="methodsList" class="module">
+                        <h4>Methods</h4>
+                        <ul class="content">        
+                                <li class="private"><a href="#method__configureEnvinronment" title="_configureEnvinronment">_configureEnvinronment</a></li>
+                                <li class="private"><a href="#method__init" title="_init">_init</a></li>
+                                <li class="private"><a href="#method__setup" title="_setup">_setup</a></li>
+                                <li class=""><a href="#method_add" title="add">add</a></li>
+                                <li class=""><a href="#method_applyTo" title="applyTo">applyTo</a></li>
+                                <li class=""><a href="#method_guid" title="guid">guid</a></li>
+                                <li class=""><a href="#method_merge" title="merge">merge</a></li>
+                                <li class=""><a href="#method_mix" title="mix">mix</a></li>
+                                <li class=""><a href="#method_namespace" title="namespace">namespace</a></li>
+                                <li class=""><a href="#method_stamp" title="stamp">stamp</a></li>
+                                <li class=""><a href="#method_use" title="use">use</a></li>
+                        </ul>
+                    </div>
+
+
+
+            </div>
+		</div>
+	</div>
+	<div id="ft">
+        <hr />
+        Copyright &copy; 2008 Yahoo! Inc. All rights reserved.
+	</div>
+</div>
+<script type="text/javascript">
+    ALL_YUI_PROPS = [{"url": "AP.html#method_add", "access": "", "host": "AP", "type": "method", "name": "add"}, {"url": "AP.html#method_applyTo", "access": "", "host": "AP", "type": "method", "name": "applyTo"}, {"url": "AP.html#method__configureEnvinronment", "access": "private", "host": "AP", "type": "method", "name": "_configureEnvinronment"}, {"url": "AP.html#method_guid", "access": "", "host": "AP", "type": "method", "name": "guid"}, {"url": "AP.html#property__iefix", "access": "private", "host": "AP", "type": "property", "name": "_iefix"}, {"url": "AP.html#method__init", "access": "private", "host": "AP", "type": "method", "name": "_init"}, {"url": "AP.html#method_merge", "access": "", "host": "AP", "type": "method", "name": "merge"}, {"url": "AP.html#method_mix", "access": "", "host": "AP", "type": "method", "name": "mix"}, {"url": "AP.html#method_namespace", "access": "", "host": "AP", "type": "method", "name": "namespace"}, {"url": "AP.html#method__setup", "access": "private", "host": "AP", "type": "method", "name": "_setup"}, {"url": "AP.html#method_stamp", "access": "", "host": "AP", "type": "method", "name": "stamp"}, {"url": "AP.html#method_use", "access": "", "host": "AP", "type": "method", "name": "use"}];
+</script>
+</body>
+</html>
