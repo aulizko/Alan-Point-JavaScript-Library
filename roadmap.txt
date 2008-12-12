@@ -10,14 +10,25 @@
 
 Примерная иерархия классов:
 Base
-  namespace
-  browser
+  namespace DONE
+  lambda DONE
+  log DONE
+  add DONE
+  stamp DONE
+  check 
+  
+  Browser 
     engine
     version
     platform
-  lambda
-  stamp
-  merge, mix?
+  
+  OOP we need to consider it in a very deep level. Merge, implement, extend and all that - maybe we can stop with that.
+    merge
+    mix
+    augment
+    clone
+    aggregate
+  
   Object
     each
     clear
@@ -29,6 +40,7 @@ Base
     some
     every
     indexOf
+  
   Array
     each
     filter
@@ -44,9 +56,10 @@ Base
     hash
     erase
     empty
+  
   Lang
-    full support with chk
-  Class - we need to consider it in a very deep level. Merge, implement, extend and all that - maybe we can stop with that.
+    full support with check
+
   String
     unescapeHTML
     escape (use native)
@@ -54,16 +67,21 @@ Base
     trim
     hexToRgb
     toInt
+    
   StringBuffer
     add
     ToString
     empty
+    
   Number
     times
+    
   Request (IO?)
     query server
     parse response
+    
   FX???
+  
   DOM
     getMatchingTarget (move to ordain)
     getMatchingTargetFast (same as above)
@@ -72,32 +90,45 @@ Base
     query
     attr
     remove
+    
   Cookie
     get
     getSub(S)
     set
     setSub(s)
     remove
+    
   History
+  
   Timer
     later
     cancel
+    
   ImageLoader
+  
   Ordain
     work with DOM.query and Event
+    
   JSON
     encode
     decode
+    
   Queue (maybe, chain?)
+  
   Supreme
     add
     run
+    
   Observer (or use event utility to implement fireEvent and all that with our objects)
+  
   Mediator (or scoped Observer)
+  
   Widget
     Spinner
     ImageGallery
     Wysiwyg
     MultiUploader
-  Logger
+    
+  Console
+  
   Profiler
