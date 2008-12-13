@@ -105,19 +105,6 @@
         		return value;
         	};
         },
-        
-        /**
-         * Checks to see if a value exists
-         * Inspired with MooTools $chk method
-         * @method check
-         * @param {Mixed} o the item to inspect
-         * @return {Boolean} If the object passed in exists, return true. Otherwise, returns false
-         */
-        check : function (o) {
-            return !!o;
-        },
-        
-        
         // stub which will be misplaced by Console module
         // inspired with YUI log function
         log : function () {},
@@ -168,8 +155,9 @@
          * @return {AP} the AP instance
          */
         add : function (name, fn, version, requirements) {
-            var m = this.config.envinronment.modules, requirement, i, oldInstance, isExistingModuleOutOfDate = true,
-            // convert version string into object
+            var m = this.config.envinronment.modules, requirement, i,
+            
+            // expand version into major, minor, micro numbers (inspired from Yahoo! BrowserPlus services version system)
             v = {
                 version : (function (version) {
                     var v = {
@@ -178,6 +166,8 @@
                         micro : 0
                     };
                     if (typeof version === 'string') {
+                        // inspired with John's Resig fast replace implementation, more details:
+                        // http://ejohn.org/blog/search-and-dont-replace/
                         version.replace(/(\d+)\.(\d+)\.(\d+)/, function (m, major, minor, micro) {
                             v.major = major;
                             v.minor = minor;
@@ -188,12 +178,14 @@
                 })(version)
             };
             
-            if (typeof (oldInstance = m[name]) === 'object') { 
-                // we already register module with same name
-                // time to compare versions 
-                if (!((v.version.major > oldInstance.version.major) ||
-                    (v.version.major == oldInstance.version.major && v.version.minor > oldInstance.version.minor) ||
-                    (v.version.major == oldInstance.version.major && v.version.minor > oldInstance.version.minor && v.version.micro > oldInstance.version.micro))) {
+            if (!!m[name]) { 
+                // module with same name already registered. Now is time to compare versions and newer will be registered
+                var inc = v.version, ext = m[name].version;
+                
+                // TODO: refactor
+                if (!((inc.major > ext.major) ||
+                    (inc.major == ext.major && inc.minor > ext.minor) ||
+                    (inc.major == ext.major && inc.minor == ext.minor && inc.micro > ext.micro))) {
                     
                     return;
                 } 
@@ -231,7 +223,7 @@
             }
             
             
-            // expand version into major, minor, micro numbers (inspired from Yahoo! BrowserPlus service version system)
+            
             m[name] = v;
             
             fn(this);

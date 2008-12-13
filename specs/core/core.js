@@ -228,24 +228,5 @@ describe('core', {
 	    value_of(AP.WOW).should_be_undefined();
 	    AP.add('wow', function (A) { A.WOW = A.WOW || {}; }, '1.2.3');
 	    value_of(typeof AP.WOW).should_be('object');
-	},
-	
-	'should have check method' : function () {
-	    value_of(AP.check).should_not_be_undefined();
-        value_of(AP.check).should_not_be_null();
-        value_of(typeof AP.check).should_be('function');
-	},
-	
-	'check should return true, if object exist, otherwise, return true' : function () {
-	    var abracadabra;
-	    value_of(AP.check(abracadabra)).should_be_false();
-        value_of(AP.check(null)).should_be_false();
-        value_of(AP.check('')).should_be_false();
-        value_of(AP.check(0)).should_be_false();
-        value_of(AP.check(1)).should_be_true();
-        value_of(AP.check('a')).should_be_true();
-        value_of(AP.check([])).should_be_true();
-        value_of(AP.check({})).should_be_true();
-        value_of(AP.check(new Date())).should_be_true();
 	}
 });
