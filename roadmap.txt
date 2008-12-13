@@ -15,11 +15,12 @@ Base
   log DONE
   add DONE
   stamp DONE
-  check 
   
-  Browser 
-    engine
-    version
+  Browser DONE
+    trident
+    presto
+    webkit
+    gecko
     platform
   
   OOP we need to consider it in a very deep level. Merge, implement, extend and all that - maybe we can stop with that.
