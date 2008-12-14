@@ -74,9 +74,6 @@ Base
     ToString
     empty
     
-  Number
-    times
-    
   Request (IO?)
     query server
     parse response

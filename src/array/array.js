@@ -1,0 +1,1 @@
+AP.add('array', function (A) {}, '0.0.1', [ { name : 'lang', version : '0.0.2' } ]);

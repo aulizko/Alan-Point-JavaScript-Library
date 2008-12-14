@@ -1,7 +1,3 @@
-/*
-Script: core.js
-	Examples for core.js
-*/
 describe('core', {
     'shoule exists as singleton object into global namespace' : function () {
         value_of(window.AP).should_not_be_undefined();

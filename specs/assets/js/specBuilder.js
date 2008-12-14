@@ -26,11 +26,13 @@ var Builder = {
 
 	scripts: {
 		source: {
-			'core'      : ['core']
+			'core'      : ['core'],
+			'lang'       : ['lang']
 		},
 
 		specs: {
-			'core'      : ['core']
+			'core'      : ['core'],
+			'lang'       : ['lang', 'isUndefined', 'isNull', 'isArray', 'isBoolean', 'isFunction', 'isDate', 'isNumber', 'isObject', 'isString', 'isValue']
 		}
 	},
 
