@@ -42,21 +42,20 @@ Base
     every
     indexOf
   
-  Array  
-    each
-    filter
-    map
-    some
-    every
-    foldl
-    foldr
-    unique
-    clean
-    array (return array based on provided argument)
-    indexOf
-    hash
-    erase
-    empty
+  Array DONE
+    each DONE
+    filter DONE
+    map DONE 
+    some DONE
+    every DONE
+    foldl TODO: review
+    foldr TODO: review
+    unique DONE
+    clean DONE
+    array (return array based on provided argument) DONE
+    indexOf DONE
+    hash DONE
+    erase DONE
   
   Lang DONE
 
