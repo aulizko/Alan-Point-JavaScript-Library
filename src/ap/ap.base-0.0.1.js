@@ -714,11 +714,6 @@ return (AP.Lang.isObject(o) || AP.Lang.isString(o) || AP.Lang.isNumber(o) || AP.
  * @module ap
  * @submodule array
  */
-
-/**
- * AP core
- * @module ap
- */
 AP.add("array", function(A) {
 
     var L = A.Lang, Native = Array.prototype;

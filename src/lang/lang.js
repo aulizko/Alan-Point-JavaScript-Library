@@ -162,7 +162,7 @@ return (o && (typeof o === OBJECT || (!failfn && L.isFunction(o)))) || false;
      * @param b second item to compare
      */
     L.compare = function (a, b) {
-        var count, i, lengthOfA, lengthOfB;
+        var count, lengthOfA, lengthOfB;
         // return primitive equivalent for string, number or boolean object
         function primitify (o) {
             return L.isObject(o) && (L.isNumber(o) || L.isString(o.valueOf()) || L.isBoolean(o)) ? o.valueOf() : o;
@@ -200,8 +200,8 @@ return (o && (typeof o === OBJECT || (!failfn && L.isFunction(o)))) || false;
             count = a.length;
             if (count != b.length) { return false; }
             // recursive call compare onto each element
-            for (i = 0; i < count; i++) {
-                if (L.compare(a[i], b[i]) == false) {
+            while(count--) {
+                if (L.compare(a[count], b[count]) == false) {
                     return false;
                 }
             }

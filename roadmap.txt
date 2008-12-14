@@ -42,7 +42,7 @@ Base
     every
     indexOf
   
-  Array
+  Array  
     each
     filter
     map
@@ -58,8 +58,7 @@ Base
     erase
     empty
   
-  Lang
-    full support with check
+  Lang DONE
 
   String
     unescapeHTML
