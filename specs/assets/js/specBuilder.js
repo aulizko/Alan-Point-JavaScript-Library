@@ -32,7 +32,7 @@ var Builder = {
 
 		specs: {
 			'core'      : ['core'],
-			'lang'       : ['lang', 'isUndefined', 'isNull', 'isArray', 'isBoolean', 'isFunction', 'isDate', 'isNumber', 'isObject', 'isString', 'isValue']
+			'lang'       : ['lang', 'isUndefined', 'isNull', 'isArray', 'isBoolean', 'isFunction', 'isDate', 'isNumber', 'isObject', 'isString', 'isValue', 'compare']
 		}
 	},
 

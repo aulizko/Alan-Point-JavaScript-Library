@@ -52,5 +52,10 @@ describe('lang', {
     'should have isValue method' : function () {
         value_of(!!AP.Lang.isValue).should_be_true();
         value_of(typeof AP.Lang.isValue).should_be('function');
+    },
+    
+    'should have compare method' : function () {
+        value_of(!!AP.Lang.compare).should_be_true();
+        value_of(typeof AP.Lang.compare).should_be('function');
     }
 });

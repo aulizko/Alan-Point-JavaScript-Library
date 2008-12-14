@@ -15,11 +15,9 @@ AP.add('lang', function (A) {
     var L = A.Lang,
         ARRAY_TOSTRING = '[object Array]',
         FUNCTION_TOSTRING = '[object Function]',
-        STRING = 'string',
+        PRIMITIVES = { 'string' : 'string', 'boolean' : 'boolean', 'number' : 'number'},
         OBJECT = 'object',
-        BOOLEAN = 'boolean',
         UNDEFINED = 'undefined',
-        NUMBER = 'number',
         OP = Object.prototype;
     
     /**
@@ -35,7 +33,7 @@ AP.add('lang', function (A) {
      * @param o The object to test
      * @return {boolean} true if o is an array
      */
-    L.isArray = function(o) { 
+    L.isArray = function (o) { 
         return OP.toString.apply(o) === ARRAY_TOSTRING;
     };
 
@@ -46,8 +44,8 @@ AP.add('lang', function (A) {
      * @param o The object to test
      * @return {boolean} true if o is a boolean
      */
-    L.isBoolean = function(o) {
-        return typeof o === BOOLEAN || o instanceof Boolean;
+    L.isBoolean = function (o) {
+        return typeof o === PRIMITIVES['boolean'] || o instanceof Boolean;
     };
     
     /**
@@ -55,10 +53,10 @@ AP.add('lang', function (A) {
      * Note: Internet Explorer thinks certain functions are objects:
      *
      * var obj = document.createElement("object");
-     * Y.Lang.isFunction(obj.getAttribute) // reports false in IE
+     * AP.Lang.isFunction(obj.getAttribute) // reports false in IE
      *
      * var input = document.createElement("input"); // append to body
-     * Y.Lang.isFunction(input.focus) // reports false in IE
+     * AP.Lang.isFunction(input.focus) // reports false in IE
      *
      * You will have to implement additional tests if these functions
      * matter to you.
@@ -68,7 +66,7 @@ AP.add('lang', function (A) {
      * @param o The object to test
      * @return {boolean} true if o is a function
      */
-    L.isFunction = function(o) {
+    L.isFunction = function (o) {
         return OP.toString.apply(o) === FUNCTION_TOSTRING;
     };
         
@@ -79,7 +77,7 @@ AP.add('lang', function (A) {
      * @param o The object to test
      * @return {boolean} true if o is a date
      */
-    L.isDate = function(o) {
+    L.isDate = function (o) {
         return o instanceof Date;
     };
 
@@ -90,19 +88,20 @@ AP.add('lang', function (A) {
      * @param o The object to test
      * @return {boolean} true if o is null
      */
-    L.isNull = function(o) {
+    L.isNull = function (o) {
         return o === null;
     };
         
     /**
      * Determines whether or not the provided object is a legal number
+     * Also returns true if Number object passed in
      * @method isNumber
      * @static
      * @param o The object to test
      * @return {boolean} true if o is a number
      */
-    L.isNumber = function(o) {
-        return (typeof o === NUMBER || o instanceof Number) && isFinite(o);
+    L.isNumber = function (o) {
+        return (typeof o === PRIMITIVES['number'] || o instanceof Number) && isFinite(o);
     };
       
     /**
@@ -114,7 +113,7 @@ AP.add('lang', function (A) {
      * @param failfn {boolean} fail if the input is a function
      * @return {boolean} true if o is an object
      */  
-    L.isObject = function(o, failfn) {
+    L.isObject = function (o, failfn) {
 return (o && (typeof o === OBJECT || (!failfn && L.isFunction(o)))) || false;
     };
         
@@ -125,8 +124,8 @@ return (o && (typeof o === OBJECT || (!failfn && L.isFunction(o)))) || false;
      * @param o The object to test
      * @return {boolean} true if o is a string
      */
-    L.isString = function(o) {
-        return typeof o === STRING;
+    L.isString = function (o) {
+        return typeof o === PRIMITIVES['string'];
     };
         
     /**
@@ -136,7 +135,7 @@ return (o && (typeof o === OBJECT || (!failfn && L.isFunction(o)))) || false;
      * @param o The object to test
      * @return {boolean} true if o is undefined
      */
-    L.isUndefined = function(o) {
+    L.isUndefined = function (o) {
         return typeof o === UNDEFINED;
     };
 
@@ -149,7 +148,81 @@ return (o && (typeof o === OBJECT || (!failfn && L.isFunction(o)))) || false;
      * @param o The item to test
      * @return {boolean} true if it is not null/undefined/NaN || false
      */
-    L.isValue = function(o) {
+    L.isValue = function (o) {
         return (L.isObject(o) || L.isString(o) || L.isNumber(o) || L.isBoolean(o));
     };
-}, '0.0.2');
+    
+    /**
+     * Deep compare of array, object, function, string and number. If value of object are equal, return true. 
+     * Otherwise, return false. 
+     * TODO: review maybe it is better to update this method in MochiKit way - to return -1,0,1 and being able to sort.
+     * @method compare
+     * @static
+     * @param a first item to compare
+     * @param b second item to compare
+     */
+    L.compare = function (a, b) {
+        var count, i, lengthOfA, lengthOfB;
+        // return primitive equivalent for string, number or boolean object
+        function primitify (o) {
+            return L.isObject(o) && (L.isNumber(o) || L.isString(o.valueOf()) || L.isBoolean(o)) ? o.valueOf() : o;
+        }
+        // check type of the passed values. if it is different, return
+        if (L.isNull(a) && L.isNull(b)) {
+            return true;
+        }
+         
+        if (L.isUndefined(a) && L.isUndefined(b)) {
+            return true;
+        }
+        // convert date into milliseconds
+        a = L.isDate(a) ? a.getTime() : a;
+        b = L.isDate(b) ? b.getTime() : b;
+        // convert objects into primitives
+        a = primitify(a);
+        b = primitify(b);
+        
+        // check if a & b are primitives
+        if (typeof a in PRIMITIVES && typeof b in PRIMITIVES) {
+            // compare primitives
+            return a == b;
+        }
+
+        // compare functions 
+        if (L.isFunction(a) && L.isFunction(b)) {
+            return a.toString() == b.toString();
+        } 
+        
+        // deep compare arraylike structures
+        // compare types of the passed variables
+        if (L.isArray(a) && L.isArray(b)) {
+            // compare lengths
+            count = a.length;
+            if (count != b.length) { return false; }
+            // recursive call compare onto each element
+            for (i = 0; i < count; i++) {
+                if (L.compare(a[i], b[i]) == false) {
+                    return false;
+                }
+            }
+            return true;
+        }
+        
+        // deep compare objects
+        if (L.isObject(a) && L.isObject(b)) {
+            // check number of properties. if it's different, return false
+            lengthOfA = lengthOfB = 0;
+            
+            for (i in a) { lengthOfB++; lengthOfA++; }
+            if (lengthOfA != lengthOfB) { return false; }
+            // recursive call compare method for every property
+            for (i in a) {
+                if (L.compare(a[i], b[i]) == false) { return false; }
+            }
+            return true;
+        }
+        
+        // passed variables cannot be compared, return false (TODO: review, need we to throw error)
+        return false;
+     };
+}, '0.0.3');
