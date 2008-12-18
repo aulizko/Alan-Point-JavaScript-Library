@@ -3,14 +3,14 @@
  * @module ap
  * @submodule oop
  */
-AP.add('oop', function (A) {
+AP.add('OO', function (A) {
     /**
      * Utils collection
      * @class AP~OOP
      */
-    A.OOP = A.OOP || {};
+    A.OO = A.OO || {};
     
-    var O = A.OOP;
+    var O = A.OO;
     
     /**
      * Applies the supplier's properties to the receiver.  By default
@@ -116,6 +116,6 @@ AP.add('oop', function (A) {
          return r;
      };
 }, '0.0.1', [
-    { name : 'array', minVersion : '0.0.1' },
+    { name : 'array', minVersion : '1.0.0' },
     { name : 'lang', minVersion : '0.0.2' }
 ]);

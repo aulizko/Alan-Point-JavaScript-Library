@@ -28,13 +28,15 @@ var Builder = {
 		source: {
 			'core'      : ['core'],
 			'lang'      : ['lang'],
-			'array'     : ['array']
+			'array'     : ['array'],
+			'oo'       : ['oo']
 		},
 
 		specs: {
 			'core'      : ['core'],
 			'lang'      : ['lang', 'isUndefined', 'isNull', 'isArray', 'isBoolean', 'isFunction', 'isDate', 'isNumber', 'isObject', 'isString', 'isValue', 'compare'],
-			'array'     : ['array']
+			'array'     : ['array'],
+			'oo'        : ['oo']
 		}
 	},
 
