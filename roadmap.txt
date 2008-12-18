@@ -73,6 +73,13 @@ Base
   Request (IO?)
     query server
     parse response
+
+  CouchDB.module (see DOJO)
+    http://jan.prima.de/~jan/plok/archives/108-Programming-CouchDB-with-Javascript.html
+    http://www.cmlenz.net/archives/2007/10/couchdb-joins
+    http://eflorenzano.com/blog/post/why-couchdb-rocks/
+    http://blog.labnotes.org/2007/09/02/couchdb-thinking-beyond-the-rdbms/
+    http://www.infoq.com/interviews/CouchDB-Damien-Katz
     
   DOM
     getMatchingTarget (move to ordain)
