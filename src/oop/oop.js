@@ -116,9 +116,5 @@ describe('oop', {
         value_of(raven.isFlightAble).should_be_true();
         value_of(nab instanceof Chiken).should_be_true();
         value_of(nab instanceof Bird).should_be_true();
-    },
-    
-    // OOP.bind
-    
-    // OOP.aggregate
+    }
 });

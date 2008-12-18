@@ -57,18 +57,18 @@ Base
   
   Lang DONE
 
-  String
-    unescapeHTML
-    escape (use native)
-    pluralize
-    trim
-    hexToRgb
-    toInt
+  String DONE
+    unescapeHTML DONE
+    pluralize DONE
+    capitalize DONE
+    trim DONE
     
-  StringBuffer
-    add
-    ToString
-    empty
+  StringBuffer DONE
+    add DONE
+    ToString DONE
+    empty DONE
+    
+  Class?? (MooTools, Prototype, Base2, YUI)
     
   Request (IO?)
     query server
