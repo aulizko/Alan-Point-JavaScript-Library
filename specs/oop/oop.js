@@ -1,19 +1,20 @@
 /**
- * OOP utils.  If included, the OOP methods are added to the AP.OOP instance
+ * OOP utils.  If included, the best OOP helpers will be available at the AP.OOPP namespace
  * @module ap
  * @submodule oop
  */
-AP.add('OO', function (A) {
+AP.add('oop', function (A) {
     /**
      * Utils collection
-     * @class AP~OOP
+     * @class AP~OOPP
      */
-    A.OO = A.OO || {};
+    A.OOP = A.OOP || {};
     
-    var O = A.OO,
+    var O = A.OOP,
         OP = Object.prototype, 
         IEF = ["toString", "valueOf"], 
         PROTO = 'prototype',
+        L = A.Lang,
     
     /**
      * IE will not enumerate native functions in a derived object even if the
@@ -205,7 +206,7 @@ AP.add('OO', function (A) {
                      // overwrite the prototype with all of the sequestered functions,
                      // but only if it hasn't been overridden
                      for (var i in sequestered) {
-                         if (Y.Object.owns(sequestered, i) && (me[i] === replacements[i])) {
+                         if (sequestered.hasOwnProperty(i) && (me[i] === replacements[i])) {
                              me[i] = sequestered[i];
                          }
                      }
@@ -245,10 +246,60 @@ AP.add('OO', function (A) {
              applyConstructor = true;
          }
 
-         Y.mix(target, newProto || sProto, ov, wl);
+         this.mix(target, newProto || sProto, ov, wl);
 
          if (applyConstructor) {
              s.apply(target, a);
+         }
+
+         return r;
+     };
+     
+     /**
+      * Utility to set up the prototype, constructor and superclass properties to
+      * support an inheritance strategy that can chain constructors and methods.
+      * Static members will not be inherited.
+      *
+      * @method extend
+      * @param {Function} r   the object to modify
+      * @param {Function} s the object to inherit
+      * @param {Object} px prototype properties to add/override
+      * @param {Object} sx static properties to add/override
+      * @return {AP} new class
+      */
+     O.extend = function(r, s, px, sx) {
+         var sp = s.prototype, rp=A.Object(sp), i;
+         r.prototype=rp;
+
+         rp.constructor=r;
+         r.superclass=sp;
+
+         // If the superclass doesn't have a standard constructor,
+         // define one so that Super() works
+         if (s != Object && sp.constructor == OP.constructor) {
+             sp.constructor=s;
+         }
+
+         // Add object properties too
+         // @TODO removed for now because it isn't that useful and
+         // has caused a few issues overwriting things that should
+         // not be.  You can do this manually if needed.  Revisit
+         // if this is something that really is needed for some
+         // reason.
+         // Y.mix(r, s);
+
+         // Add superclass convienience functions 
+         // @TODO revisit when we have something that works
+         // Y.augment(r, Ext);
+
+         // Add prototype overrides
+         if (px) {
+             O.mix(rp, px, true);
+         }
+
+         // Add object overrides
+         if (sx) {
+             O.mix(r, sx, true);
          }
 
          return r;

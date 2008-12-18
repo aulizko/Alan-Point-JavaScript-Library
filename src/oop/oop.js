@@ -1,23 +1,23 @@
-describe('oo', {
+describe('oop', {
     'should exist in the AP namespace' : function () {
-        value_of(!!AP.OO).should_be_true();
-        value_of(typeof AP.OO).should_be('object');
+        value_of(!!AP.OOP).should_be_true();
+        value_of(typeof AP.OOP).should_be('object');
     },
     
-    // OO.merge
+    // OOP.merge
     
     'should create new object from passed in, same properties should be overriden' : function () {
         var set1 = { foo : "foo" };
         var set2 = { foo : "BAR", bar : "bar" };
-        var set3 = { foo : "FOO", baz : "BAZ" };
-        value_of(AP.OO.merge(set1, set2, set3)).should_be({
-            foo : 'FOO',
+        var set3 = { foo : "FOOP", baz : "BAZ" };
+        value_of(AP.OOP.merge(set1, set2, set3)).should_be({
+            foo : 'FOOP',
             bar : 'bar',
             baz : 'BAZ'
         });
     },
     
-    // OO.mix
+    // OOP.mix
     
     'should mix public property of one object to another one' : function () {
         var person = function () {
@@ -39,11 +39,11 @@ describe('oo', {
            }; 
         }();
         
-        AP.OO.mix(person, logger);
+        AP.OOP.mix(person, logger);
         value_of(!!person.myNameIs).should_be_true();
     },
     
-    // OO.augment
+    // OOP.augment
     
     'should copy prototype methods of the supplier object to the resiver' : function () {
         var messageBoard = [];
@@ -63,7 +63,7 @@ describe('oo', {
             messageBoard.push(a);
         };
         
-        AP.OO.augment(person, logger);
+        AP.OOP.augment(person, logger);
         var Adam = new person('Adam', 'Moore');
         value_of(!!Adam.log).should_be_true();
         Adam.fullName();
@@ -88,25 +88,37 @@ describe('oo', {
             messageBoard.push(a);
         };
         
-        AP.OO.augment(person, logger);
+        AP.OOP.augment(person, logger);
         var Adam = new person('Adam', 'Moore');
         
         value_of(Adam instanceof person).should_be_true();
         value_of(Adam instanceof logger).should_be_false();
-    }
+    },
     
-    // OO.extend
+    // OOP.extend
     
+    'should extend passed object' : function () {
+        var Bird = function (name) {
+            this.name = name;
+        };
+        Bird.prototype.isFlightAble = true;
+        Bird.prototype.whatIsYourName = function() {
+            return this.name;
+        };
+        var raven = new Bird('raven');
+        var Chiken = function (name) {
+            this.constructor.superclass.constructor.call(this, name);
+        };
+        AP.OOP.extend(Chiken, Bird);
+        Chiken.prototype.isFlightAble = false;
+        var nab = new Chiken('nab');
+        value_of(nab.isFlightAble).should_be_false();
+        value_of(raven.isFlightAble).should_be_true();
+        value_of(nab instanceof Chiken).should_be_true();
+        value_of(nab instanceof Bird).should_be_true();
+    },
     
+    // OOP.bind
     
-    
-    
-    
-    
-    
-    
-    // OO.clone
-    
-    
-    // OO.aggregate
+    // OOP.aggregate
 });

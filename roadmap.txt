@@ -23,12 +23,12 @@ Base
     gecko
     platform
   
-  OO we need to consider it in a very deep level. Merge, implement, extend and all that - maybe we can stop with that.
-    merge
-    mix
-    augment
-    clone
-    aggregate
+  OO DONE
+    merge DONE
+    mix DONE
+    augment DONE
+    aggregate ?
+    extend DONE
   
   Object DONE
     each DONE
