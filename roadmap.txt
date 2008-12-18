@@ -68,14 +68,12 @@ Base
     ToString DONE
     empty DONE
     
-  Class?? (MooTools, Prototype, Base2, YUI)
+  Class?? (MooTools, Prototype, Base2, YUI). Which way?
     
   Request (IO?)
     query server
     parse response
     
-  FX???
-  
   DOM
     getMatchingTarget (move to ordain)
     getMatchingTargetFast (same as above)
@@ -84,6 +82,11 @@ Base
     query
     attr
     remove
+    
+  Ordain
+    work with DOM.query and Event
+  
+  FX???
     
   Cookie
     get
@@ -100,9 +103,6 @@ Base
     
   ImageLoader
   
-  Ordain
-    work with DOM.query and Event
-    
   JSON
     encode
     decode
