@@ -23,24 +23,22 @@ Base
     gecko
     platform
   
-  OOP we need to consider it in a very deep level. Merge, implement, extend and all that - maybe we can stop with that.
+  OO we need to consider it in a very deep level. Merge, implement, extend and all that - maybe we can stop with that.
     merge
     mix
     augment
     clone
     aggregate
   
-  Object
-    each
-    clear
-    object (return object based on provided argument, see ap.base)
-    keys
-    equal
-    filter
-    map
-    some
-    every
-    indexOf
+  Object DONE
+    each DONE
+    clear DONE
+    keys DONE
+    filter DONE
+    map DONE
+    some DONE
+    every DONE
+    indexOf DONE
   
   Array DONE
     each DONE

@@ -27,15 +27,18 @@ var Builder = {
 	scripts: {
 		source: {
 			'core'      : ['core'],
+			'browser'   : ['browser'],
 			'lang'      : ['lang'],
 			'array'     : ['array'],
-			'oo'       : ['oo']
+			'object'    : ['object'],
+			'oo'        : ['oo']
 		},
 
 		specs: {
 			'core'      : ['core'],
 			'lang'      : ['lang', 'isUndefined', 'isNull', 'isArray', 'isBoolean', 'isFunction', 'isDate', 'isNumber', 'isObject', 'isString', 'isValue', 'compare'],
 			'array'     : ['array'],
+			'object'    : ['object'],
 			'oo'        : ['oo']
 		}
 	},

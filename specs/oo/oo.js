@@ -10,7 +10,54 @@ AP.add('OO', function (A) {
      */
     A.OO = A.OO || {};
     
-    var O = A.OO;
+    var O = A.OO,
+        OP = Object.prototype, 
+        IEF = ["toString", "valueOf"], 
+        PROTO = 'prototype',
+    
+    /**
+     * IE will not enumerate native functions in a derived object even if the
+     * function was overridden.  This is a workaround for specific functions 
+     * we care about on the Object prototype. 
+     * @property _iefix
+     * @param {Function} r  the object to receive the augmentation
+     * @param {Function} s  the object that supplies the properties to augment
+     * @param w a whitelist object (the keys are the valid items to reference)
+     * @private
+     * @for YUI
+     */
+    _iefix = (A.Browser && A.Browser.ie) ?
+        function(r, s, w) {
+            for (var i=0, a=IEF; i<a.length; i=i+1) {
+                var n = a[i], f = s[n];
+                if (L.isFunction(f) && f != OP[n]) {
+                    if (!w || (n in w)) {
+                        r[n]=f;
+                    }
+                }
+            }
+        } : function() {};
+    
+    /**
+     * Returns a new object containing all of the properties of
+     * all the supplied objects.  The properties from later objects
+     * will overwrite those in earlier objects.  Passing in a
+     * single object will create a shallow copy of it.  For a deep
+     * copy, use clone.
+     * @method merge
+     * @param arguments {Object*} the objects to merge
+     * @return {object} the new merged object
+     */
+    O.merge = function() {
+        // var o={}, a=arguments;
+        // for (var i=0, l=a.length; i<l; i=i+1) {
+        //var a=arguments, o=Y.Object(a[0]);
+        var a=arguments, o={};
+        for (var i=0, l=a.length; i<l; i=i+1) {
+            O.mix(o, a[i], true);
+        }
+        return o;
+    };
     
     /**
      * Applies the supplier's properties to the receiver.  By default
@@ -19,8 +66,6 @@ AP.add('OO', function (A) {
      * properties are applied, and a property that is already on the
      * reciever will not be overwritten.  The default behavior can
      * be modified by supplying the appropriate parameters.
-     *
-     * @TODO add constants for the modes
      *
      * @method mix
      * @param {Function} r  the object to receive the augmentation
@@ -58,7 +103,7 @@ AP.add('OO', function (A) {
 
                          // We never want to overwrite the prototype
                          // if (PROTO === i) {
-                         if (PROTO === i || '_yuid' === i) {
+                         if (PROTO === i || '_uid' === i) {
                              continue;
                          }
 
@@ -115,7 +160,102 @@ AP.add('OO', function (A) {
 
          return r;
      };
+     
+     /**
+      * Applies prototype properties from the supplier to the receiver.
+      * The receiver can be a constructor or an instance.
+      * @method augment
+      * @param {Function} r  the object to receive the augmentation
+      * @param {Function} s  the object that supplies the properties to augment
+      * @param ov {boolean} if true, properties already on the receiver
+      * will be overwritten if found on the supplier.
+      * @param wl {string[]} a whitelist.  If supplied, only properties in 
+      * this list will be applied to the receiver.
+      * @param args {Array | Any} arg or arguments to apply to the supplier
+      * constructor when initializing.
+      * @return {object} the augmented object
+      */
+     O.augment = function(r, s, ov, wl, args) {
+
+         var sProto = s.prototype, newProto = null, construct = s, 
+             a = (args) ? A.Array(args) : [], rProto = r.prototype, 
+             target =  rProto || r, applyConstructor = false;
+
+         // working on a class, so apply constructor infrastructure
+         if (rProto && construct) {
+
+
+             // Y.Do.before(r, construct);
+
+             var sequestered = {}, replacements = {};
+             newProto = {};
+
+             // sequester all of the functions in the supplier and replace with
+             // one that will restore all of them.
+             A.Object.each(sProto, function(v, k) {
+
+
+                 // var initialized = false;
+
+                 replacements[k] = function() {
+
+                     var me = this;
+
+
+                     // overwrite the prototype with all of the sequestered functions,
+                     // but only if it hasn't been overridden
+                     for (var i in sequestered) {
+                         if (Y.Object.owns(sequestered, i) && (me[i] === replacements[i])) {
+                             me[i] = sequestered[i];
+                         }
+                     }
+
+                     // apply the constructor
+                     construct.apply(me, a);
+
+                     // apply the original sequestered function
+                     return sequestered[k].apply(me, arguments);
+
+                 };
+
+                 if ((!wl || (k in wl)) && (ov || !(k in this))) {
+
+
+                     if (L.isFunction(v)) {
+
+                         // sequester the function
+                         sequestered[k] = v;
+
+                         // replace the sequestered function with a function that will
+                         // restore all sequestered functions and exectue the constructor.
+                         this[k] = replacements[k];
+
+                     } else {
+
+
+                         this[k] = v;
+                     }
+
+                 }
+
+             }, newProto, true);
+
+         // augmenting an instance, so apply the constructor immediately
+         } else {
+             applyConstructor = true;
+         }
+
+         Y.mix(target, newProto || sProto, ov, wl);
+
+         if (applyConstructor) {
+             s.apply(target, a);
+         }
+
+         return r;
+     };
 }, '0.0.1', [
     { name : 'array', minVersion : '1.0.0' },
-    { name : 'lang', minVersion : '0.0.2' }
+    { name : 'lang', minVersion : '0.0.2' },
+    { name : 'browser', minVersion : '0.0.1'},
+    { name : 'object', minVersion : '0.0.1' }
 ]);
