@@ -35,7 +35,7 @@
             }
         };
     }
-    
+
     AP.prototype = {
         /**
          * Initialize this AP instance
@@ -54,7 +54,7 @@
                 uidIndex : 0,
                 modules : {}
             };
-            
+
             this.config = o;
             this.constructor = AP;
         },
@@ -82,7 +82,7 @@
             var a=arguments, o=null, i, j, d;
             for (i=0; i<a.length; i=i+1) {
                 d = a[i].split(".");
-                
+
                 o = this.Project ? this.Project : this.Project = {};
                 for (j = 0; j < d.length; j = j + 1) {
                     o[d[j]] = o[d[j]] || {};
@@ -91,7 +91,7 @@
             }
             return o;
         },
-        
+
         /**
          * Creates an empty function which does nothing but return the value passed.
          * Inspired with MooTools $lambda function
@@ -108,7 +108,7 @@
         // stub which will be misplaced by Console module
         // inspired with YUI log function
         log : function () {},
-        
+
         /**
          * Generate an id that is unique among all AP instances
          * inspired by YUI 3.0 <guid> method.
@@ -119,7 +119,7 @@
             var e = this.config.envinronment, p = (pre) || e.prefix;
             return p +'-' + e.uidIndex++;
         },
-        
+
         /**
          * Stamps an object with a guid.  If the object already
          * has one, a new one is not created
@@ -143,7 +143,7 @@
 
             return uid;
         },
-        
+
         /**
          * Register a module
          * Inspired from YUI.3.0.0.pr1 add module
@@ -156,7 +156,7 @@
          */
         add : function (name, fn, version, requirements) {
             var m = this.config.envinronment.modules, requirement, i,
-            
+
             // expand version into major, minor, micro numbers (inspired from Yahoo! BrowserPlus services version system)
             v = {
                 version : (function (version) {
@@ -177,59 +177,63 @@
                     return v;
                 })(version)
             };
-            
-            if (!!m[name]) { 
+
+            if (!!m[name]) {
                 // module with same name already registered. Now is time to compare versions and newer will be registered
                 var inc = v.version, ext = m[name].version;
-                
+
                 // TODO: refactor
                 if (!((inc.major > ext.major) ||
                     (inc.major == ext.major && inc.minor > ext.minor) ||
                     (inc.major == ext.major && inc.minor == ext.minor && inc.micro > ext.micro))) {
-                    
+
                     return;
-                } 
+                }
             }
-            
+
             // check requirements
             if (typeof requirements !== 'undefined' && requirements) {
                 i = 0;
                 while(requirement = requirements[i++]) {
-                    var requirementName = requirement.name, 
+                    var requirementName = requirement.name,
                         error = 'Module registration failure: module ' + name + ' requires module ' + requirementName;
-                        
+
                     if (typeof requirementName === 'string' && typeof m[requirementName] === 'undefined') {
                         throw new Error(error);
                     }
-                    
+
                     if (typeof requirement.minVersion === 'string') {
                         // parse requirement into major, minor, micro numbers
                         var version = requirement.minVersion.split(/\./), j = 0, existedVersion = m[requirementName].version;
-                        if (existedVersion.major < version[0] || existedVersion.minor < version[1] || 
-                              existedVersion.micro < version[2]) {
+                        if ((existedVersion.major < version[0]) ||
+                          (existedVersion.major == version[0] && existedVersion.minor < version[1]) ||
+                          (existedVersion.major == version[0] && existedVersion.minor == version[1] && existedVersion.micro < version[2])) {
+
                             throw new Error(error + ' version at least ' + requirement.minVersion);
                         }
+
                     }
-                    
+
                     if (typeof requirement.maxVersion === 'string') {
                         // parse requirement into major, minor, micro numbers
                         var version = requirement.maxVersion.split(/\./), j = 0, existedVersion = m[requirementName].version;
-                        if (existedVersion.major > version[0] || existedVersion.minor > version[1] || 
-                              existedVersion.micro > version[2]) {
+                        if ((existedVersion.major > version[0]) ||
+                              (existedVersion.major == version[0] && existedVersion.minor > version[1]) ||
+                              (existedVersion.major == version[0] && existedVersion.minor == version[1] && existedVersion.micro > version[2])) {
                             throw new Error(error + ' version no greater than ' + requirement.maxVersion);
                         }
                     }
                 }
             }
-            
-            
-            
+
+
+
             m[name] = v;
-            
+
             fn(this);
         }
     };
-    
+
     var A = AP, p = A.prototype, i;
 
     // inheritance utilities are not available yet
@@ -238,7 +242,7 @@
            A[i] = p[i];
         }
     }
-    
+
     A.init();
-    
+
 })();

@@ -316,7 +316,7 @@ AP.add("cookie", function(A){
             var subs = this.getSubs(name);
 
             //delete the indicated subcookie
-            if (isObject(subs) && O.owns(subs, subName)){
+            if (isObject(subs) && subs.hasOwnProperty(subName)){
                 delete subs[subName];
 
                 //reset the cookie

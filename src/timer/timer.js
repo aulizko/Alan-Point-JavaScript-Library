@@ -1,4 +1,4 @@
-AP.add('Timer', function (A) {
+AP.add('timer', function (A) {
     A.Timer = A.Timer || {};
 
     var L = A.Lang;
@@ -27,7 +27,7 @@ AP.add('Timer', function (A) {
     A.Timer.later = function(when, o, fn, data, periodic) {
         when = when || 0;
         o = o || {};
-        var m=fn, d=data, f, r;
+        var m = fn, d = data, f, r;
 
         if (L.isString(fn)) {
             m = o[fn];
@@ -59,4 +59,6 @@ AP.add('Timer', function (A) {
         };
     };
 
-}, '0.0.1');
+}, '0.0.1', [
+    { name : 'lang', minVersion : '0.0.1' }
+]);
