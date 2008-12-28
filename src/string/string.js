@@ -61,18 +61,20 @@ AP.add('string', function (A) {
     /**
      * Returns a string without any leading or trailing whitespace.  If 
      * the input is not a string, the input will be returned untouched.
+     * Realization taken from Steven Levitahn trim11 implementation http://blog.stevenlevithan.com/archives/faster-trim-javascript
      * @method trim
      * @static
      * @param s {string} the string to trim
      * @return {string} the trimmed string
      */
-    S.trim = function (s) {
-        try {
-            return s.replace(/^\s+|\s+$/g, "");
-        } catch(e) {
-            return s;
-        }
+    S.trim = function (str) {
+    	var	str = str.replace(/^\s\s*/, ''),
+    		ws = /\s/,
+    		i = str.length;
+    	while (ws.test(str.charAt(--i)));
+    	return str.slice(0, i + 1);
     };
+    
 }, '0.0.1', [
     {
         name : 'lang',
