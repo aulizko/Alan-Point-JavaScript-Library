@@ -44,7 +44,7 @@ AP.add('templateEngine', function (A) {
                 node.positive = {};
                 if (/^'[\w\W]+'$/.test(tempArray[2])) {
                     node.positive.type = 'text';
-                    node.positive.value = tempArray[2].replace(/'/, '');
+                    node.positive.value = tempArray[2].replace(/'/g, '');
                 } else {
                     node.positive.type = 'fill';
                     node.positive.value = tempArray[2];
@@ -60,7 +60,7 @@ AP.add('templateEngine', function (A) {
                     node.negative.positive = {};
                     if (/^'[\w\W]+'$/.test(anotherTempArray[2])) {
                         node.negative.positive.type = 'text';
-                        node.negative.positive.value = anotherTempArray[2].replace(/'/, '');
+                        node.negative.positive.value = anotherTempArray[2].replace(/'/g, '');
                     } else {
                         node.negative.positive.type = 'fill';
                         node.negative.positive.value = anotherTempArray[2];
@@ -76,7 +76,7 @@ AP.add('templateEngine', function (A) {
                     var nestedNode = {};
                     if (/^'[\w\W]+'$/.test(anotherTempArray[1])) {
                         nestedNode.type = 'text';
-                        nestedNode.value = anotherTempArray[1].replace(/'/, '');
+                        nestedNode.value = anotherTempArray[1].replace(/'/g, '');
                     } else {
                         nestedNode.type = 'fill';
                         nestedNode.value = anotherTempArray[1];
@@ -190,7 +190,6 @@ AP.add('templateEngine', function (A) {
     };
     
     T.evaluateToughExpression = function (exp, data) {
-        var result = '';
         // check if exp is javascript expression
         if (/[\W\s]+/.test(exp)) {
             // replace javascript identifiers with its values taken from data
@@ -198,11 +197,10 @@ AP.add('templateEngine', function (A) {
                 var v = a || b || c || '';
                 return ' ' + T.evaluateSimpleExpression(v, data) + ' ';
             });
-            try{ result = eval(pExp); } 
+            try{ return eval(pExp); } 
 			catch (e) {
 			    throw 'Cannot evaluate ' + pExp;
             }
-            return result;
         } else {
             return T.evaluateSimpleExpression(exp, data);
         }
