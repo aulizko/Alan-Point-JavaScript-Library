@@ -1,14 +1,25 @@
 (function () {
+    // var Cap = new AP.Class({
+    //     className : 'cap'
+    // });
+    // var Guitar = new AP.Class({
+    //     className : 'GuiTar'
+    // });
+    
     describe('class', {
         'should exist in the AP namespace' : function () {
             value_of(!!AP.Class).should_be_true();
-            value_of(typeof AP.Class).should_be('object');
+            value_of(typeof AP.Class).should_be('function');
         },
         
-        'should have type class' : function () {
-            value_of(this).should_fail('TODO');
-        },
         // attributes
+        
+        'should have lower cased className attribute' : function () {
+            var cap = new Cap();
+            value_of(cap.getClassName()).should_be('cap');
+            // var guitar = new Guitar();
+            // value_of(guitar.getClassName()).should_be('guitar');
+        },
         
         'should create properties for every member of attributes param' : function () {
             value_of(this).should_fail('TODO');

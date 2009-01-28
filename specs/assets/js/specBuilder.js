@@ -32,7 +32,8 @@ var Builder = {
 			'array'     : ['array'],
 			'object'    : ['object'],
 			'oop'       : ['oop', 'class'],
-			'string'    : ['string', 'stringBuffer']
+			'string'    : ['string', 'stringBuffer'],
+			'specification' : ['specification']
 		},
 
 		specs: {
@@ -41,7 +42,8 @@ var Builder = {
 			'array'     : ['array'],
 			'object'    : ['object'],
 			'oop'       : ['oop', 'class'],
-			'string'    : ['string', 'stringBuffer']
+			'string'    : ['string', 'stringBuffer'],
+			'specification' : ['specification']
 		}
 	},
 
