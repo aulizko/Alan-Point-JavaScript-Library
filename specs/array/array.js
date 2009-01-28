@@ -11,7 +11,7 @@ describe('array', {
     'should return array if node collection passed in' : function () {
         var temp = document.createElement('div');
         document.body.appendChild(temp);
-        temp.innerHTML = '<span>Something</span>';
+        temp.innerHTML = '<span>Something</span><span>Something another</span>';        
         value_of(AP.Lang.isArray(AP.Array(temp.childNodes))).should_be_true();
     },
     

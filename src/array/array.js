@@ -281,4 +281,4 @@ AP.add('array', function (A) {
         }
         return a;
     };
-}, '1.0.0', [ { name : 'lang', version : '0.0.3' } ]);
+}, '1.0.0', [ { name : 'lang', minversion : '0.0.3' } ]);

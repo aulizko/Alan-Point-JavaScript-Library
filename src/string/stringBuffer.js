@@ -47,6 +47,7 @@ AP.add('stringBuffer', function (A) {
         } :
         function (e) {
             this.buffer += e;
+            return this;
         };
     
     /**

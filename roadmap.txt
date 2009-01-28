@@ -69,10 +69,17 @@ Base
     empty DONE
     
   Class?? (MooTools, Prototype, Base2, YUI). Which way?
+  
+    Initializer && destructor - for the supreme. При этом нужно, чтобы инициализатор не вызывался автоматически, но зато вызывался последовательно с самого корня иерархии до последнего подкласса. Для деструктора все обратно - т.е. стартуем с последнего подкласса и добираемся до Class.
+    
+    
+    
+  
     
   Request (IO?)
     query server
     parse response
+    REST
 
   CouchDB.module (see DOJO)
     http://jan.prima.de/~jan/plok/archives/108-Programming-CouchDB-with-Javascript.html
@@ -81,7 +88,7 @@ Base
     http://blog.labnotes.org/2007/09/02/couchdb-thinking-beyond-the-rdbms/
     http://www.infoq.com/interviews/CouchDB-Damien-Katz
     
-  DOM
+  DOM (or consider usage of sizzle and yass)
     getMatchingTarget (move to ordain)
     getMatchingTargetFast (same as above)
     setInnerHTML
@@ -92,6 +99,7 @@ Base
     
   Ordain
     work with DOM.query and Event
+    maybe it is better to use RegLib or jQuery life
   
   FX???
     
