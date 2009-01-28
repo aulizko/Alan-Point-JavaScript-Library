@@ -67,7 +67,7 @@ AP.add('specification', function (A) {
             prop = specification[propName];
             actualProperty = args[propName];
             if (prop.required && !L.isValue(actualProperty)) {
-                throw new Error(prop + ' attribute is mandatory');
+                throw new Error(propName + ' attribute is mandatory');
             }
             
             if (!!actualProperty && !S.__checkType(prop.type, actualProperty)) {
@@ -88,11 +88,12 @@ AP.add('specification', function (A) {
         var prop, i = 0;
         for (var prop, i = 0, length = specification.length; i < length; i++) {
             prop = specification[i];
-            if (prop.required && !L.isValue(args[i])) {
+            actualProperty = args[i];
+            if (prop.required && !L.isValue(actualProperty)) {
                 throw new Error((i + 1) + ' attribute is mandatory');
             }
             
-            if (!!args[i] && !S.__checkType(prop.type, args[i])) {
+            if (!!actualProperty && !S.__checkType(prop.type, actualProperty)) {
                 throw new Error((i + 1) + ' attribute type must be "' + prop.type + '"');
             }
         }
