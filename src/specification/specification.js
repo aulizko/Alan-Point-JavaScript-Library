@@ -15,6 +15,8 @@ AP.add('specification', function (A) {
     
     var S = A.Specification, L = A.Lang;
     
+    S.__augmentedFunctions = {};
+    
     /**
      * Check validates arguments, passed into parent-level function (got by arguments.callee.caller.arguments chain)
      * through so-called specification which passed as argument to the check method itself
@@ -52,6 +54,25 @@ AP.add('specification', function (A) {
         // there is no right specification passed. Let it be.
     };
     
+    
+    /** 
+     * This method augment replace original method, passed in
+     * with new function which first call check with passed in specification and arguments
+     * and than throw error or call old method
+     * @method augment
+     * @param fn {String} name of the method(function) to replace
+     * @param specification  {Object|Array} specification (@see AP~specification~check)
+     * @param @owner {Function|Object} owner of the fn. Optional, default value - window global object
+     */
+    S.augment = function (fn, specification, owner) {
+        var t = owner[fn];
+        owner[fn] = function (a) {
+            S.check(specification);
+            return t.call(owner, a);
+        };
+        
+    };
+    
     /**
      * Inner method which called inside check method when object-like specification passed in
      * @method __objectSpecificationCheck
@@ -67,11 +88,11 @@ AP.add('specification', function (A) {
             prop = specification[propName];
             actualProperty = args[propName];
             if (prop.required && !L.isValue(actualProperty)) {
-                throw new Error(propName + ' attribute is mandatory');
+                throw new Error(propName + ' argument is mandatory');
             }
             
             if (!!actualProperty && !S.__checkType(prop.type, actualProperty)) {
-                throw new Error(propName + ' attribute type must be "' + prop.type + '"');
+                throw new Error(propName + ' argument type must be "' + prop.type + '"');
             }
         }
     };
@@ -90,11 +111,11 @@ AP.add('specification', function (A) {
             prop = specification[i];
             actualProperty = args[i];
             if (prop.required && !L.isValue(actualProperty)) {
-                throw new Error((i + 1) + ' attribute is mandatory');
+                throw new Error((i + 1) + ' argument is mandatory');
             }
             
             if (!!actualProperty && !S.__checkType(prop.type, actualProperty)) {
-                throw new Error((i + 1) + ' attribute type must be "' + prop.type + '"');
+                throw new Error((i + 1) + ' argument type must be "' + prop.type + '"');
             }
         }
     };
@@ -110,39 +131,23 @@ AP.add('specification', function (A) {
      * @return {Boolean} is property match type
      */
     S.__checkType = function (requiredType, property) {
-        if (L.isUndefined(requiredType)) return true;
+        var literalNameToMethodNameTranslator = {
+            'array' : 'isArray',
+            'boolean' : 'isBoolean',
+            'function' : 'isFunction',
+            'date' : 'isDate',
+            'number' : 'isNumber',
+            'object' : 'isObject',
+            'string' : 'isString'
+        };
         
-        var correspondLangMethod = null;
-        switch (requiredType.toLowerCase()) {
-            case 'array':
-                correspondLangMethod = 'isArray';
-                break;
-            case 'boolean':
-                correspondLangMethod = 'isBoolean';
-                break;
-            case 'function':
-                correspondLangMethod = 'isFunction';
-                break;
-            case 'date':
-                correspondLangMethod = 'isDate';
-                break;
-            case 'number':
-                correspondLangMethod = 'isNumber';
-                break;
-            case 'object':
-                correspondLangMethod = 'isObject';
-                break;
-            case 'string':
-                correspondLangMethod = 'isString';
-                break;
-            default:
-                correspondLangMethod = 'isValue';
-        }
-        return L[correspondLangMethod](property);
+        if (L.isUndefined(requiredType)) return true;
+        var t = literalNameToMethodNameTranslator[requiredType];
+        return L[(t) ? t : 'isValue'](property);
     };
     
-    
     // todo: implement value restrictions specification - for example, range for number, length for string&array and so forth
+    // todo: implement structure of nested arguments - like objects passed in method or something like that
     
 }, '0.0.1', [
     { name : 'lang', minversion : '0.0.3' },

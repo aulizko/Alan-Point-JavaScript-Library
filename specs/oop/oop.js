@@ -59,7 +59,6 @@ describe('oop', {
         
         var logger = function () {};
         logger.prototype.log = function(a) {
-            console.log(a);
             messageBoard.push(a);
         };
         
@@ -84,7 +83,6 @@ describe('oop', {
         
         var logger = function () {};
         logger.prototype.log = function(a) {
-            console.log(a);
             messageBoard.push(a);
         };
         

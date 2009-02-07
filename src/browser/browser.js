@@ -7,6 +7,7 @@
 AP.add('browser', function (A) {
     /**
      * Browser/platform detection
+     * @todo check short detection  http://www.thespanner.co.uk/2009/01/29/detecting-browsers-javascript-hacks/
      * @class Browser
      * @static
      */

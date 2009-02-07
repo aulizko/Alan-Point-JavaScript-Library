@@ -31,9 +31,10 @@ var Builder = {
 			'lang'      : ['lang'],
 			'array'     : ['array'],
 			'object'    : ['object'],
+			'specification' : ['specification'],
 			'oop'       : ['oop', 'class'],
-			'string'    : ['string', 'stringBuffer'],
-			'specification' : ['specification']
+			'string'    : ['string', 'stringBuffer']
+			
 		},
 
 		specs: {
@@ -41,9 +42,10 @@ var Builder = {
 			'lang'      : ['lang', 'isUndefined', 'isNull', 'isArray', 'isBoolean', 'isFunction', 'isDate', 'isNumber', 'isObject', 'isString', 'isValue', 'compare'],
 			'array'     : ['array'],
 			'object'    : ['object'],
+			'specification' : ['specification'],
 			'oop'       : ['oop', 'class'],
-			'string'    : ['string', 'stringBuffer'],
-			'specification' : ['specification']
+			'string'    : ['string', 'stringBuffer']
+			
 		}
 	},
 

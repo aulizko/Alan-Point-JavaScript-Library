@@ -21,7 +21,7 @@
                 test();
                 value_of(this).should_fail('must throw an error!');
             } catch (e) {
-                value_of(e.message).should_be('name attribute is mandatory');
+                value_of(e.message).should_be('name argument is mandatory');
             }
         },
         
@@ -41,7 +41,7 @@
                 });
                 value_of(this).should_fail('must throw an error!');
             } catch (e) {
-                value_of(e.message).should_be('name attribute type must be "string"');
+                value_of(e.message).should_be('name argument type must be "string"');
             }
         },
         
@@ -59,7 +59,7 @@
                 test();
                 value_of(this).should_fail('must throw an error!');
             } catch (e) {
-                value_of(e.message).should_be('1 attribute is mandatory');
+                value_of(e.message).should_be('1 argument is mandatory');
             }
             
             try {
@@ -91,7 +91,7 @@
                 test(function () {}, new Date());
                 value_of(this).should_fail('must throw an error!');
             } catch (e) {
-                value_of(e.message).should_be('2 attribute type must be "number"');
+                value_of(e.message).should_be('2 argument type must be "number"');
             }
 
             try {
@@ -105,7 +105,57 @@
                 test(function () {}, new Date());
                 value_of(this).should_fail('must throw an error!');
             } catch (e) {
-                value_of(e.message).should_be('2 attribute type must be "number"');
+                value_of(e.message).should_be('2 argument type must be "number"');
+            }
+        },
+        
+        // augment 
+        
+        'should call method, if arguments match contract' : function () {
+            var person = {
+                name : 'John Doe',
+                sayWords : function (message) { return message.words; },
+                sayMessage : function (message) { return message; }
+            };
+            
+            S.augment('sayWords', {
+                words : {
+                    required : true
+                }
+            }, person);
+            
+            value_of(person.sayWords({words : 'different words' })).should_be('different words');
+            
+            S.augment('sayMessage', [ { required : true } ], person);
+            
+            value_of(person.sayMessage('All that moments will be lost in time')).should_be('All that moments will be lost in time');
+        },
+        
+        'should call check method before original method invocation and throw error if contract check failed' : function () {
+            var person = {
+                name : 'John Doe',
+                sayWords : function (message) { return message.words; },
+                sayMessage : function (message) { return message; }
+            };
+            S.augment('sayWords', {
+                words : {
+                    required : true,
+                    type : 'string'
+                }
+            }, person);
+            
+            try {
+                person.sayWords();
+                value_of(this).should_fail('specification must throw an error');
+            } catch (e) {
+                value_of(e.message).should_be('words attribute is mandatory');
+            }
+            
+            try {
+                person.sayWords({ words : { something : 'bo!' } });
+                value_of(this).should_fail('specification must throw an error');
+            } catch (e) {
+                value_of(e.message).should_be('words attribute type must be "string"');
             }
         }
     });
