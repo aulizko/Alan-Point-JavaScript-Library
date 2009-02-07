@@ -21,63 +21,111 @@ AP.add('class', function (A) {
         conf = conf || {};
         
         var name = (conf.className || 'class').toLowerCase(),
-            extend = conf.extend, 
-            mixin = conf.mixin || [],
+            inherit = conf.inherit, 
+            mixins = (conf.mixins) ? A.Array(conf.mixins) : [],
             initialize = conf.initialize || function () {}, // provide way to chain initializers and destructors
             destructor = conf.destructor || function () {},
             attrs = conf.attrs || {};
         
         // todo : try to replace that ugly piece of code with Object filter method (if any)
         delete conf.className;
-        delete conf.extend;
-        delete conf.mixin;
+        delete conf.inherit;
+        delete conf.mixins;
         delete conf.initialize;
         delete conf.destructor;
         delete conf.attrs;
         
         var klass = function () {
-            this.constructor.superclass.constructor.call(this, arguments);
+            klass.superclass.constructor.apply(this, arguments);
             this.__NAME__ = name;
+            var initializeSpecs = {};
             for (var attr in attrs) {
                 var spec = attrs[attr];
-                this[attr] = spec.value || defaultValues[attrs[attr].type || 'object'];
                 
-                this['get' + camelize(attr)] = (spec.deep) ?
-                    function () {
-                        return deepCopy(this[attr]);
-                    } :
-                    function () {
-                        return this[attr];
-                    };
-                
-                var setterName = 'set' + camelize(attr);
-                
-                this[setterName] = (spec.deep) ? 
-                    function (n) {
-                        this[attr] = deepCopy(n);
-                    } :
-                    function (n) {
-                        this[attr] = n;
-                    };
-                
-                if (spec.type) S.augment(setterName, [{ required : true, type : spec.type }], this);
-                else S.augment(setterName, [{ required : true }], this);
+                if (L.isValue(spec.value) && spec.readonly) {
+                    // we need to create readonly attribute, so that we need to create getter which should return value
+                    this['get' + camelize(attr)] = function () { return spec.value; };
+                } else {
+                    this[attr] = spec.value || defaultValues[attrs[attr].type || 'object'];
+                    
+                    var setterName = 'set' + camelize(attr), getterName = 'get' + camelize(attr);
+
+                    if (spec.deep) {
+                        this[getterName] = function () {
+                            return deepCopy(this[attr]);
+                        };
+                        
+                        this[setterName] = function (n) {
+                            this[attr] = deepCopy(n);
+                        };
+                    } else {
+                        this[getterName] = function () {
+                            return this[attr];
+                        };
+                        this[setterName] = function (n) {
+                            this[attr] = n;
+                        };
+                    }
+                    
+                    if (spec.type) S.augment(setterName, [{ required : true, type : spec.type }], this);
+                    else S.augment(setterName, [{ required : true }], this);
+                    
+                    if (spec.required || !!spec.validator) {
+                        initializeSpecs[attr] = spec;
+                    }
+                }    
             }
-            initialize.apply(this, arguments);
+            
+            S.augment('initialize', initializeSpecs, this);
+            
+            this.initialize.apply(this, arguments);
+            
+            // this.uber('initialize', arguments);
+            
+            A.stamp(this);
+            
+            A.OOP.mix(klass.prototype, conf, true);
+            
+            return this;
         };
         
-        klass.prototype = conf;
-        A.OOP.extend(klass, root);
+        
+        
+        klass.prototype.constructor = klass;
+
+        if (inherit) {
+            AP.OOP.extend(klass, inherit);
+        } else {
+            AP.OOP.extend(klass, root);
+        }
+        
+        if (mixins.length) { // todo: test if it should work in IE 6
+            var mixin, i = 0;
+            while (mixin = mixins[i++]) {
+                // AP.OOP.mix(klass, mixin, true, null, 1);
+                // AP.OOP.augment(klass, mixin, true);
+            }
+        }
         
         return klass;
     };
     
     var root = function () {
-        this.__NAME__ = 'class';
+        this.initialize();
     };
     
-    root.prototype.getClassName = function () {
-        return this.__NAME__;
+    root.__NAME__ = 'class';
+    
+    root.prototype = {
+        getClassName : function () {
+            return this.__NAME__;
+        },
+        initialize : function () {
+            
+        },
+        toString : function () {
+            return this.getClassName() + '[' + this._uid + ']';
+        }
     };
     
     var camelize = function (str) {
@@ -132,10 +180,10 @@ AP.add('class', function (A) {
         
         return defineCopyMethodByType[type](p);
     };
-    
-    
+        
 }, '0.0.1', [ 
     { name : 'lang', minVersion : '0.0.3' },
     { name : 'specification', minVersion: '0.0.1' },
-    { name : 'oop', minVersion : '0.0.1' }
+    { name : 'oop', minVersion : '0.0.1' },
+    { name : 'array', minVersion : '1.0.0' }
 ]);
