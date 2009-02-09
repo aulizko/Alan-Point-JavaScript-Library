@@ -80,8 +80,6 @@ AP.add('class', function (A) {
             
             this.initialize.apply(this, arguments);
             
-            // this.uber('initialize', arguments);
-            
             A.stamp(this);
             
             A.OOP.mix(klass.prototype, conf, true);
@@ -89,10 +87,6 @@ AP.add('class', function (A) {
             return this;
         };
         
-        
-        
-        klass.prototype.constructor = klass;
-
         if (inherit) {
             AP.OOP.extend(klass, inherit);
         } else {
@@ -100,12 +94,23 @@ AP.add('class', function (A) {
         }
         
         if (mixins.length) { // todo: test if it should work in IE 6
-            var mixin, i = 0;
+            var mixin, i = 0, aggr = {};
+            
             while (mixin = mixins[i++]) {
-                // AP.OOP.mix(klass, mixin, true, null, 1);
-                // AP.OOP.augment(klass, mixin, true);
+                var c = mixin;
+                while (c && c.prototype) {
+                    for (var prop in c.prototype) {
+                        if (prop != 'initialize' && prop != 'getClassName' && prop != 'toString' && prop != 'constructor') {
+                            aggr[prop] = c.prototype[prop];
+                        }
+                    }
+                    c = c.superclass ? c.superclass.constructor : null;
+                }
             }
+            A.OOP.mix(klass.prototype, aggr, true);
         }
+        
+        klass.prototype.constructor = klass;
         
         return klass;
     };
