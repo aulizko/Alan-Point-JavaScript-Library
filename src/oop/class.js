@@ -92,7 +92,7 @@ AP.add('class', function (A) {
         } else {
             AP.OOP.extend(klass, root);
         }
-        
+        // @todo: implement attribute mixins and add mixed attributes initialization to the initialization function
         if (mixins.length) { // todo: test if it should work in IE 6
             var mixin, i = 0, aggr = {};
             
