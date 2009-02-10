@@ -77,23 +77,26 @@ Base
     6. он должен принимать объект attributes, и если у них есть поле "value", то он должен их инициализировать
     7. Валидаторы! Аттрибуты должны понимать, что такое валидаторы и спокойно давать его использовать.
     
-  QuerySelector (or consider usage of sizzle and yass)
-    getMatchingTarget (move to ordain)
-    getMatchingTargetFast (same as above)
-    setInnerHTML
-    empty
-    query
-    attr
-    remove
+  QuerySelector (or consider usage of sizzle and yass) DONE
     
   Dom manipulation
+    setInnerHTML
+    empty
+    attr
+    remove
+    getMatchingTarget (move to ordain)
+    getMatchingTargetFast (same as above)
+    
+  DOM Event manipulation
+    bind event listeners
+    prevent memory leaks
   
   Widget && Plugin infrastructure
     
     
   FX???
     Look through simpleJS, MooTools, Dojo, jQuery :)
-    
+    query
     
   Request (IO?)
     query server
