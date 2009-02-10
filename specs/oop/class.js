@@ -76,7 +76,7 @@
             var guitar = new Guitar();
             value_of(guitar.getClassName()).should_be('guitar');
         },
-        
+                
         'should create properties for every member of attributes param' : function () {
             var cap = new Cap({ color : 'red', owner : { name : 'bo!' } });
             
@@ -194,7 +194,7 @@
             value_of(efficientBulb.shine()).should_be('Light');
             // value_of(efficientBulb.getPower()).should_be(80);
         },
-        
+
         'should not change prototype chain by augmenting' : function () {
             var EfficientBulb = new AP.Class({
                 className : 'efficientBulb',
