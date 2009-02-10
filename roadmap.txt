@@ -68,7 +68,10 @@ Base
     ToString DONE
     empty DONE
     
-  Class?? (MooTools, Prototype, Base2, YUI). Which way? Done
+  Specification DONE
+    Validators !!! (todo)
+    
+  Class?? (MooTools, Prototype, Base2, YUI). Almost done
     1. название метода Class
     2. он должен уметь делать extend
     3. он должен уметь делать augment
@@ -77,27 +80,35 @@ Base
     6. он должен принимать объект attributes, и если у них есть поле "value", то он должен их инициализировать
     7. Валидаторы! Аттрибуты должны понимать, что такое валидаторы и спокойно давать его использовать.
     
-  QuerySelector (or consider usage of sizzle and yass) DONE
-    
-  Dom manipulation
-    setInnerHTML
-    empty
-    attr
-    remove
-    getMatchingTarget (move to ordain)
-    getMatchingTargetFast (same as above)
-    
-  DOM Event manipulation
-    bind event listeners
-    prevent memory leaks
-  
-  Widget && Plugin infrastructure
-    
-    
+  DOM:
+    Query Selector
+    DOM Manipulation
+      setInnerHTML
+      empty
+      query
+      attr
+      value
+      class
+      visibility
+      remove
+    DOM event binding
+      getMatchingTarget (move to ordain)
+      getMatchingTargetFast (same as above)
+      prevent memory leaks
+      Implement "live" event binding, like reglib or jQuery live provide
+
   FX???
     Look through simpleJS, MooTools, Dojo, jQuery :)
-    query
-    
+
+  Widget && plugins infrastructure
+
+  Widget
+    Spinner
+    ImageGallery
+    Wysiwyg
+    MultiUploader
+
+
   Request (IO?)
     query server
     parse response
@@ -111,15 +122,7 @@ Base
     http://blog.labnotes.org/2007/09/02/couchdb-thinking-beyond-the-rdbms/
     http://www.infoq.com/interviews/CouchDB-Damien-Katz
     
-    
-  
-    
-  Ordain
-    work with DOM.query and Event
-    maybe it is better to use RegLib or jQuery life
-  
-  
-    
+
   Cookie
     get
     getSub(S)
@@ -149,12 +152,6 @@ Base
   
   Mediator (or scoped Observer)
   
-  Widget
-    Spinner
-    ImageGallery
-    Wysiwyg
-    MultiUploader
-    
   Console
   
   Profiler
