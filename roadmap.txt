@@ -68,7 +68,7 @@ Base
     ToString DONE
     empty DONE
     
-  Class?? (MooTools, Prototype, Base2, YUI). Which way?
+  Class?? (MooTools, Prototype, Base2, YUI). Which way? Done
     1. название метода Class
     2. он должен уметь делать extend
     3. он должен уметь делать augment
@@ -76,7 +76,24 @@ Base
     5. Initializer && destructor - for the supreme. При этом нужно, чтобы инициализатор не вызывался автоматически, но зато вызывался последовательно с самого корня иерархии до последнего подкласса. Для деструктора все обратно - т.е. стартуем с последнего подкласса и добираемся до Class.
     6. он должен принимать объект attributes, и если у них есть поле "value", то он должен их инициализировать
     7. Валидаторы! Аттрибуты должны понимать, что такое валидаторы и спокойно давать его использовать.
+    
+  QuerySelector (or consider usage of sizzle and yass)
+    getMatchingTarget (move to ordain)
+    getMatchingTargetFast (same as above)
+    setInnerHTML
+    empty
+    query
+    attr
+    remove
+    
+  Dom manipulation
   
+  Widget && Plugin infrastructure
+    
+    
+  FX???
+    Look through simpleJS, MooTools, Dojo, jQuery :)
+    
     
   Request (IO?)
     query server
@@ -91,21 +108,14 @@ Base
     http://blog.labnotes.org/2007/09/02/couchdb-thinking-beyond-the-rdbms/
     http://www.infoq.com/interviews/CouchDB-Damien-Katz
     
-  DOM (or consider usage of sizzle and yass)
-    getMatchingTarget (move to ordain)
-    getMatchingTargetFast (same as above)
-    setInnerHTML
-    empty
-    query
-    attr
-    remove
+    
+  
     
   Ordain
     work with DOM.query and Event
     maybe it is better to use RegLib or jQuery life
   
-  FX???
-    Look through simpleJS, MooTools, Dojo, jQuery :)
+  
     
   Cookie
     get
