@@ -81,7 +81,8 @@ Base
     7. Валидаторы! Аттрибуты должны понимать, что такое валидаторы и спокойно давать его использовать.
     
   DOM:
-    Query Selector
+    Query Selector DONE
+    Node (in purpose to produce jQuery-like dhtml) Done
     DOM Manipulation
       setInnerHTML
       empty
