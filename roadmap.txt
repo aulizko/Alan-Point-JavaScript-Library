@@ -84,7 +84,7 @@ Base
     Query Selector DONE
     Node (in purpose to produce jQuery-like dhtml) Done
     DOM Manipulation
-      setInnerHTML
+      setInnerHTML Done
       empty
       query
       attr
