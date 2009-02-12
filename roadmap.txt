@@ -81,12 +81,12 @@ Base
     7. Валидаторы! Аттрибуты должны понимать, что такое валидаторы и спокойно давать его использовать.
     
   DOM:
-    Query Selector DONE
+[    Query Selector DONE
     Node (in purpose to produce jQuery-like dhtml) Done
     DOM Manipulation
       setInnerHTML Done
       empty Done
-      color 
+      color Done
       attr
       value
       class
@@ -96,7 +96,7 @@ Base
       getMatchingTarget (move to ordain)
       getMatchingTargetFast (same as above)
       prevent memory leaks
-      Implement "live" event binding, like reglib or jQuery live provide
+      Implement "live" event binding, like reglib or jQuery live provide ] Temporary replaced with jQuery (I completely overladen with that cherinfo.ru)
 
   FX???
     Look through simpleJS, MooTools, Dojo, jQuery :)

@@ -9,7 +9,6 @@ AP.add('color', function (A) {
     
     A.Color.prototype = {
         set : function (color) {
-            console.log(color);
             if (/rgb/.test(color)) {
                 this.color = AP.ColorUtils.rgbToHex(color);
             } else {
