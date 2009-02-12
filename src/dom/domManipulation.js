@@ -40,8 +40,8 @@ AP.add('domManipulation', function (A) {
         }
     
     D.setInnerHTML = (ie6) ?
-        function (el, html, fast) {
-            if (fast) {
+        function (el, html, unsafe) {
+            if (unsafe) {
                 replaceHTML(el, html);
             } else {
                 // prevent memory leaks - remove cycling links
@@ -76,17 +76,24 @@ AP.add('domManipulation', function (A) {
                 })(el);
 
                 // Удаляем все скрипты из HTML-строки и выставляем свойство innerHTML
-                replaceHTML(el, html.replace(/<script[^>]*>[\S\s]*?<\/script[^>]*>/ig, ""));
-
-                // Возвращаем ссылку на первый дочерний узел
-                return el.firstChild;
+                return replaceHTML(el, html.replace(/<script[^>]*>[\S\s]*?<\/script[^>]*>/ig, ""));
             }
         } :
         function (el, html) {
-            replaceHTML(el, html);
+            return replaceHTML(el, html);
         };
     
-    
+    D.empty = (ie6) ?
+        function (el, unsafe) {
+            if (unsafe) {
+                return D.setInnerHTML(el, '', 1);
+            } else {
+                return D.setInnerHTML(el, '');
+            }
+        } :
+        function (el) {
+            return D.setInnerHTML(el, '');
+        };
     
 }, '0.0.1', [
     { name : 'browser', minVersion : '0.0.2' }

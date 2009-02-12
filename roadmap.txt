@@ -85,8 +85,7 @@ Base
     Node (in purpose to produce jQuery-like dhtml) Done
     DOM Manipulation
       setInnerHTML Done
-      empty
-      query
+      empty Done
       attr
       value
       class
@@ -100,6 +99,7 @@ Base
 
   FX???
     Look through simpleJS, MooTools, Dojo, jQuery :)
+    query
 
   Widget && plugins infrastructure
 
