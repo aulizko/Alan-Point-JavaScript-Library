@@ -86,6 +86,7 @@ Base
     DOM Manipulation
       setInnerHTML Done
       empty Done
+      color 
       attr
       value
       class

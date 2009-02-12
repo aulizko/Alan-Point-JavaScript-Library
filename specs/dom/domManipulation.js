@@ -50,6 +50,43 @@
             var p = document.getElementById('testDiv');
             p = D.empty(p);
             value_of(p.innerHTML).should_be('');
+        },
+        
+        // attribute manipulation
+        
+        'should set arbitrary element attribute' : function () {
+            var p = document.getElementById('testDiv');
+            D.setAttribute(p, 'alanpoint', '3444');
+            value_of(p.alanpoint).should_be('3444');
+        },
+        
+        'should get attribute value' : function () {
+            var p = document.getElementById('testDiv');
+            p.alanpoint = '3444';
+            value_of(D.getAttribute(p, 'alanpoint')).should_be('3444');
+        },
+        
+        'should search inside style property if necessary in purpose to get attribute value' : function () {
+            var p = document.getElementById('testDiv');
+            value_of(D.getAttribute(p, 'visibility')).should_be('visible');
+        },
+        
+        'should search inside className attribute if class attribute value asked for' : function () {
+            var p = document.getElementById('testDiv');
+            p.className = 'rock';
+            value_of(D.getAttribute(p, 'class')).should_be('rock');
+        },
+        
+        'should convert class attribute name to the className attribute' : function () {
+            var p = document.getElementById('testDiv');
+            D.setAttribute(p, 'class', 'rock');
+            value_of(p.className).should_be('rock');
+        },
+        
+        'should convert css-like attribute names into camelCase properties' : function () {
+            var p = document.getElementById('testDiv');
+            D.setAttribute(p, 'background-color', 'ccc');
+            value_of(p.style.backgroundColor).should_be('#cccccc');
         }
     });
 })();

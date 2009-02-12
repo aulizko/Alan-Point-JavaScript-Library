@@ -34,7 +34,7 @@ var Builder = {
 			'specification' : ['specification'],
 			'oop'       : ['oop', 'class'],
 			'string'    : ['string', 'stringBuffer'],
-			'dom'       : ['sizzle', 'domManipulation', 'node']
+			'dom'       : ['sizzle', 'color', 'domManipulation', 'node']
 		},
 
 		specs: {
@@ -45,7 +45,7 @@ var Builder = {
 			'specification' : ['specification'],
 			'oop'       : ['oop', 'class'],
 			'string'    : ['string', 'stringBuffer'],
-			'dom'       : ['sizzle', 'domManipulation', 'node']
+			'dom'       : ['sizzle', 'color', 'domManipulation', 'node']
 			
 		}
 	},
