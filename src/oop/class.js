@@ -25,7 +25,7 @@ AP.add('class', function (A) {
             mixins = (conf.mixins) ? A.Array(conf.mixins) : [],
             initialize = conf.initialize || function () {}, // provide way to chain initializers and destructors
             destructor = conf.destructor || function () {},
-            attrs = conf.attrs || {};
+            attributes = conf.attributes || {};
         
         // todo : try to replace that ugly piece of code with Object filter method (if any)
         delete conf.className;
@@ -33,20 +33,20 @@ AP.add('class', function (A) {
         delete conf.mixins;
         delete conf.initialize;
         delete conf.destructor;
-        delete conf.attrs;
+        delete conf.attributes;
         
         var klass = function () {
             klass.superclass.constructor.apply(this, arguments);
             this.__NAME__ = name;
             var initializeSpecs = {};
-            for (var attr in attrs) {
-                var spec = attrs[attr];
+            for (var attr in attributes) {
+                var spec = attributes[attr];
                 
                 if (L.isValue(spec.value) && spec.readonly) {
                     // we need to create readonly attribute, so that we need to create getter which should return value
                     this['get' + camelize(attr)] = function () { return spec.value; };
                 } else {
-                    this[attr] = spec.value || defaultValues[attrs[attr].type || 'object'];
+                    this[attr] = spec.value || defaultValues[attributes[attr].type || 'object'];
                     
                     var setterName = 'set' + camelize(attr), getterName = 'get' + camelize(attr);
 

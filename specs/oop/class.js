@@ -1,7 +1,7 @@
 (function () {
     var Cap = new AP.Class({
         className : 'cap',
-        attrs : {
+        attributes : {
             color : {
                 required : true,
                 type : 'string'
@@ -32,7 +32,7 @@
     
     Lamp = new AP.Class({ 
         className : 'lamp',
-        attrs : {
+        attributes : {
             power : {
                 type : 'number',
                 required : true
@@ -48,7 +48,7 @@
     
     Blink = new AP.Class({
         className : 'blink',
-        attrs : {
+        attributes : {
             angleOfCoverage : {
                 required : true,
                 type : 'number'
@@ -152,7 +152,7 @@
             value_of(cap.getGrahalLike()).should_be('no');
         },
         
-        'should add required attrs to the specification of the initialize method' : function () {
+        'should add required attributes to the specification of the initialize method' : function () {
             try {
                 var cap = new Cap();
                 value_of(this).should_fail('must throw an error');
