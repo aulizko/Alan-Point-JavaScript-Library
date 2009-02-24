@@ -6,7 +6,7 @@
  */
 AP.add('imageloader', function(A) {
     
-    var L = AP.Lang, O = AP.Observer;
+    var L = A.Lang, O = A.Observer, $ = A.Query;
     /**
      * A group for images. A group can have one time limit and a series of triggers. 
      * Thus the images belonging to this group must share these constraints.
@@ -76,7 +76,7 @@ AP.add('imageloader', function(A) {
     };
     
     /**
-     * Adds a trigger to the group. Call this with the same style as YAHOO.util.Event.addListener
+     * Adds a trigger to the group. Call this with the same style as AP.util.Event.addListener
      * @method addTrigger
      * @param event* {String|Object} any number of custom event names or objects which contains DOMEvent type and HTMLElement id or reference.
      * If event is object, he must contain following properties:
@@ -268,7 +268,7 @@ AP.add('imageloader', function(A) {
     A.ImageLoader.backgroundImage = function (el, url) {
         this.constructor.superclass.call(this, domId, url);
     };
-    A.extend(AP.ImageLoader.backgroundImage, AP.ImageLoader.imgObj);
+    A.OOP.extend(AP.ImageLoader.backgroundImage, AP.ImageLoader.imgObj);
     
     /**
      * Inserts the image URL into the DOM so that the image is displayed.
@@ -285,7 +285,7 @@ AP.add('imageloader', function(A) {
      * Source image object. A source image is one whose URL is specified by a src attribute in the DOM element
      * @class ImageLoader.image
      * @constructor
-     * @extends YAHOO.util.ImageLoader.imgObj
+     * @extends AP.ImageLoader.imgObj
      * @param el {String} HTML DOM id of the image element
      * @param url {String} URL for the image
      * @param misc {Object}	pixel width and height of the image - defaults to image's natural size
@@ -296,7 +296,7 @@ AP.add('imageloader', function(A) {
     	this.height = misc.height;
     };
 
-    A.extend(A.ImageLoader.image, AP.ImageLoader.imgObj);
+    A.OOP.extend(A.ImageLoader.image, AP.ImageLoader.imgObj);
     
     /**
      * Inserts the image URL into the DOM so that the image is displayed.
@@ -329,10 +329,10 @@ AP.add('imageloader', function(A) {
     	 * @type Object
     	 */
     	this.props = ailProps || {};
-    	this.ie6 = $.browser.msie && (($.browser.version.substr(0, 1) - 0) == 6);
+    	this.ie6 = A.Browser.trident == 6;
     };
 
-    A.extend(A.ImageLoader.backgroundPngImage, A.ImageLoader.imgObj);
+    A.OOP.extend(A.ImageLoader.backgroundPngImage, A.ImageLoader.imgObj);
     
     /**
      * Inserts the image URL into the DOM so that the image is displayed.
@@ -352,4 +352,9 @@ AP.add('imageloader', function(A) {
             el.css('background-image', "url('" + this.url + "')");
     	}
     };
-}, '0.0.1');
+}, '0.0.1', [
+    { name : 'lang', version : '0.0.3' },
+    { name : 'oop', minVersion : '0.0.1' },
+    { name : 'observer' },
+    { name : 'query' }
+]);

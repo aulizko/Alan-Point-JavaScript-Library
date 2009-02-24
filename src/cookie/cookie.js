@@ -419,4 +419,7 @@ AP.add("cookie", function(A){
         }
 
     };
-}, "0.0.1");
+}, "0.0.2", [
+    { name : 'array', minVersion : '1.0.0' },
+    { name : 'object', minVersion : '0.0.1' }
+]);

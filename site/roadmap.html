@@ -1,0 +1,244 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
+<html>
+    <head>
+        <meta http-equiv="Content-type" content="text/html; charset=utf-8">
+        <title>
+            Roadmap ~ Alanpoint UI Library
+        </title>
+        <link rel="stylesheet" href="css/reset.css" type="text/css" media="screen" title="reset" charset="utf-8">
+        <style type="text/css" media="screen">
+            table {
+                width: 100%;
+                text-align: left;
+            }
+            h3 {
+                text-align: left;
+            }
+            table ul {
+                margin: 2px 0;
+                padding: 0;
+                display :none;
+                list-style-type: none;
+            }
+
+            /* completness */
+            .complete {
+                background-color: green;
+            }
+        </style>
+    </head>
+    <body>
+        <h1>
+            AlanPoint UI library: roadmap
+        </h1>
+        <ul class="menu">
+            <li>
+                <a href="/">Главная</a>
+            </li>
+            <li class="active">
+                <a href="/api">API</a>
+            </li>
+            <li>
+                <a href="/roadmap">Roadmap</a>
+            </li>
+        </ul>
+        <h2>Roadmap</h2>
+        <table cellpadding="0" cellspacing="0">
+            <tr>
+                <th width="10%">Completeness</th>
+                <th>
+                    Title
+                </th>
+            </tr>
+            <tr class="complete">
+                <td>
+                    100%
+                </td>
+                <td>
+                    <h3>Base</h3>
+                    <ul><li>namespace</li>
+                                        <li>lambda</li>
+                                        <li>log</li>
+                                        <li>add</li>
+                                        <li>stamp</li></ul>
+                    <!-- <table>
+                        <tr><td>namespace</td></tr>
+                        <tr><td>lambda</td></tr>
+                        <tr><td>log</td></tr>
+                        <tr><td>add</td></tr>
+                        <tr><td>stamp</td></tr>
+                    </table> -->
+                </td>
+            </tr>
+        </table>
+        <script type="text/javascript" charset="utf-8" src="src/core/core.js"></script>
+        <script type="text/javascript" charset="utf-8" src="src/dom/jquery.js"></script>
+        <script type="text/javascript" charset="utf-8">
+            (function () {
+                var $ = AP.Query;
+
+                $('table h3').click(function (e) {
+                    $(this).siblings('ul').show('slow');
+                });
+
+                $('.forewords h2').click(function (e) {
+                    $('.forewords ul').toggle('visibility');
+                })
+
+            })();
+
+        </script>
+
+
+        <!-- 
+          Browser DONE
+            trident
+            presto
+            webkit
+            gecko
+            platform
+
+          OO DONE
+            merge DONE
+            mix DONE
+            augment DONE
+            aggregate ?
+            extend DONE
+
+          Object DONE
+            each DONE
+            clear DONE
+            keys DONE
+            filter DONE
+            map DONE
+            some DONE
+            every DONE
+            indexOf DONE
+
+          Array DONE
+            each DONE
+            filter DONE
+            map DONE 
+            some DONE
+            every DONE
+            foldl TODO: review
+            foldr TODO: review
+            unique DONE
+            clean DONE
+            array (return array based on provided argument) DONE
+            indexOf DONE
+            hash DONE
+            erase DONE
+
+          Lang DONE
+
+          String DONE
+            unescapeHTML DONE
+            pluralize DONE
+            capitalize DONE
+            trim DONE
+
+          StringBuffer DONE
+            add DONE
+            ToString DONE
+            empty DONE
+
+          Specification DONE
+            Validators !!! (todo)
+
+          Class?? (MooTools, Prototype, Base2, YUI). Almost done
+            1. название метода Class
+            2. он должен уметь делать extend
+            3. он должен уметь делать augment
+            4. он должен уметь сохранять иерархию
+            5. Initializer && destructor - for the supreme. При этом нужно, чтобы инициализатор не вызывался автоматически, но зато вызывался последовательно с самого корня иерархии до последнего подкласса. Для деструктора все обратно - т.е. стартуем с последнего подкласса и добираемся до Class.
+            6. он должен принимать объект attributes, и если у них есть поле "value", то он должен их инициализировать
+            7. Валидаторы! Аттрибуты должны понимать, что такое валидаторы и спокойно давать его использовать.
+
+          DOM:
+        [    Query Selector DONE
+            Node (in purpose to produce jQuery-like dhtml) Done
+            DOM Manipulation
+              setInnerHTML Done
+              empty Done
+              color Done
+              attr
+              value
+              class
+              visibility
+              remove
+              css (style)
+            DOM event binding
+              getMatchingTarget (move to ordain)
+              getMatchingTargetFast (same as above)
+              prevent memory leaks
+              Implement "live" event binding, like reglib or jQuery live provide 
+
+          FX???
+            Look through simpleJS, MooTools, Dojo, jQuery :)
+            query ] Temporary replaced with jQuery (I completely overladen with that cherinfo.ru)
+
+          Widgets infrastructure
+
+
+          Widgets:
+            Spinner
+            ImageGallery
+            Wysiwyg
+
+          Request (IO?)
+            query server
+            parse response
+            REST
+            MultiUpload (Flash || Java Applet)
+
+          ClientSide storage
+
+          CouchDB.module (see DOJO, jqCouch)
+            ~/projects/javascript/jqCouch
+            http://jan.prima.de/~jan/plok/archives/108-Programming-CouchDB-with-Javascript.html
+            http://www.cmlenz.net/archives/2007/10/couchdb-joins
+            http://eflorenzano.com/blog/post/why-couchdb-rocks/
+            http://blog.labnotes.org/2007/09/02/couchdb-thinking-beyond-the-rdbms/
+            http://www.infoq.com/interviews/CouchDB-Damien-Katz
+
+
+          Cookie done
+            get done
+            getSub(S) done
+            set done
+            setSub(s) done
+            remove done
+
+          History
+
+          Timer done
+            later done
+            cancel done
+
+          ImageLoader
+
+          JSON
+            encode
+            decode
+
+          Queue (maybe, chain?)
+
+          Supreme
+            add
+            run
+
+          Observer (or use event utility to implement fireEvent and all that with our objects)
+
+          Mediator (or scoped Observer)
+
+          Console
+
+          Profiler
+
+          Build Tool -->
+        
+    </body>
+</html>
+

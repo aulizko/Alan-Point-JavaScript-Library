@@ -2,9 +2,12 @@
 AP.add('history', function (A) {
     /**
      * History managment, for ajax-based pages
+     * Inspired with jQuery history plugin
      * @module history
      * @class History
      * @constructor
+     * todo: augment with cool modules mechanism inspired from HistoryManager MooTools plugin
+     * todo: try to avoid clicking sound in ie with activeX object (read javascript.ru cross-site scripting article)
      */
     A.History = function () {
         var
@@ -26,13 +29,17 @@ AP.add('history', function (A) {
         isFirst,
 
         dontCheck,
+        
+        ie = A.Browser.trident,
+        
+        safari = A.Browser.webkit,
 
         check = function () {
             var i, hash;
-            if($.browser.msie) {
+            if(ie) {
                 // On IE, check for location.hash of iframe
                 return function () {
-                    var ihistory = $("#APHistory")[0];
+                    var ihistory = document.getElementById('APHistory');
                     var iframe = ihistory.contentDocument || ihistory.contentWindow.document;
                     hash = iframe.location.hash;
                     if(hash != currentHash) {
@@ -42,7 +49,7 @@ AP.add('history', function (A) {
                         _callback(hash.replace(/^#/, ''));
                     }
                 };
-            } else if ($.browser.safari) {
+            } else if (safari) {
                 return function () {
                     if (dontCheck) {
                         var historyDelta = history.length - historyBackStack.length;
@@ -87,7 +94,7 @@ AP.add('history', function (A) {
 
         return {
             initialize : function (callback) {
-                if ($.browser.msie) {
+                if (ie) {
                     return function (callback) {
                         _callback = callback;
                         currentHash = location.hash;
@@ -97,16 +104,25 @@ AP.add('history', function (A) {
                         }
 
                         // add hidden iframe for IE
-                        $("body").prepend('<iframe id="APHistory" style="display: none;"></iframe>');
-                        var iframe = $("#APHistory")[0].contentWindow.document;
+                        var temp = document.createElement('iframe');
+                        temp.id = 'APHistory';
+                        temp.style.display = 'none';
+                        document.body.appendChild(temp);
+                        
+                        
+                        var iframe = temp.contentWindow.document;
+                        
                         iframe.open();
                         iframe.close();
                         iframe.location.hash = currentHash;
                         
                         _callback(currentHash.replace(/^#/, ''));
                         setInterval(check, 100);
+                        
+                        temp = null;
+                        delete temp;
                     };
-                } else if ($.browser.safari) {
+                } else if (safari) {
                     return function (callback) {
                         _callback = callback;
                         currentHash = location.hash;
@@ -144,7 +160,7 @@ AP.add('history', function (A) {
              * @param hash {String} desiring hash without first #
              */
             load : function(hash) {
-                if ($.browser.safari) {
+                if (safari) {
                     return function (hash) {
                         var newhash;
                         newhash = hash;
@@ -165,7 +181,7 @@ AP.add('history', function (A) {
                         //      URL in the browser and the "history" object are both updated correctly.
                         location.hash = newhash;
                     };
-                } else if ($.browser.msie) {
+                } else if (ie) {
                     return function (hash) {
                         var newhash;
                         
@@ -215,4 +231,6 @@ AP.add('history', function (A) {
     }();
 
 
-}, '0.0.1');
+}, '0.0.1', [
+    { name : 'browser', minVersion : '0.0.2' }
+]);

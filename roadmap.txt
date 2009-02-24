@@ -92,29 +92,32 @@ Base
       class
       visibility
       remove
+      css (style)
     DOM event binding
       getMatchingTarget (move to ordain)
       getMatchingTargetFast (same as above)
       prevent memory leaks
-      Implement "live" event binding, like reglib or jQuery live provide ] Temporary replaced with jQuery (I completely overladen with that cherinfo.ru)
+      Implement "live" event binding, like reglib or jQuery live provide 
 
   FX???
     Look through simpleJS, MooTools, Dojo, jQuery :)
-    query
+    query ] Temporary replaced with jQuery (I completely overladen with that cherinfo.ru)
 
-  Widget && plugins infrastructure
+  Widgets infrastructure
+    
 
-  Widget
+  Widgets:
     Spinner
     ImageGallery
     Wysiwyg
-    MultiUploader
-
-
+    
   Request (IO?)
     query server
     parse response
     REST
+    MultiUpload (Flash || Java Applet)
+    
+  ClientSide storage
 
   CouchDB.module (see DOJO, jqCouch)
     ~/projects/javascript/jqCouch
@@ -125,35 +128,36 @@ Base
     http://www.infoq.com/interviews/CouchDB-Damien-Katz
     
 
-  Cookie
-    get
-    getSub(S)
-    set
-    setSub(s)
-    remove
+  Cookie done (test required)
+    get done (test required)
+    getSub(S) done (test required)
+    set done (test required)
+    setSub(s) done (test required)
+    remove done (test required)
     
-  History
+  History done(test required)
   
-  Timer
-    later
-    cancel
+  Timer done
+    later done (test required)
+    cancel done (test required)
     
-  ImageLoader
+  ImageLoader done
   
-  JSON
-    encode
-    decode
+  JSON done (test required)
+    encode done (test required)
+    decode done (test required)
+
+  Observer done (test required)
+  Mediator
     
   Queue (maybe, chain?)
   
   Supreme
     add
     run
-    
-  Observer (or use event utility to implement fireEvent and all that with our objects)
-  
-  Mediator (or scoped Observer)
   
   Console
   
   Profiler
+  
+  Build Tool

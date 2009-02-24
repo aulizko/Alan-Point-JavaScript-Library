@@ -1,19 +1,19 @@
-AP.add("json-parse", function(A) {
+AP.add("json-decode", function(A) {
 
 
 /**
- * Provides AP.JSON.parse method to take JSON strings and return native
+ * Provides AP.JSON.decode method to take JSON strings and return native
  * JavaScript objects.
  * The JSON Utility provides methods to serialize JavaScript objects into
- * JSON strings and parse JavaScript objects from strings containing JSON data.
+ * JSON strings and decode JavaScript objects from strings containing JSON data.
  * Three modules are available for inclusion:
  * <ol>
- * <li>1. <code>json-parse</code> for parsing JSON strings into native JavaScript data</li>
- * <li>2. <code>json-stringify</code> for stringification of JavaScript objects into JSON strings</li>
+ * <li>1. <code>json-decode</code> for parsing JSON strings into native JavaScript data</li>
+ * <li>2. <code>json-encode</code> for stringification of JavaScript objects into JSON strings</li>
  * <li>3. <code>json</code> for both parsing and stringification</li>
  * </ol>
  *
- * Both <code>json-parse</code> and <code>json-stringify</code> create functions in a static JSON class under your AP instance (e.g. A.JSON.parse(..)).
+ * Both <code>json-decode</code> and <code>json-encode</code> create functions in a static JSON class under your AP instance (e.g. A.JSON.decode(..)).
  * @class AP.JSON
  * @static
  */
@@ -113,11 +113,11 @@ var
  * @param reviver {function} (optional) function(k,v) passed each key value pair of object literals, allowing pruning or altering values
  * @return {MIXED} the native JavaScript representation of the JSON string
  * @throws SyntaxError
- * @method parse
+ * @method decode
  * @static
  * @public
  */
-AP.JSON.parse = function (s,reviver) {
+AP.JSON.decode = function (s,reviver) {
     // Ensure valid JSON
     if (typeof s === 'string') {
         // Replace certain Unicode characters that are otherwise handled
@@ -139,19 +139,19 @@ AP.JSON.parse = function (s,reviver) {
     }
 
     // The text is not JSON parsable
-    throw new SyntaxError('parseJSON');
+    throw new SyntaxError('decodeJSON');
 };
 
 
 }, '0.0.1' );
 
 
-AP.add("json-stringify", function(A) {
+AP.add("json-encode", function(A) {
 
 /**
- * Provides A.JSON.stringify method for converting objects to JSON strings.
+ * Provides A.JSON.encode method for converting objects to JSON strings.
  * @module json
- * @submodule json-stringify
+ * @submodule json-encode
  * @for JSON
  * @static
  */
@@ -190,7 +190,7 @@ A.mix(A.JSON,{
 
     /**
      * Serializes a Date instance as a UTC date string.  Used internally by
-     * stringify.  Override this method if you need Dates serialized in a
+     * encode.  Override this method if you need Dates serialized in a
      * different format.
      * @method dateToString
      * @param d {Date} The Date to serialize
@@ -216,7 +216,7 @@ A.mix(A.JSON,{
      * If a whitelist is provided, only matching object keys will be included.
      * If a depth limit is provided, objects and arrays at that depth will
      * be stringified as empty.
-     * @method stringify
+     * @method encode
      * @param o {MIXED} any arbitrary object to convert to JSON string
      * @param w {Array|Function} (optional) whitelist of acceptable object
      *                  keys to include, or a replacer function to modify the
@@ -227,7 +227,7 @@ A.mix(A.JSON,{
      * @static
      * @public
      */
-    stringify : function (o,w,d) {
+    encode : function (o,w,d) {
 
         var m      = A.JSON._CHARS,
             str_re = A.JSON._SPECIAL_CHARS,
@@ -256,7 +256,7 @@ A.mix(A.JSON,{
 
         // Worker function.  Fork behavior on data type and recurse objects and
         // arrays per the configured depth.
-        var _stringify = function (h,key,d) {
+        var _encode = function (h,key,d) {
             var o = typeof rep === 'function' ? rep.call(h,key,h[key]) : h[key],
                 t = typeof o,
                 i,len,j, // array iteration
@@ -306,7 +306,7 @@ A.mix(A.JSON,{
                     // Array
                     if (isA(o)) {
                         for (i = o.length - 1; i >= 0; --i) {
-                            a[i] = _stringify(o,i,d-1) || 'null';
+                            a[i] = _encode(o,i,d-1) || 'null';
                         }
 
                     // Object
@@ -316,7 +316,7 @@ A.mix(A.JSON,{
 
                         for (i = 0, j = 0, len = k.length; i < len; ++i) {
                             if (typeof k[i] === 'string') {
-                                v = _stringify(o,k[i],d-1);
+                                v = _encode(o,k[i],d-1);
                                 if (v) {
                                     a[j++] = _string(k[i]) + ':' + v;
                                 }
@@ -338,7 +338,7 @@ A.mix(A.JSON,{
         d = d >= 0 ? d : 1/0;
 
         // process the input
-        return _stringify({'':o},'',d);
+        return _encode({'':o},'',d);
     }
 });
 
