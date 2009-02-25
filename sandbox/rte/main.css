@@ -1,0 +1,542 @@
+body {
+	background-color: #FFFFFF;
+	font-family: Arial;
+	min-width: 1000px;
+	height: 100%;
+    width: 100%;
+    font-size: 80%;
+}
+    
+    .header {
+        background-image: url('images/headerBackground.png');
+        background-repeat: repeat-x;
+        width: 100%;
+        height: 58px;
+		position: fixed;
+    }
+	
+	.wrap {
+		width: 100%;
+		clear: both;
+		margin-top: 120px;
+		float: left;		
+	}
+	
+		.leftColumn {
+			float: left;
+			width: 210px;
+			height: 100%;
+			padding: 1em;		
+		}
+		
+		.rightColumn {
+			float: right;
+			width: 210px;
+			height: 100%;
+			padding: 1em;			
+		}
+		
+		
+		.centralColumn {
+			height: 1000px;			
+			margin: 0 230px 0 230px;
+		}	
+		
+
+/*------------top panel-----------*/
+    
+        .topPanel {
+            background-image: url('images/topPanelBackground.png');
+            background-repeat: repeat-x;
+            height: 23px;
+            padding: 3px 0 0 0;
+            font-size: 0.8em;
+			position: absolute;
+			width: 100%;
+			
+        }
+		
+		.hideTopPanel {
+			display: none;			
+		}
+        
+            .topPanel a {
+                color: #FFFFFF;
+            }
+        
+            .topPanelArrow {
+                background-image: url('images/images.gif');
+                background-repeat: no-repeat;
+                background-position: 0.3% 0%;
+                width: 11px;
+                height: 11px;
+                float: left;
+				margin-left: 0.5em;
+            }
+            
+            .login {
+                color: #FFFFFF;
+                margin-left: 1em;
+                float: left;
+                border-right: 1px solid #FFFFFF;
+                padding-right: 1.5em;                
+            }
+            
+            .cancelAll {
+                padding: 0 1.5em 0 1.5em;
+                border-right: 1px solid #FFFFFF;
+                float: left;
+            }
+            
+            .hidePanel {
+                padding: 0 1.5em 0 1.5em;
+                float: left;
+            }
+            
+            .save {
+                float: right;
+                margin-right: 3em;                
+            }
+			
+			    .saveIcon {
+                    background-image: url('images/images.gif');
+                    background-repeat: no-repeat;
+                    background-position: 2.7% 0%;
+                    width: 14px;
+                    height: 14px;
+                    float: left;
+                    margin-right: 1em;
+                }
+			
+			.showBorders {
+				float: right;
+                margin-right: 3em; 
+			}
+			
+				.showBordersIcon {
+					background-image: url('images/images.gif');
+                    background-repeat: no-repeat;
+                    background-position: 70% 0%;
+                    width: 18px;
+                    height: 14px;
+                    float: left;
+                    margin-right: 1em;
+				}
+/*----------------------panels--------------------*/
+            
+        .panel {
+			width: 100%;
+			font-size: 0.9em;
+			margin-top: 25px;
+			float: left;			
+		}
+		
+			.panel input {
+				margin: 0.6em 0 0 1em;
+				float: left;
+			}
+			
+			.panelSeparatop {
+				margin: 0.6em 1em 0 1em;
+				float: left;
+				width: 1px;
+				height: 15px;
+				border-left: 1px solid #000000;
+			}
+			
+			.panelTitle {
+				float: left;
+				margin: 0.5em 1em 0 2em;
+				padding-right: 1em;
+				border-right: 1px solid #000000;
+			}
+			
+			.panelItem {
+				float: left;
+				width: 31px;
+				height: 22px;
+				margin: 3px 0 0 0.2em;				
+			}
+			
+				.panelIcon {
+					background-image: url('images/images.gif');
+                    background-repeat: no-repeat;                    
+					width: 17px;
+					height: 18px;
+					margin: 0.4em 0 0 0.5em;
+					padding: 1px;
+				}
+			
+				.activeItem {
+					background-color: #E3A951;
+					border-bottom: 1px solid #FFFFFF;
+					border-top: 1px solid #B97A26;
+					height: 26px;					
+					padding: 0px !important;
+				}
+			
+				.activePage {
+					background-color: #F9ECB0;
+					border: 1px solid #D59237;
+					border-bottom: 1px solid #F9ECB0 !important;
+					height: 28px;
+					padding: 0px !important;
+				}
+				
+				.showIcon {
+					background-position: 6% 0%;					
+				}
+			
+			.addLink {
+				float: right;
+				margin-top: 0.5em;
+				margin-right: 1.8em;
+			}
+			
+				.addLink a {
+					color: #000000;
+					font-size: 0.9em;
+					margin-left: 0.3em;
+				}
+				
+				.deleteIcon {
+					float: left;
+					background-image: url('images/images.gif');
+                    background-repeat: no-repeat;
+                    background-position: 9.7% 0%;
+					width: 12px;
+					height: 15px;
+				}
+
+	.settingsIcon {
+		background-position: 5.9% 0%;
+	}
+	
+	.boldIcon {
+		background-position: 12.1% 0%;
+	}
+	
+	.italicIcon {
+		background-position: 15.5% 0%;
+	}
+	
+	.markedListIcon {
+		background-position: 20% 0%;
+	}
+
+	.numListIcon {
+		background-position: 24.1% 0%;
+	}
+	
+	.toLeftIcon {
+		background-position: 29% 0%;
+	}
+	
+	.toRightIcon {
+		background-position: 34.5% 0%;
+	}
+	
+	.hyperlinkIcon {
+		background-position: 39.5% 0%;
+	}
+	
+	.addPictureIcon {
+		background-position: 44% 0%;
+	}
+	
+	.addVideoIcon {
+		background-position: 48.5% 0%;
+	}
+	
+	.addAudioIcon {
+		background-position: 52.4% 0%;
+	}
+	
+	.quotationIcon {
+		background-position: 57% 0%;
+	}
+	
+	.addTableIcon {
+		background-position: 61.6% 0%;
+	}
+	
+	.addFileIcon {
+		background-position: 66.2% 0%;
+	}
+	
+	.dateIcon {
+		background-position: 74.6% 0%;
+	}
+	
+	.addBannerIcon {
+		background-position: 79.7% 0%;
+	}
+	
+	.addNewsIcon {
+		background-position: 84.7% 0%;
+	}
+	
+	.expandIcon {
+		background-position: 89.1% 0%;
+	}
+	
+	.horisontalIcon {
+		background-position: 93.2% 0%;
+	}
+	
+	.verticalIcon {
+		background-position: 97% 0%;
+	}
+	
+	.tableToTopIcon {
+		background-position: 0% 45%;
+	}
+	
+	.tableToBottomIcon {
+		background-position: 3.5% 45%;
+	}
+	
+	.tableToLeftIcon {
+		background-position: 7.2% 45%;
+	}
+	
+	.tableToRightIcon {
+		background-position: 11.5% 45%;
+	}
+	
+	.delRowIcon {
+		background-position: 16.2% 45%;
+	}
+	
+	.delCollumnIcon {
+		background-position: 21% 45%;
+	}
+	
+/*-----------------settings--------------------*/
+    
+	.settingsPanel {
+		clear: both;
+		width: 100%;
+		height: 58px;
+		background-color: #F9ECB0;
+		border-bottom: 1px solid #D59237;		
+	}
+		
+		.settingsInput {
+			float: left;
+			margin: 0.7em 1em 0 1em;
+		}
+		
+			.settingsInputLabel {
+				font-size: 0.7em;
+			}
+			
+			.settingsInput input {
+				border: 1px solid #6D6D56;
+				padding: 4px;				
+			}
+			
+		.settingsPanelIcon {
+			margin-top: 1.6em;
+		}
+		
+		.settingsPanelSeparator {
+			float: left;
+			width: 1px;
+			border-left: 1px solid #3D3D3D;
+			height: 2em;
+			margin: 1.7em 1em 0 1em;
+		}
+		
+		.iconGroup {
+			float: left;
+		}
+		
+			.settingsLabel {
+				position: absolute;
+				font-size: 0.7em;
+				margin: 1.2em 1em 0 1em;
+			}
+
+/*-------elements---------------*/
+
+	.listOfLinks {
+		
+	}
+	
+		.listOfLinks li {
+			margin-bottom: 0.5em;
+		}
+		
+	.subTitle {
+		font-size: 1.3em;
+		margin-bottom: 1em;
+	}
+	
+	.italicTitle {
+		font-size: 1.6em;
+		font-style: italic;
+		margin-bottom: 1em;
+		font-family: Georgia;
+	}
+	
+	.block {
+		border: 3px solid #FFFFFF;
+		padding: 10px;
+	}
+	
+	.block:hover{
+		border: 3px solid #75DDFF;
+	}
+	
+	.addToBlockLink {
+		margin: 0.5em 0 0.5em 0;
+	}
+	
+		.addToBlockLinkIcon {
+			background-position: 25% 43%;
+			width: 11px;
+			height: 11px;
+			float: left;
+			background-image: url('images/images.gif');
+            background-repeat: no-repeat;
+			margin: 0.2em 0.5em 0 0;
+		}
+		
+		.addToBlockLink a {
+			color: #FF6600;
+		}
+	
+	.rightBannerContainer {
+		margin: 1em 0 1em 0;
+	}
+	
+	.poll {
+		
+	}
+	
+		.pollText {
+			color: #666666;
+		}
+		
+			.pollVariants {
+				margin: 1em 0 1em 0;
+				
+			}
+			
+				.pollVariant {
+					width: 10px;
+					height: 10px;
+					background-image: url('images/images.gif');
+					background-repeat: no-repeat;
+					background-position: 27.9% 43%;
+					float: right;
+				}
+				
+					.enabledVariant {				
+						background-position: 27.9% 43%;				
+					}
+					
+					.disabledVariant {				
+						background-position: 30.6% 43%;				
+					}
+			
+			.addVariant {
+				font-style: italic;
+				color: #999999;
+				font-family: Georgia;
+				margin-top: 0.5em;
+			}
+	
+	.news {
+		
+	}
+	
+		.news img {
+			float: left;
+			margin-top: 0.5em;
+		}
+		
+		.newsContent {
+			margin-left: 8em;			
+		}
+		
+			.newsDate {
+				font-size: 0.8em;
+			}
+			
+			.newsCategory {
+				font-size: 0.8em;
+				margin-left: 1em;
+				background-color: #E1F7D9;
+				padding: 0 5px 0 5px;
+			}
+			
+			.newsTitle {
+				margin-top: 0.5em;
+			}
+			
+				.newsTitle a {
+					color: #0099FF;
+				}
+			
+			.newsTextContainer {
+				padding: 2em;
+				background-color: #FCF5D7;
+				margin-top: 2em;
+			}
+			
+				.newsText {
+					font-style: italic;
+				}
+				
+				.newsAuthor {
+					float: right;
+					margin-right: 2em;
+					font-style: italic;
+					color: #0099FF;
+				}
+			
+			.newsTable {
+				margin-top: 2em;
+				width: 100%;						
+			}
+			
+				.newsTable td {					
+					border-bottom: 1px solid #DBC075;
+					padding: 0.5em 0 0.5em 1em;
+				}
+				
+				.titleColumn {
+					width: 60%;
+					background-color: #F9ECB0;
+				}
+				
+				.quantityColumn {
+					width: 20%;
+					padding-left: 1em;
+					background-color: #F9ECB0;
+				}
+				
+				.dateColumn {
+					width: 20%;
+					padding-left: 1em;
+					background-color: #F9ECB0;
+				}
+				
+					.sortArrow {
+						width: 7px;
+						height: 5px;
+						background-image: url('images/images.gif');
+						background-repeat: no-repeat;
+						background-position: 33.2% 43%;
+						position: absolute;
+						margin: -0.7em 0 0 3em;
+					}
+	
+/*-------page structure----------*/
+	
+	
+	
+
+

@@ -75,7 +75,7 @@ describe('array', {
     'should return 2 if dom node collection passed in' : function () {
         var temp = document.createElement('div');
         document.body.appendChild(temp);
-        temp.innerHTML = '<span>Something</span>';
+        temp.innerHTML = '<span>Something</span><span>AnotherOne</span>';
         value_of(AP.Array.test(temp.childNodes)).should_be(2);
     },
     

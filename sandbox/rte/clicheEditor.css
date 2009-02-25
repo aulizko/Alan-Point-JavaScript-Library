@@ -1,0 +1,21 @@
+* html .widgToolbar {
+	width: auto;
+}
+
+body {
+	background-color: white;
+}
+
+.widgIframe {
+	clear: left;
+	width: 100%;
+	height: 200px;
+}
+
+.widgContainer textarea.widgEditor {
+	clear: left;
+	width: 100%;
+	height: 200px;
+	border-top-width: 1px;
+	padding: 0;
+}
