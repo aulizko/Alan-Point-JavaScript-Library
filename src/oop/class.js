@@ -5,190 +5,62 @@
  * @module ap
  * @submodule class
  */
-AP.add('class', function (A) {
-    var S = A.Specification, L = A.Lang;
-    
-    /** 
-     * Root node of the class the hierarchy
-     * and class builder itself
-     * @class AP~class
-     */
-    A.Class = function (conf) {
-        S.check({
-            // todo: write valid specification
-        });
-        
-        conf = conf || {};
-        
-        var name = (conf.className || 'class').toLowerCase(),
-            inherit = conf.inherit, 
-            mixins = (conf.mixins) ? A.Array(conf.mixins) : [],
-            initialize = conf.initialize || function () {}, // provide way to chain initializers and destructors
-            destructor = conf.destructor || function () {},
-            attributes = conf.attributes || {};
-        
-        // todo : try to replace that ugly piece of code with Object filter method (if any)
-        delete conf.className;
-        delete conf.inherit;
-        delete conf.mixins;
-        delete conf.initialize;
-        delete conf.destructor;
-        delete conf.attributes;
-        
-        var klass = function () {
-            klass.superclass.constructor.apply(this, arguments);
-            this.__NAME__ = name;
-            var initializeSpecs = {};
-            for (var attr in attributes) {
-                var spec = attributes[attr];
-                
-                if (L.isValue(spec.value) && spec.readonly) {
-                    // we need to create readonly attribute, so that we need to create getter which should return value
-                    this['get' + camelize(attr)] = function () { return spec.value; };
-                } else {
-                    this[attr] = spec.value || defaultValues[attributes[attr].type || 'object'];
-                    
-                    var setterName = 'set' + camelize(attr), getterName = 'get' + camelize(attr);
+AP.add('class', function(A) {
+    var initializing = false, fnTest = /xyz/.test(function() { xyz; }) ? /\bbase\b/: /.*/;
+    // The base Class implementation (does nothing)
+    var Class = A.Class = function () {};
 
-                    if (spec.deep) {
-                        this[getterName] = function () {
-                            return deepCopy(this[attr]);
-                        };
-                        
-                        this[setterName] = function (n) {
-                            this[attr] = deepCopy(n);
-                        };
-                    } else {
-                        this[getterName] = function () {
-                            return this[attr];
-                        };
-                        this[setterName] = function (n) {
-                            this[attr] = n;
-                        };
-                    }
-                    
-                    if (spec.type) S.augment(setterName, [{ required : true, type : spec.type }], this);
-                    else S.augment(setterName, [{ required : true }], this);
-                    
-                    if (spec.required || !!spec.validator) {
-                        initializeSpecs[attr] = spec;
-                    }
-                }    
-            }
-            
-            S.augment('initialize', initializeSpecs, this);
-            
-            this.initialize.apply(this, arguments);
-            
-            A.stamp(this);
-            
-            A.OOP.mix(klass.prototype, conf, true);
-            
-            return this;
-        };
-        
-        if (inherit) {
-            AP.OOP.extend(klass, inherit);
-        } else {
-            AP.OOP.extend(klass, root);
+    // Create a new Class that inherits from this class
+    Class.extend = function(prop) {
+        var base = this.prototype;
+
+        // Instantiate a base class (but only create the instance,
+        // don't run the init constructor)
+        initializing = true;
+        var prototype = new this();
+        initializing = false;
+
+        // Copy the properties over onto the new prototype
+        for (var name in prop) {
+            // Check if we're overwriting an existing function
+            prototype[name] = typeof prop[name] == "function" &&
+            typeof base[name] == "function" && fnTest.test(prop[name]) ?
+                (function(name, fn) {
+                    return function() {
+                        var tmp = this.base;
+
+                        // Add a new .base() method that is the same method
+                        // but on the super-class
+                        this.base = base[name];
+
+                        // The method only need to be bound temporarily, so we
+                        // remove it when we're done executing
+                        var ret = fn.apply(this, arguments);
+                        this.base = tmp;
+
+                        return ret;
+                    };
+                })(name, prop[name]) :
+                prop[name];
         }
-        // @todo: implement attribute mixins and add mixed attributes initialization to the initialization function
-        if (mixins.length) { // todo: test if it should work in IE 6
-            var mixin, i = 0, aggr = {};
-            
-            while (mixin = mixins[i++]) {
-                var c = mixin;
-                while (c && c.prototype) {
-                    for (var prop in c.prototype) {
-                        if (prop != 'initialize' && prop != 'getClassName' && prop != 'toString' && prop != 'constructor') {
-                            aggr[prop] = c.prototype[prop];
-                        }
-                    }
-                    c = c.superclass ? c.superclass.constructor : null;
-                }
-            }
-            A.OOP.mix(klass.prototype, aggr, true);
+
+        // The dummy class constructor
+        function Class() {
+            // All construction is actually done in the init method
+            if (!initializing && this.init)
+            this.init.apply(this, arguments);
         }
-        
-        klass.prototype.constructor = klass;
-        
-        return klass;
+
+        // Populate our constructed prototype object
+        Class.prototype = prototype;
+
+        // Enforce the constructor to be what we expect
+        Class.constructor = Class;
+
+        // And make this class extendable
+        Class.extend = arguments.callee;
+
+        return Class;
     };
-    
-    var root = function () {
-        this.initialize();
-    };
-    
-    root.__NAME__ = 'class';
-    
-    root.prototype = {
-        getClassName : function () {
-            return this.__NAME__;
-        },
-        initialize : function () {
-            
-        },
-        toString : function () {
-            return this.getClassName() + '[' + this._uid + ']';
-        }
-    };
-    
-    var camelize = function (str) {
-        return str[0].toUpperCase() + str.substring(1, str.length);
-    };
-    
-    var defaultValues = {
-        'string' : '',
-        'number' : 0, 
-        'date' : new Date(),
-        'boolean' : false,
-        'function' : new Function (),
-        'object' : {},
-        'array' : []
-    };
-    
-    var deepCopy = function (p) {
-        var defineCopyMethodByType = {
-            'primitive' : function (p) { return p; },
-            'object' : function (p) {
-                var o = {};
-                for (var prop in p) {
-                    o[prop] = p[prop];
-                }
-                return o;
-            },
-            'date' : function (p) {
-                return new Date(p.toString());
-            },
-            'array' : function (p) {
-                var o = [], i = o.length = p.length;
-                while(i--) {
-                    o[i] = deepCopy(p[i]);
-                }
-                return i;
-            },
-            'function' : function (p) {
-                return new Function (p.name, p.toString());
-            }
-        },
-        type = 'object';
-        
-        if (L.isArray(p)) type = 'array';
-        if (L.isNumber(p) || L.isString(p) || L.isBoolean(p)) {
-            type = 'primitive';
-            if (p.valueOf) {
-                p = p.valueOf();
-            }
-        }
-        if (L.isDate(p)) type = 'date';
-        if (L.isFunction(p)) type = 'function';
-        
-        return defineCopyMethodByType[type](p);
-    };
-        
-}, '0.0.1', [ 
-    { name : 'lang', minVersion : '0.0.3' },
-    { name : 'specification', minVersion: '0.0.1' },
-    { name : 'oop', minVersion : '0.0.1' },
-    { name : 'array', minVersion : '1.0.0' }
-]);
+
+}, '0.0.2', []);

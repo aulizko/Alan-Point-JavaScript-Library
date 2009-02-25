@@ -34,7 +34,7 @@ var Builder = {
 			'specification' : ['specification'],
 			'oop'       : ['oop', 'class'],
 			'string'    : ['string', 'stringBuffer'],
-			'widget'    : ['pluginHoster', 'widget']
+			'widget'    : ['widget']
 		},
 
 		specs: {
@@ -45,7 +45,7 @@ var Builder = {
 			'specification' : ['specification'],
 			'oop'       : ['oop', 'class'],
 			'string'    : ['string', 'stringBuffer'],
-			'widget'    : ['pluginHoster', 'widget']
+			'widget'    : ['widget']
 		}
 	},
 
