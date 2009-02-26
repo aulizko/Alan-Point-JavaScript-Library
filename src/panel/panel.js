@@ -4,6 +4,7 @@ AP.add('panel', function (A) {
         init : function (o) {
             this.base(o);
             A.stamp(this);
+            this.uniqueIdRegex = /%UNIQUE_ID%/g;
             this.conf = {};
             
             if (o.html) {
@@ -70,7 +71,7 @@ AP.add('panel', function (A) {
                         .add('>');
             }, this);
             
-            return html.toString();
+            return html.toString().replace(this.uniqueIdRegex, this._uid);
         },
         registerComponent : function (component) {
             var c = this.components[component.title] = component;

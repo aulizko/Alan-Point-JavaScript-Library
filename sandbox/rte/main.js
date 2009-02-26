@@ -48,7 +48,7 @@
                 },
                 html : '<div class="settingsInput">\
                              <div class="settingsInputLabel">Содержание</div>\
-                             <input value="Содержание">\
+                             <input id="linkContent%UNIQUE_ID%" value="Содержание">\
                          </div>'
             });
             return a;
