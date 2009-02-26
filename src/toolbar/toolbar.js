@@ -21,6 +21,14 @@ AP.add('toolbar', function (A) {
             if (!L.isValue(root) && !L.isValue(root[0].nodeType)) throw new Error('You must set parent dom element for the toolbar with uid ' + this._uid + ' and title ' + this.title);
             var html = this.generateHTML().replace(this.uniqueIdRegex, this._uid);
             root.append(html);
+            
+            var t = this.tabs;
+            O.each(t, function (tab) {
+                tab.content.setParent(root);
+                tab.content.render();
+                tab.content.hide();
+            }, this);
+            
             this.initializeDOMReferences();
             this.initializeGUI();
             this.initializeCallbacks();
@@ -29,8 +37,7 @@ AP.add('toolbar', function (A) {
         generateHTML : function () {
             var html = new StringBuffer('<div id="toolBarPanel%UNIQUE_ID%" class="' + this.conf.panelCssClass + '"><span class="panelTitle">' + this.title + '</span>'); // begin of the container code
             html.add(this.generateHTMLForButtonsAndTabTriggers())
-                .add('</div>')
-                .add(this.generateHTMLForTabContent());
+                .add('</div>');
 
             return html.toString();
         },
@@ -49,9 +56,7 @@ AP.add('toolbar', function (A) {
         generateHTMLForTabContent : function () {
             var html = new StringBuffer(''), t = this.tabs;
             O.each(t, function (tab) {
-                html.add('<div id="toolBarSettingPanel' + tab.title + '%UNIQUE_ID%" class="' + this.conf.settingsPanelCssClass + '">')
-                    .add(tab.content.html)
-                    .add('</div>');
+                tab.content.setParent(this.conf.parent);
             }, this);
             
             return html.toString();
@@ -59,7 +64,7 @@ AP.add('toolbar', function (A) {
         initializeDOMReferences : function () {
             var b = this.buttons, t = this.tabs, d = this.domReferences = {};
             d.buttons = {};
-            d.tabs = { triggers : {}, content : {}};
+            d.tabs = {};
 
             this.container = $('#toolBarPanel' + this._uid);
 
@@ -69,8 +74,7 @@ AP.add('toolbar', function (A) {
             }, this);
             O.each(t, function (tab) {
                 var title = tab.title;
-                d.tabs.triggers[title] = $('#tab' + title + this._uid);
-                d.tabs.content[title] = $('#toolBarSettingPanel' + title + this._uid);
+                d.tabs[title] = $('#tab' + title + this._uid);
             }, this);
         },
         initializeGUI : function () {
@@ -103,23 +107,25 @@ AP.add('toolbar', function (A) {
                 });
             }, this);
             // initialize tab triggers
-            O.each(t, function (tab) {
-                var title = tab.title,
-                    content = d.tabs.content[title].hide(),
+            O.each(t, function (tab, title) {
+                var content = t[title].content,
                     activeTabCssClass = this.conf.activeTabCssClass;
+                
+                d.tabs[title].click(function (e) {
                     
-                d.tabs.triggers[title].click(function (e) {
                     // if correspond tab is hidden, than show it, otherwise, hide it
-                    tab.open = content.css('display') == 'block';
-
-                    O.each(d.tabs.content, function (c, index) { 
+                    tab.visible = content.visible;
+                    
+                    O.each(t, function (anotherTab, index) {
                         if (index != title) {
-                            d.tabs.triggers[index].removeClass(activeTabCssClass);
-                            c.hide();
+                            anotherTab.content.hide();
+                            d.tabs[anotherTab.title].removeClass(activeTabCssClass);
                         }
                     }, this);
-                    if (tab.open) {
+                    
+                    if (tab.visible) {
                         content.hide('fast');
+                        
                         $(this).removeClass(activeTabCssClass);
                     } else {
                         content.show('fast');

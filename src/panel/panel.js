@@ -20,6 +20,7 @@ AP.add('panel', function (A) {
             this.components = {};
             
             this.rendered = false;
+            this.visible = false;
         },
         className : 'panel',
         setParent : function (el) {
@@ -53,6 +54,7 @@ AP.add('panel', function (A) {
             this.buildDOMReferences();
             this.initializeEventListeners();
             this.rendered = true;
+            this.visible = this.container.is(':visible');
         },
         generateHTML : function () {
             var components = this.components,
@@ -120,10 +122,15 @@ AP.add('panel', function (A) {
             }
             if (animationSpeed) this.container.show(animationSpeed);
             else this.container.show();
+            this.visible = true;
         },
         hide : function (animationSpeed) {
+            if (!this.rendered) {
+                this.render();
+            }
             if (animationSpeed) this.container.hide(animationSpeed);
             else this.container.hide();
+            this.visible = false;
         }
     });
 }, '0.0.1', [
