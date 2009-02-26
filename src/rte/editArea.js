@@ -26,11 +26,6 @@ AP.add('editArea', function (A) {
             
             this.conf.parent.append(h);// append iframe to the root element
             
-            
-            
-            
-            
-            
             var html = '<'+'?xml version="1.0" encoding="UTF-8"?'+'><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">STYLE_SHEET</head><body>INITIAL_CONTENT</body></html>';
             var style = '<link rel="stylesheet" type="text/css" media="screen" href="' + this.conf.pathToStylesheet + '" />';
 
@@ -54,6 +49,73 @@ AP.add('editArea', function (A) {
                 $(d).focus(function() {
                     d.designMode = 'on';
                 });
+            }
+            
+            this.backupSelection = {};
+            
+            this.initializeBackupSelection();
+        },
+        initializeBackupSelection : function () {
+            var body = this.conf.body,
+                b = this.backupSelection;
+            b.startContainer = body;
+            b.startOffset = 0;
+            b.endContainer = body;
+            b.endOffset = 0;
+            b.selectionValue = '';
+            b.commonAncestorContainer = body;
+            b.collapsed = true;
+        },
+        initializeEventListeners : function () {
+            var d = $(this.conf.doc);
+            d.
+            $j(EditArea.fn.doc).keypress(function (event) { raiseEvent('iframeKeyPress'); });
+            $j(EditArea.fn.doc).keyup(function (event) { raiseEvent('iframeKeyUp'); });
+            $j(EditArea.fn.doc).mouseup(function (event) {raiseEvent('iframeMouseUp'); });
+            $j(EditArea.fn.doc).mousedown(function (event) {raiseEvent('iframeMouseDown'); });
+            $j(EditArea.fn.doc).focus(function (event) { raiseEvent('iframeFocus'); });
+            // TODO: think, is there way to transfer pressed key into the event
+            $j(EditArea.fn.doc).keydown(function (event) { EditArea.fn.detectPaste(event); return true; });
+            // TODO: check drag events handling in the jQuery framework
+            if (EditArea.fn.doc.addEventListener) {
+                EditArea.fn.doc.addEventListener('dragexit', function (event) { 
+                    EditArea.fn.acceptableChildren(EditArea.fn.body); 
+                    if ($j.browser.mozilla) { 
+                        EditArea.fn.convertSPANs(); 
+                    } 
+                    EditArea.fn.input.value = EditArea.fn.body.innerHTML;
+
+                    // Final cleanout for MS Word cruft
+                    EditArea.fn.input.value = EditArea.fn.input.value.replace(/<\?xml[^>]*>/g, "");
+                    EditArea.fn.input.value = EditArea.fn.input.value.replace(/<[^ >]+:[^>]*>/g, "");
+                    EditArea.fn.input.value = EditArea.fn.input.value.replace(/<\/[^ >]+:[^>]*>/g, "");
+
+                    EditArea.fn.doc.getElementsByTagName("body")[0].innerHTML = EditArea.fn.input.value;
+                }, true);
+            }
+            
+//                var theForm = $j(EditArea.fn.extraInput).parent('form').get(0);
+            var theForm = $j(EditArea.fn.extraInput).parents('form').get(0);
+            var oldOnsubmit = null;
+            // TODO: extract form submition overriding to another method
+            console.log(theForm);
+            /* Find the parent form element */
+            while (theForm.nodeName.toLowerCase() != "form") {
+                theForm = theForm.parentNode;
+            }
+
+            /* Add onsubmit without overwriting existing function calls */
+            oldOnsubmit = theForm.onsubmit;
+
+            if (typeof theForm.onsubmit != "function") {
+                theForm.onsubmit = function() {
+                    return EditArea.fn.updateInput();
+                }
+            } else {
+                theForm.onsubmit = function() {
+                    EditArea.fn.updateInput();
+                    return oldOnsubmit();           
+                }
             }
         }
     });
