@@ -185,6 +185,11 @@ AP.add('toolbar', function (A) {
             this.container.show();
         },
         hide : function () {
+            var t = this.tabs, d = this.domReferences, activeTabCssClass = this.conf.activeTabCssClass;
+            O.each(t, function (tab, title) {
+                d.tabs[title].removeClass(activeTabCssClass);
+                tab.content.hide();
+            }, this);
             this.container.hide();
         }
     });

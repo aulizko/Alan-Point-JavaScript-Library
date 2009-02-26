@@ -10,7 +10,7 @@
     	<!--[if !IE]>--><link rel="stylesheet" href="main.css" type="text/css" /><!--<![endif]-->
     </head>
     <body id="cms">
-    	<div class="header">
+    	<div class="cmsHeader">
     		<div class="topPanel">
     			<div class="topPanelArrow"></div>
     			<span class="login">Терминатор (<a href="">выход</a>)</span>
@@ -21,72 +21,130 @@
     		</div>
     	</div>
     	<div class="wrap">
-    		<div class="leftColumn">
-    			<div class="block">
-    				<h2 class="subTitle">Власть</h2>
-    				<ul class="listOfLinks">
-    					<li><a href="">Мэр</a></li>
-    					<li><a href="">Мэрия</a></li>
-    					<li><a href="">Постановления мэра</a></li>
-    					<li><a href="">Депутаты ГД и ЗСО</a></li>
-    					<li><a href="">Судебная власть</a></li>
-    					<li><a href="">Федеральные органы</a></li>
-    				</ul>
-    			</div>	
-    		</div>
-    		<div class="rightColumn">				
-    			<div class="block">
-    				<h1 class="italicTitle">Баннеры</h1>
-    				<div class="addToBlockLink"><div class="addToBlockLinkIcon"></div><a href="">Добавить баннер</a></div>
-    				<div class="rightBannerContainer"><img src="images/banner.jpg"/></div>
-    			</div>
-    			<div class="block">
-    				<h1 class="italicTitle">Опрос</h1>
-    				<div class="addToBlockLink"><div class="addToBlockLinkIcon"></div><a href="">Добавить опрос</a></div>
-    				<div class="poll">
-    					<div class="pollText">Чего, на ваш взгляд, прежде всего, не хватает для улучшения эстетического облика города?</div>
-    					<ul class="pollVariants listOfLinks">
-    						<li><div class="disabledVariant pollVariant"></div><a href="">Мэр</a></li>
-    						<li><div class="enabledVariant pollVariant"></div><a href="">Мэрия</a></li>
-    						<li><div class="disabledVariant pollVariant"></div><a href="">Постановления мэра</a></li>
-    						<li><div class="enabledVariant pollVariant"></div><a href="">Депутаты ГД и ЗСО</a></li>
-    						<li><div class="disabledVariant pollVariant"></div><a href="">Судебная власть</a></li>
-    						<li><div class="enabledVariant pollVariant"></div><a href="">Федеральные органы</a></li>
-    					</ul>
-    					<a href="" class="addVariant">Добавить вариант</a>
-    				</div>
-    			</div>						
-    		</div>	
-    		<div class="centralColumn">			
-    			<div class="block">
-    				<h1 class="italicTitle">Новости</h1>
-    				<div class="addToBlockLink"><div class="addToBlockLinkIcon"></div><a href="">Добавить новость</a></div>
-    				<div class="news">
-    					<img src="images/news1.jpg"/>
-    					<div class="newsContent">
-    						<span class="newsDate">12 сентября 2008</span><span class="newsCategory">Здоровье и экология</span>
-    						<div class="newsTitle"><a href="">У врачей будет больше стимулов для хорошей работы</a></div>
-    						<div class="newsTextContainer">
-    							<div class="newsText">Призванная уберечь людей от вирусных инфекций, сама эта процедура под знаком вопроса.</div>
-    							<a class="newsAuthor" href="">Автор</a>
-    						</div>
-    						<table class="newsTable">                        
-    							<tr>
-    								<td class="titleColumn">Название</td>
-    								<td class="quantityColumn">Количество</td>
-    								<td class="dateColumn">Дата <div class="sortArrow"></div></td>                        
-    							</tr>
-    							<tr>
-    								<td>asdasdsad</td><td>dasdasdsad</td><td>asdasdsad</td>
-    							</tr>
-    							<tr>
-    								<td>asdsadsad</td><td>sadsadsad</td><td>asdsad</td>
-    							</tr>
-    						</table>
-    					</div>
-    				</div>                
-    			</div>
-    		</div>		
+
+    		<div class="centralColumn">
+                <div class="centralColumnContentWrapper block">
+                    <div class="centralColumnContent">
+                        <div class="mayorTitle">
+                            <h1 class="title">Мэр</h1>
+                            <div class="mayorQuotation">
+                                <img src="images/mayorPhoto5.jpg"/>
+                                <div class="mayorQuotationContent">
+                                    <a class="mayorName" href="">Кувшинников Олег&nbspАлександрович</a>
+                                    <div class="mayorQuotationTextContainer">    
+                                        <span class="openedBracket">«</span>
+                                        <div class="quotationText">Любая реклама должна быть этична и корректна. То, что сейчас иногда происходит, не что иное, как хитрый ход некоторых продавцов техники<span class="closedBracket">»</span></div>
+                                    </div>
+                                    <ul class="mayorsQuotationLinks">
+                                        <li><a href="">Задай вопрос мэру</a></li>
+                                        <li><a class="greenLink" href="">Рабочий график мэра</a></li>
+                                        <li><a class="greenLink" href="">Приёмные дни</a></li>
+                                        <li><a href="">Порядок рассмотрения заявлений и жалоб граждан</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <h1 class="title"><a href="">Заместители</a></h1>
+                        <table class="personTable">
+                            <tr>
+                                <td>
+                                    <img src="images/akishin.jpg"/>                               
+                                    <div class="tablePersonInfo">
+                                        <a href="">Акишин Алексей Макарович</a>
+                                        <div class="quotationPerson">Заместитель мэра города</div>
+                                        <div class="phone"><div class="phoneIcon"></div>55-90-37</div>
+                                    </div>                                                                      
+                                </td>
+                                <td class="leftCell">
+                                    <img src="images/ananenko.jpg"/>                               
+                                    <div class="tablePersonInfo">
+                                        <a href="">Ананенко Сергей Александрович</a>
+                                        <div class="quotationPerson">Заместитель мэра города</div>
+                                        <div class="phone"><div class="phoneIcon"></div>55-90-37</div>
+                                    </div>                                                                      
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <img src="images/savenkov.jpg"/>                               
+                                    <div class="tablePersonInfo">
+                                        <a href="">Савенков Николай Александрович</a>
+                                        <div class="quotationPerson">Заместитель мэра города</div>
+                                        <div class="phone"><div class="phoneIcon"></div>55-90-37</div>
+                                    </div>                                                                      
+                                </td>
+                                <td class="leftCell">
+                                    <img src="images/zubar.jpg"/>                               
+                                    <div class="tablePersonInfo">
+                                        <a href="">Зубарь Сергей Николаевич </a>
+                                        <div class="quotationPerson">Заместитель мэра города</div>
+                                        <div class="phone"><div class="phoneIcon"></div>55-90-37</div>
+                                    </div>                                                                      
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <img src="images/kosarev.jpg"/>                               
+                                    <div class="tablePersonInfo">
+                                        <a href="">Косарев Сергей Николаевич</a>
+                                        <div class="quotationPerson">Заместитель мэра города</div>
+                                        <div class="phone"><div class="phoneIcon"></div>55-90-37</div>
+                                    </div>                                                                      
+                                </td>
+                                <td class="leftCell">
+                                    <img src="images/semichev.jpg"/>                               
+                                    <div class="tablePersonInfo">
+                                        <a href="">Семичев Василий Алексеевич</a>
+                                        <div class="quotationPerson">Заместитель мэра города</div>
+                                        <div class="phone"><div class="phoneIcon"></div>55-90-37</div>
+                                    </div>                                                                      
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <img src="images/krutovski.jpg"/>                               
+                                    <div class="tablePersonInfo">
+                                        <a href="">Крутовский Николай Петрович</a>
+                                        <div class="quotationPerson">Заместитель мэра города</div>
+                                        <div class="phone"><div class="phoneIcon"></div>55-90-37</div>
+                                    </div>                                                                      
+                                </td>                                
+                            </tr>
+                        </table>    
+                        <h1 class="title"><a href="">Помощники мэра</a></h1>                        
+                        <table class="personTable">
+                            <tr>
+                                <td>
+                                    <img src="images/akishin.jpg"/>                               
+                                    <div class="tablePersonInfo">
+                                        <a href="">Акишин Алексей Макарович</a>
+                                        <div class="quotationPerson">Заместитель мэра города</div>
+                                        <div class="phone"><div class="phoneIcon"></div>55-90-37</div>
+                                    </div>                                                                      
+                                </td>
+                                <td class="leftCell">
+                                    <img src="images/ananenko.jpg"/>                               
+                                    <div class="tablePersonInfo">
+                                        <a href="">Ананенко Сергей Александрович</a>
+                                        <div class="quotationPerson">Заместитель мэра города</div>
+                                        <div class="phone"><div class="phoneIcon"></div>55-90-37</div>
+                                    </div>                                                                      
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <img src="images/savenkov.jpg"/>                               
+                                    <div class="tablePersonInfo">
+                                        <a href="">Савенков Николай Александрович</a>
+                                        <div class="quotationPerson">Заместитель мэра города</div>
+                                        <div class="phone"><div class="phoneIcon"></div>55-90-37</div>
+                                    </div>                                                                      
+                                </td>                                
+                            </tr>                            
+                        </table>
+                    </div>  
+                </div>
+            </div>	
     	</div>		
     	<script type="text/javascript" charset="utf-8" src="../../src/core/core.js"></script>
     	<script type="text/javascript" charset="utf-8" src="../../src/browser/browser.js"></script>
@@ -98,6 +156,7 @@
         <script type="text/javascript" charset="utf-8" src="../../src/widget/widget.js"></script>
         <script type="text/javascript" charset="utf-8" src="../../src/panel/panel.js"></script>
         <script type="text/javascript" charset="utf-8" src="../../src/toolbar/toolbar.js"></script>
+        <script type="text/javascript" charset="utf-8" src="../../src/rte/editArea.js"></script>
         <script type="text/javascript" charset="utf-8" src="../../src/rte/rte.js"></script>
         <script type="text/javascript" charset="utf-8" src="main.js"></script>
     </body>

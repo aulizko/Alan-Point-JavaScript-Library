@@ -2,7 +2,7 @@
     var $ = AP.Query, 
     rteToolBar = new AP.ToolBar({
         title : 'Текст',
-        container : $('.header')
+        container : $('.cmsHeader')
     });
     rteToolBar.addButton({
         title : 'Bold',
@@ -99,13 +99,13 @@
                 title : 'addLink',
                 id : 'addLink',
                 eventListeners : {},
-                html : '<div class="addLink"><a href="#" id="addLink%UNIQUE_ID%">Добавить ссылку</a></div>'
+                html : '<div class="settingsPanelLinkWithImage"><div class="plusIcon"></div><a href="#" id="addLink%UNIQUE_ID%">Добавить ссылку</a></div>'
             });
             a.registerComponent({
                 title : 'deleteLink',
                 id : 'deleteLink',
                 eventListeners : {},
-                html : '<div class="addLink hidden"><div class="deleteIcon"></div><a href="#" id="deleteLink%UNIQUE_ID%">Удалить ссылку</a></div>'
+                html : '<div class="settingsPanelLinkWithImage hidden"><div class="deleteIcon"></div><a href="#" id="deleteLink%UNIQUE_ID%">Удалить ссылку</a></div>'
             });
             return a;
         }()
@@ -141,13 +141,13 @@
                 title : 'addPicture',
                 id : 'addPicture',
                 eventListeners : {},
-                html : '<div class="addLink"><a href="#" id="addPicture%UNIQUE_ID%">Добавить изображение</a></div>'
+                html : '<div class="settingsPanelLinkWithImage"><div class="plusIcon"></div><a href="#" id="addPicture%UNIQUE_ID%">Добавить изображение</a></div>'
             });
             a.registerComponent({
                 title : 'deletePicture',
                 id : 'deletePicture', 
                 eventListeners : {},
-                html : '<div class="addLink hidden"><div class="deleteIcon"></div><a href="#" id="deltePicture%UNIQUE_ID%">Удалить изображение</a></div>'
+                html : '<div class="settingsPanelLinkWithImage hidden"><div class="deleteIcon"></div><a href="#" id="deltePicture%UNIQUE_ID%">Удалить изображение</a></div>'
             });
             return a;
         }()
@@ -174,13 +174,13 @@
                 title : 'addVideo',
                 id : 'addVideo',
                 eventListeners : {},
-                html : '<div class="addLink"><a href="#" id="addVideo%UNIQUE_ID%">Добавить видео</a></div>'
+                html : '<div class="settingsPanelLinkWithImage"><div class="plusIcon"></div><a href="#" id="addVideo%UNIQUE_ID%">Добавить видео</a></div>'
             });
             a.registerComponent({
                 title : 'deleteVideo',
                 id : 'deleteVideo', 
                 eventListeners : {},
-                html : '<div class="addLink hidden"><div class="deleteIcon"></div><a href="#" id="deleteVideo%UNIQUE_ID%">Удалить видео</a></div>'
+                html : '<div class="settingsPanelLinkWithImage hidden"><div class="deleteIcon"></div><a href="#" id="deleteVideo%UNIQUE_ID%">Удалить видео</a></div>'
             });
             return a;
         }()
@@ -208,13 +208,13 @@
                 title : 'addAudio',
                 id : 'addAudio',
                 eventListeners : {},
-                html : '<div class="addLink"><a href="#" id="addAudio%UNIQUE_ID%">Добавить аудио</a></div>'
+                html : '<div class="settingsPanelLinkWithImage"><div class="plusIcon"></div><a href="#" id="addAudio%UNIQUE_ID%">Добавить аудио</a></div>'
             });
             a.registerComponent({
                 title : 'deleteAudio',
                 id : 'deleteAudio', 
                 eventListeners : {},
-                html : '<div class="addLink hidden"><div class="deleteIcon"></div><a href="#" id="deleteAudio%UNIQUE_ID%">Удалить аудио</a></div>'
+                html : '<div class="settingsPanelLinkWithImage hidden"><div class="deleteIcon"></div><a href="#" id="deleteAudio%UNIQUE_ID%">Удалить аудио</a></div>'
             });
             
             return a;
@@ -252,13 +252,13 @@
                 title : 'addQuote',
                 id : 'addQuote',
                 eventListeners : {},
-                html : '<div class="addLink"><a href="#" id="addQuote%UNIQUE_ID%">Добавить цитату</a></div>'
+                html : '<div class="settingsPanelLinkWithImage"><div class="plusIcon"></div><a href="#" id="addQuote%UNIQUE_ID%">Добавить цитату</a></div>'
             });
             a.registerComponent({
                 title : 'deleteQuote',
                 id : 'deleteQuote', 
                 eventListeners : {},
-                html : '<div class="addLink hidden"><div class="deleteIcon"></div><a href="#" id="deleteQuote%UNIQUE_ID%">Удалить цитату</a></div>'
+                html : '<div class="settingsPanelLinkWithImage hidden"><div class="deleteIcon"></div><a href="#" id="deleteQuote%UNIQUE_ID%">Удалить цитату</a></div>'
             });
             
             return a;
@@ -313,20 +313,20 @@
                 title : 'makeTableInvisible',
                 id : 'makeTableInvisible',
                 eventListeners : {},
-                html : '<div class="settingsInput"><div class="settingsInputLabel">Сделать таблицу невидимой</div><input type="checkbox" id="makeTableInvisible%UNIQUE_ID%"></input></div>'
+                html : '<div class="checkBoxBlock"><div class="settingsCheckBox"><input type="checkbox" id="makeTableInvisible%UNIQUE_ID%"></input>Сделать таблицу невидимой</div></div>'
             });
             
             a.registerComponent({
                 title : 'addTable',
                 id : 'addTable',
                 eventListeners : {},
-                html : '<div class="addLink"><a href="#" id="addTable%UNIQUE_ID%">Добавить таблицу</a></div>'
+                html : '<div class="settingsPanelLinkWithImage"><div class="plusIcon"></div><a href="" id="addTable%UNIQUE_ID%">Добавить таблицу</a></div>'
             });
             a.registerComponent({
                 title : 'deleteTable',
                 id : 'deleteTable', 
                 eventListeners : {},
-                html : '<div class="addLink hidden"><div class="deleteIcon"></div><a href="#" id="deleteTable%UNIQUE_ID%">Удалить таблицу</a></div>'
+                html : '<div class="settingsPanelLinkWithImage hidden"><div class="deleteIcon"></div><a href="#" id="deleteTable%UNIQUE_ID%">Удалить таблицу</a></div>'
             });
             
             return a;
@@ -356,19 +356,21 @@
                 title : 'addFile',
                 id : 'addFile',
                 eventListeners : {},
-                html : '<div class="addLink"><a href="#" id="addFile%UNIQUE_ID%">Добавить ссылку на файл</a></div>'
+                html : '<div class="settingsPanelLinkWithImage"><div class="plusIcon"></div><a href="#" id="addFile%UNIQUE_ID%">Добавить ссылку на файл</a></div>'
             });
             a.registerComponent({
                 title : 'deleteFile',
                 id : 'deleteFile', 
                 eventListeners : {},
-                html : '<div class="addLink hidden"><div class="deleteIcon"></div><a href="#" id="deleteFile%UNIQUE_ID%">Удалить ссылку на файл</a></div>'
+                html : '<div class="settingsPanelLinkWithImage hidden"><div class="deleteIcon"></div><a href="#" id="deleteFile%UNIQUE_ID%">Удалить ссылку на файл</a></div>'
             });
             
             return a;
         }()
     });
     rteToolBar.show();
+    
+    
     var GUI = {
         topPanel : {
             visible : true
@@ -377,16 +379,26 @@
     
     $('.topPanelArrow').click(function (e) {
         if (GUI.topPanel.visible) {
-            $('.header').animate({height : '23px'}, 500).animate({ width : '23px' }, 700);
+            $('.cmsHeader').animate({height : '23px'}, 500).animate({ width : '23px' }, 700);
             rteToolBar.hide();
             GUI.topPanel.visible = false;
         } else {
-            $('.header').animate({ width : '100%' }, 700).animate({height : '58px'}, 500);
+            $('.cmsHeader').animate({ width : '100%' }, 700).animate({height : '58px'}, 500);
             rteToolBar.show();
             GUI.topPanel.visible = true;
         }
         
     });
+    
+    $('.centralColumnContentWrapper.block').dblclick(function (e) {
+        
+        var e = new AP.EditArea({
+            target : this,
+            iframeCssClass : 'textarea',
+            pathToStyleSheet : 'clicheEditor.css',
+        });
+    });
+    
     // var e = new AP.Widget.RTE({
     //         textareaClass : 'wisywig',
     //         containerClass : 'clicheEditor',
