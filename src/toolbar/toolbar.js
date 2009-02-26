@@ -6,6 +6,7 @@ AP.add('toolbar', function (A) {
             this.title = o.title || 'Текст';
             this.rendered = false;
             this.buttons = {};
+            this.selects = {};
             this.tabs = {};
             this.conf = {};
             this.conf.parent = $(o.container);
@@ -42,9 +43,27 @@ AP.add('toolbar', function (A) {
             return html.toString();
         },
         generateHTMLForButtonsAndTabTriggers : function () {
-            var b = this.buttons, html = new StringBuffer(''), t = this.tabs;
+            var b = this.buttons, 
+                html = new StringBuffer(''), 
+                s = this.selects,
+                t = this.tabs;
             O.each(b, function (button) {
                 html.add('<div class="panelItem" id="button' + button.title + '%UNIQUE_ID%"><div class="panelIcon ' + button.cssClass + '"></div></div>');
+            }, this);
+            O.each(s, function (select) {
+                html.add('<div class="settingsInput"><select id="select' + select.title + '%UNIQUE_ID%">');
+                
+                O.each(select.values, function (value, index) {
+                    html.add('<option')
+                        .add((index == select.defaultValue) ? ' selected' : '')
+                        .add(' value="')
+                        .add(index)
+                        .add('">')
+                        .add(value)
+                        .add('</option>');
+                }, this);
+                
+                html.add('</select></div>');
             }, this);
             html.add('<div class="panelSeparatop"></div>');
             O.each(t, function (tab) {
@@ -62,15 +81,23 @@ AP.add('toolbar', function (A) {
             return html.toString();
         },
         initializeDOMReferences : function () {
-            var b = this.buttons, t = this.tabs, d = this.domReferences = {};
+            var b = this.buttons, 
+                s = this.selects,
+                t = this.tabs, 
+                d = this.domReferences = {};
             d.buttons = {};
             d.tabs = {};
+            d.selects = {};
 
             this.container = $('#toolBarPanel' + this._uid);
 
             O.each(b, function (button) {
                 var title = button.title;
                 d.buttons[title] = $('#button' + title + this._uid);
+            }, this);
+            O.each(s, function (select) {
+                var title = select.title;
+                d.selects[title] = $('#select' + title + this._uid);
             }, this);
             O.each(t, function (tab) {
                 var title = tab.title;
@@ -135,11 +162,20 @@ AP.add('toolbar', function (A) {
             }, this);
         },
         initializeCallbacks : function () {
+            var s = this.selects,
+                d = this.domReferences;
+            
+            O.each(s, function (select, title) {
+                d.selects[title].change(function (e) { return select.onChange(e); });
+            }, this);
             // initialize button callback
             // initialize tabs content event listeners and so on
         },
         addButton : function (button) {
             this.buttons[button.title] = button;
+        },
+        addSelect : function (select) {
+            this.selects[select.title] = select;
         },
         addTab : function (tab) {
             this.tabs[tab.title] = tab;
