@@ -96,66 +96,67 @@
         <script type="text/javascript" charset="utf-8" src="../../src/string/stringBuffer.js"></script>
         <script type="text/javascript" charset="utf-8" src="../../src/oop/class.js"></script>
         <script type="text/javascript" charset="utf-8" src="../../src/widget/widget.js"></script>
+        <script type="text/javascript" charset="utf-8" src="../../src/panel/panel.js"></script>
         <script type="text/javascript" charset="utf-8" src="../../src/toolbar/toolbar.js"></script>
         <script type="text/javascript" charset="utf-8" src="../../src/rte/rte.js"></script>
         <script type="text/javascript" charset="utf-8">
 (function () {
-    var $ = AP.Query, 
-    poll = new AP.ToolBar({
-        title : 'Опрос',
-        container : $('.header')
-    });
-    poll.addButton({
-        title : 'Bold',
-        cssClass : 'boldIcon',
-        onActivateCallback : function () { alert('make bold!!!'); },
-        onDeactivateCallback : function () { alert('make thin!!!'); }
-    });
-    poll.addButton({
-        title : 'Italic',
-        cssClass : 'italicIcon',
-        onActivateCallback : function () { alert('make italic!!!'); },
-        onDeactivateCallback : function () { alert('make non italic!!!'); }
-    });
-    poll.addTab({
-        title : 'Link',
-        trigger : {
-            cssClass : 'hyperlinkIcon'
-        },
-        content : {
-            html : '<div class="settingsPanel">\
-        			    <div class="settingsInput">\
-            				<div class="settingsInputLabel">Источник</div>\
-            				<input value="Источник">\
-            			</div>\
-            			<div class="settingsPanelSeparator"></div>\
-        			    <div class="settingsInput">\
-            				<div class="settingsInputLabel">Содержание</div>\
-            				<input value="Содержание">\
-            			</div>\
-            		</div>'
-        }
-    });
-    poll.addTab({
-        title : 'Table',
-        trigger : {
-            cssClass : 'addTableIcon'
-        },
-        content : {
-            html : '<div class="settingsPanel">\
-            			<div class="iconGroup">\
-            				<div class="settingsLabel">Таблица</div>\
-            				<div class="panelItem settingsPanelIcon"><div class="panelIcon tableToTopIcon"></div></div>\
-            				<div class="panelItem settingsPanelIcon"><div class="panelIcon tableToBottomIcon"></div></div>\
-            				<div class="panelItem settingsPanelIcon"><div class="panelIcon tableToLeftIcon"></div></div>\
-            				<div class="panelItem settingsPanelIcon"><div class="panelIcon tableToRightIcon"></div></div>\
-            				<div class="panelItem settingsPanelIcon"><div class="panelIcon delRowIcon"></div></div>\
-            				<div class="panelItem settingsPanelIcon"><div class="panelIcon delCollumnIcon"></div></div>\
-            			</div>\
-            		</div>'
-        }
-    });
-    poll.show();
+    var $ = AP.Query;
+    // poll = new AP.ToolBar({
+    //         title : 'Опрос',
+    //         container : $('.header')
+    //     });
+    //     poll.addButton({
+    //         title : 'Bold',
+    //         cssClass : 'boldIcon',
+    //         onActivateCallback : function () { alert('make bold!!!'); },
+    //         onDeactivateCallback : function () { alert('make thin!!!'); }
+    //     });
+    //     poll.addButton({
+    //         title : 'Italic',
+    //         cssClass : 'italicIcon',
+    //         onActivateCallback : function () { alert('make italic!!!'); },
+    //         onDeactivateCallback : function () { alert('make non italic!!!'); }
+    //     });
+    //     poll.addTab({
+    //         title : 'Link',
+    //         trigger : {
+    //             cssClass : 'hyperlinkIcon'
+    //         },
+    //         content : {
+    //             html : '<div class="settingsPanel">\
+    //                      <div class="settingsInput">\
+    //                          <div class="settingsInputLabel">Источник</div>\
+    //                          <input value="Источник">\
+    //                      </div>\
+    //                      <div class="settingsPanelSeparator"></div>\
+    //                      <div class="settingsInput">\
+    //                          <div class="settingsInputLabel">Содержание</div>\
+    //                          <input value="Содержание">\
+    //                      </div>\
+    //                  </div>'
+    //         }
+    //     });
+    //     poll.addTab({
+    //         title : 'Table',
+    //         trigger : {
+    //             cssClass : 'addTableIcon'
+    //         },
+    //         content : {
+    //             html : '<div class="settingsPanel">\
+    //                      <div class="iconGroup">\
+    //                          <div class="settingsLabel">Таблица</div>\
+    //                          <div class="panelItem settingsPanelIcon"><div class="panelIcon tableToTopIcon"></div></div>\
+    //                          <div class="panelItem settingsPanelIcon"><div class="panelIcon tableToBottomIcon"></div></div>\
+    //                          <div class="panelItem settingsPanelIcon"><div class="panelIcon tableToLeftIcon"></div></div>\
+    //                          <div class="panelItem settingsPanelIcon"><div class="panelIcon tableToRightIcon"></div></div>\
+    //                          <div class="panelItem settingsPanelIcon"><div class="panelIcon delRowIcon"></div></div>\
+    //                          <div class="panelItem settingsPanelIcon"><div class="panelIcon delCollumnIcon"></div></div>\
+    //                      </div>\
+    //                  </div>'
+    //         }
+    //     });
+    //     poll.show();
     // var e = new AP.Widget.RTE({
     //         textareaClass : 'wisywig',
     //         containerClass : 'clicheEditor',
