@@ -1,0 +1,258 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html xmlns:yui="http://yuilibrary.com/rdf/1.0/yui.rdf#">
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+	<title>API: queue   specification.js  (YUI Library)</title>
+
+	<link rel="stylesheet" type="text/css" href="assets/reset-fonts-grids-min.css?stamp=1235697936.67" />
+	<link rel="stylesheet" type="text/css" href="assets/api.css?stamp=1235697936.67" />
+
+    <script type="text/javascript" src="assets/api-js?stamp=1235697936.67"></script>
+    <script type="text/javascript" src="assets/ac-js?stamp=1235697936.67"></script>
+</head>
+
+<body id="yahoo-com">
+
+<div id="doc3" class="yui-t2">
+	<div id="hd">
+        <h1><a href="http://developer.yahoo.com/yui/" title="Yahoo! UI Library">Yahoo! UI Library</a></h1>
+        <h3>queue&nbsp; <span class="subtitle">0.0.2</span></h3>
+        <a href="./index.html" title="Yahoo! UI Library">Yahoo! UI Library</a> 
+            &gt; <a href="./module_queue.html" title="queue">queue</a>
+                
+                 &gt; specification.js (source view) 
+        <form onsubmit="return false">
+            <div id="propertysearch">
+                Search: <input autocomplete="off" id="searchinput" />
+                <div id="searchresults">
+                    &nbsp;
+                </div>
+            </div>
+        </form>
+	</div>
+
+	<div id="bd">
+		<div id="yui-main">
+			<div class="yui-b">
+            <form action="#" name="yui-classopts-form" method="get" id="yui-classopts-form">
+                <fieldset>
+                    <legend>Filters</legend>
+                <span class="classopts"><input type="checkbox" name="show_private" id="show_private" /> <label for="show_private">Show Private</label></span>
+                <span class="classopts"><input type="checkbox" name="show_protected" id="show_protected" /> <label for="show_protected">Show Protected</label></span>
+                <span class="classopts"><input type="checkbox" name="show_deprecated" id="show_deprecated" /> <label for="show_deprecated">Show Deprecated</label></span>
+                </fieldset>
+            </form>
+
+                    <div id="srcout">
+                        <style>
+                            #doc3 .classopts { display:none; }
+                        </style>
+<div class="highlight" ><pre><span class="c">/**</span>
+<span class="c"> * Specification module </span>
+<span class="c"> * This is helpers for the &quot;design by contract&quot; programming style</span>
+<span class="c"> * @module ap</span>
+<span class="c"> * @submodule specification</span>
+<span class="c"> */</span>
+<span class="nx">AP</span><span class="o">.</span><span class="nx">add</span><span class="o">(</span><span class="s1">&#39;specification&#39;</span><span class="o">,</span> <span class="k">function</span> <span class="o">(</span><span class="nx">A</span><span class="o">)</span> <span class="o">{</span>
+    
+    <span class="c">/**</span>
+<span class="c">     * Creates Specification object to AP instance</span>
+<span class="c">     * @class AP~specification</span>
+<span class="c">     */</span>
+    
+    <span class="nx">A</span><span class="o">.</span><span class="nx">Specification</span> <span class="o">=</span> <span class="nx">A</span><span class="o">.</span><span class="nx">Specification</span> <span class="o">||</span> <span class="o">{};</span>
+    
+    <span class="k">var</span> <span class="nx">S</span> <span class="o">=</span> <span class="nx">A</span><span class="o">.</span><span class="nx">Specification</span><span class="o">,</span> <span class="nx">L</span> <span class="o">=</span> <span class="nx">A</span><span class="o">.</span><span class="nx">Lang</span><span class="o">;</span>
+    
+    <span class="nx">S</span><span class="o">.</span><span class="nx">__augmentedFunctions</span> <span class="o">=</span> <span class="o">{};</span>
+    
+    <span class="c">/**</span>
+<span class="c">     * Check validates arguments, passed into parent-level function (got by arguments.callee.caller.arguments chain)</span>
+<span class="c">     * through so-called specification which passed as argument to the check method itself</span>
+<span class="c">     * @method check</span>
+<span class="c">     * @static</span>
+<span class="c">     * @param specification {Array|Object} can be passed with three possible ways: </span>
+<span class="c">     * &lt;ul&gt;&lt;li&gt;As Object - so that every property will expect property with same name at the real-world arguments. </span>
+<span class="c">     * Every property can have up to two properties:</span>
+<span class="c">     * &lt;ul&gt;&lt;li&gt;required {Boolean} - if true, check should throw error if won&#39;t found that method at the real-world arguments&lt;/li&gt;</span>
+<span class="c">     * &lt;li&gt;type {String} - determine which type must be paramether(todo: check spelling)&lt;/li&gt;&lt;/ul&gt;&lt;/li&gt;</span>
+<span class="c">     * &lt;li&gt;As array - so that every property (if have true as required sub-property) expect same property at same index-based position.</span>
+<span class="c">     * Every property can have object-way subproperties&lt;/li&gt;</span>
+<span class="c">     * &lt;li&gt;As regular arguments. Works same as array-like way, but beware not to left 1 argument, cause check method should consider it like object-like way&lt;/li&gt;</span>
+<span class="c">     * &lt;/ul&gt;</span>
+<span class="c">     */</span>
+    <span class="nx">S</span><span class="o">.</span><span class="nx">check</span> <span class="o">=</span> <span class="k">function</span> <span class="o">(</span><span class="nx">specification</span><span class="o">)</span> <span class="o">{</span>
+        <span class="c">// take function arguments object</span>
+<span class="c"></span>        <span class="k">var</span> <span class="nx">caller</span> <span class="o">=</span> <span class="nx">arguments</span><span class="o">.</span><span class="nx">callee</span><span class="o">.</span><span class="nx">caller</span><span class="o">,</span> 
+            <span class="nx">real_arguments</span> <span class="o">=</span> <span class="nx">caller</span><span class="o">.</span><span class="nx">arguments</span><span class="o">;</span>
+        
+        <span class="c">// we can pass arguments as we usual passed into function</span>
+<span class="c"></span>        <span class="k">if</span> <span class="o">(</span><span class="nx">arguments</span><span class="o">.</span><span class="nx">length</span> <span class="o">&gt;</span> <span class="m">1</span><span class="o">)</span> <span class="o">{</span>
+            <span class="nx">S</span><span class="o">.</span><span class="nx">__arraySpecificationCheck</span><span class="o">(</span><span class="nx">A</span><span class="o">.</span><span class="nb">Array</span><span class="o">(</span><span class="nx">arguments</span><span class="o">),</span> <span class="nx">real_arguments</span><span class="o">);</span>
+            <span class="c">// use array-based implementation</span>
+<span class="c"></span>        <span class="o">}</span> <span class="k">else</span> <span class="k">if</span> <span class="o">(</span><span class="nx">arguments</span><span class="o">.</span><span class="nx">length</span> <span class="o">==</span> <span class="m">1</span><span class="o">)</span> <span class="o">{</span>
+            <span class="k">if</span> <span class="o">(</span><span class="nx">L</span><span class="o">.</span><span class="nx">isArray</span><span class="o">(</span><span class="nx">specification</span><span class="o">))</span> <span class="o">{</span>
+                <span class="nx">S</span><span class="o">.</span><span class="nx">__arraySpecificationCheck</span><span class="o">(</span><span class="nx">specification</span><span class="o">,</span> <span class="nx">real_arguments</span><span class="o">);</span>
+            <span class="o">}</span> <span class="k">else</span> <span class="k">if</span> <span class="o">(</span><span class="nx">L</span><span class="o">.</span><span class="nx">isObject</span><span class="o">(</span><span class="nx">specification</span><span class="o">))</span> <span class="o">{</span>
+                <span class="c">// if specification is object, so that expected that first object passed at function is also last</span>
+<span class="c"></span>                <span class="c">// assume that arguments passed in as fields of object</span>
+<span class="c"></span>                <span class="nx">S</span><span class="o">.</span><span class="nx">__objectSpecificationCheck</span><span class="o">(</span><span class="nx">specification</span><span class="o">,</span> <span class="o">(</span><span class="nx">real_arguments</span><span class="o">.</span><span class="nx">length</span> <span class="o">?</span> <span class="nx">real_arguments</span><span class="o">[</span><span class="m">0</span><span class="o">]</span> <span class="o">:</span> <span class="o">{}));</span>
+            <span class="o">}</span>
+        <span class="o">}</span>
+        
+        <span class="c">// there is no right specification passed. Let it be.</span>
+<span class="c"></span>    <span class="o">};</span>
+    
+    
+    <span class="c">/** </span>
+<span class="c">     * This method augment replace original method, passed in</span>
+<span class="c">     * with new function which first call check with passed in specification and arguments</span>
+<span class="c">     * and than throw error or call old method</span>
+<span class="c">     * @method augment</span>
+<span class="c">     * @param fn {String} name of the method(function) to replace</span>
+<span class="c">     * @param specification  {Object|Array} specification (@see AP~specification~check)</span>
+<span class="c">     * @param @owner {Function|Object} owner of the fn. Optional, default value - window global object</span>
+<span class="c">     */</span>
+    <span class="nx">S</span><span class="o">.</span><span class="nx">augment</span> <span class="o">=</span> <span class="k">function</span> <span class="o">(</span><span class="nx">fn</span><span class="o">,</span> <span class="nx">specification</span><span class="o">,</span> <span class="nx">owner</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">var</span> <span class="nx">t</span> <span class="o">=</span> <span class="nx">owner</span><span class="o">[</span><span class="nx">fn</span><span class="o">];</span>
+        <span class="nx">owner</span><span class="o">[</span><span class="nx">fn</span><span class="o">]</span> <span class="o">=</span> <span class="k">function</span> <span class="o">(</span><span class="nx">a</span><span class="o">)</span> <span class="o">{</span>
+            <span class="nx">S</span><span class="o">.</span><span class="nx">check</span><span class="o">(</span><span class="nx">specification</span><span class="o">);</span>
+            <span class="k">return</span> <span class="nx">t</span><span class="o">.</span><span class="nx">call</span><span class="o">(</span><span class="nx">owner</span><span class="o">,</span> <span class="nx">a</span><span class="o">);</span>
+        <span class="o">};</span>
+        
+    <span class="o">};</span>
+    
+    <span class="c">/**</span>
+<span class="c">     * Inner method which called inside check method when object-like specification passed in</span>
+<span class="c">     * @method __objectSpecificationCheck</span>
+<span class="c">     * @private</span>
+<span class="c">     * @param specification {Object} - specification object (@see AP~specification~check)</span>
+<span class="c">     * @param args {Arguments} - real-world arguments which check retreived from the parent-level function</span>
+<span class="c">     * @throws error about attribute (name) is mandatory or about attribute (name) type must be passed in</span>
+<span class="c">     */</span>
+    <span class="nx">S</span><span class="o">.</span><span class="nx">__objectSpecificationCheck</span> <span class="o">=</span> <span class="k">function</span> <span class="o">(</span><span class="nx">specification</span><span class="o">,</span> <span class="nx">args</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">var</span> <span class="nx">propName</span><span class="o">,</span> <span class="nx">prop</span><span class="o">,</span> <span class="nx">actualProperty</span><span class="o">;</span>
+
+        <span class="k">for</span> <span class="o">(</span><span class="nx">propName</span> <span class="k">in</span> <span class="nx">specification</span><span class="o">)</span> <span class="o">{</span>
+            <span class="nx">prop</span> <span class="o">=</span> <span class="nx">specification</span><span class="o">[</span><span class="nx">propName</span><span class="o">];</span>
+            <span class="nx">actualProperty</span> <span class="o">=</span> <span class="nx">args</span><span class="o">[</span><span class="nx">propName</span><span class="o">];</span>
+            <span class="k">if</span> <span class="o">(</span><span class="nx">prop</span><span class="o">.</span><span class="nx">required</span> <span class="o">&amp;&amp;</span> <span class="o">!</span><span class="nx">L</span><span class="o">.</span><span class="nx">isValue</span><span class="o">(</span><span class="nx">actualProperty</span><span class="o">))</span> <span class="o">{</span>
+                <span class="k">throw</span> <span class="k">new</span> <span class="nb">Error</span><span class="o">(</span><span class="nx">propName</span> <span class="o">+</span> <span class="s1">&#39; argument is mandatory&#39;</span><span class="o">);</span>
+            <span class="o">}</span>
+            
+            <span class="k">if</span> <span class="o">(!!</span><span class="nx">actualProperty</span> <span class="o">&amp;&amp;</span> <span class="o">!</span><span class="nx">S</span><span class="o">.</span><span class="nx">__checkType</span><span class="o">(</span><span class="nx">prop</span><span class="o">.</span><span class="nx">type</span><span class="o">,</span> <span class="nx">actualProperty</span><span class="o">))</span> <span class="o">{</span>
+                <span class="k">throw</span> <span class="k">new</span> <span class="nb">Error</span><span class="o">(</span><span class="nx">propName</span> <span class="o">+</span> <span class="s1">&#39; argument type must be &quot;&#39;</span> <span class="o">+</span> <span class="nx">prop</span><span class="o">.</span><span class="nx">type</span> <span class="o">+</span> <span class="s1">&#39;&quot;&#39;</span><span class="o">);</span>
+            <span class="o">}</span>
+        <span class="o">}</span>
+    <span class="o">};</span>
+    
+    <span class="c">/**</span>
+<span class="c">     * Inner method called inside check method when array-like specification passed in</span>
+<span class="c">     * @method __arraySpecificationCheck</span>
+<span class="c">     * @private</span>
+<span class="c">     * @param specification {Array} - specification object (@see AP~specification~check)</span>
+<span class="c">     * @param args {Arguments} - real-world arguments which check retreived from the parent-level function</span>
+<span class="c">     * @throws error about attribute (name) is mandatory or about attribute (name) type must be passed in</span>
+<span class="c">     */</span>
+    <span class="nx">S</span><span class="o">.</span><span class="nx">__arraySpecificationCheck</span> <span class="o">=</span> <span class="k">function</span> <span class="o">(</span><span class="nx">specification</span><span class="o">,</span> <span class="nx">args</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">var</span> <span class="nx">prop</span><span class="o">,</span> <span class="nx">i</span> <span class="o">=</span> <span class="m">0</span><span class="o">;</span>
+        <span class="k">for</span> <span class="o">(</span><span class="k">var</span> <span class="nx">prop</span><span class="o">,</span> <span class="nx">i</span> <span class="o">=</span> <span class="m">0</span><span class="o">,</span> <span class="nx">length</span> <span class="o">=</span> <span class="nx">specification</span><span class="o">.</span><span class="nx">length</span><span class="o">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">length</span><span class="o">;</span> <span class="nx">i</span><span class="o">++)</span> <span class="o">{</span>
+            <span class="nx">prop</span> <span class="o">=</span> <span class="nx">specification</span><span class="o">[</span><span class="nx">i</span><span class="o">];</span>
+            <span class="nx">actualProperty</span> <span class="o">=</span> <span class="nx">args</span><span class="o">[</span><span class="nx">i</span><span class="o">];</span>
+            <span class="k">if</span> <span class="o">(</span><span class="nx">prop</span><span class="o">.</span><span class="nx">required</span> <span class="o">&amp;&amp;</span> <span class="o">!</span><span class="nx">L</span><span class="o">.</span><span class="nx">isValue</span><span class="o">(</span><span class="nx">actualProperty</span><span class="o">))</span> <span class="o">{</span>
+                <span class="k">throw</span> <span class="k">new</span> <span class="nb">Error</span><span class="o">((</span><span class="nx">i</span> <span class="o">+</span> <span class="m">1</span><span class="o">)</span> <span class="o">+</span> <span class="s1">&#39; argument is mandatory&#39;</span><span class="o">);</span>
+            <span class="o">}</span>
+            
+            <span class="k">if</span> <span class="o">(!!</span><span class="nx">actualProperty</span> <span class="o">&amp;&amp;</span> <span class="o">!</span><span class="nx">S</span><span class="o">.</span><span class="nx">__checkType</span><span class="o">(</span><span class="nx">prop</span><span class="o">.</span><span class="nx">type</span><span class="o">,</span> <span class="nx">actualProperty</span><span class="o">))</span> <span class="o">{</span>
+                <span class="k">throw</span> <span class="k">new</span> <span class="nb">Error</span><span class="o">((</span><span class="nx">i</span> <span class="o">+</span> <span class="m">1</span><span class="o">)</span> <span class="o">+</span> <span class="s1">&#39; argument type must be &quot;&#39;</span> <span class="o">+</span> <span class="nx">prop</span><span class="o">.</span><span class="nx">type</span> <span class="o">+</span> <span class="s1">&#39;&quot;&#39;</span><span class="o">);</span>
+            <span class="o">}</span>
+        <span class="o">}</span>
+    <span class="o">};</span>
+    
+    
+    <span class="c">/**</span>
+<span class="c">     * Inner method called inside check method implementations which interpreur user-level type names like &#39;string&#39; into</span>
+<span class="c">     * AP~lang module method names like &#39;isString&#39; and pass property into that method</span>
+<span class="c">     * @method __checkType</span>
+<span class="c">     * @private</span>
+<span class="c">     * @param requiredType {String} - any-case named type. String, nUmber, Date and all that. </span>
+<span class="c">     * @param property - property to check type of</span>
+<span class="c">     * @return {Boolean} is property match type</span>
+<span class="c">     */</span>
+    <span class="nx">S</span><span class="o">.</span><span class="nx">__checkType</span> <span class="o">=</span> <span class="k">function</span> <span class="o">(</span><span class="nx">requiredType</span><span class="o">,</span> <span class="nx">property</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">var</span> <span class="nx">literalNameToMethodNameTranslator</span> <span class="o">=</span> <span class="o">{</span>
+            <span class="s1">&#39;array&#39;</span> <span class="o">:</span> <span class="s1">&#39;isArray&#39;</span><span class="o">,</span>
+            <span class="s1">&#39;boolean&#39;</span> <span class="o">:</span> <span class="s1">&#39;isBoolean&#39;</span><span class="o">,</span>
+            <span class="s1">&#39;function&#39;</span> <span class="o">:</span> <span class="s1">&#39;isFunction&#39;</span><span class="o">,</span>
+            <span class="s1">&#39;date&#39;</span> <span class="o">:</span> <span class="s1">&#39;isDate&#39;</span><span class="o">,</span>
+            <span class="s1">&#39;number&#39;</span> <span class="o">:</span> <span class="s1">&#39;isNumber&#39;</span><span class="o">,</span>
+            <span class="s1">&#39;object&#39;</span> <span class="o">:</span> <span class="s1">&#39;isObject&#39;</span><span class="o">,</span>
+            <span class="s1">&#39;string&#39;</span> <span class="o">:</span> <span class="s1">&#39;isString&#39;</span>
+        <span class="o">};</span>
+        
+        <span class="k">if</span> <span class="o">(</span><span class="nx">L</span><span class="o">.</span><span class="nx">isUndefined</span><span class="o">(</span><span class="nx">requiredType</span><span class="o">))</span> <span class="k">return</span> <span class="kc">true</span><span class="o">;</span>
+        <span class="k">var</span> <span class="nx">t</span> <span class="o">=</span> <span class="nx">literalNameToMethodNameTranslator</span><span class="o">[</span><span class="nx">requiredType</span><span class="o">];</span>
+        <span class="k">return</span> <span class="nx">L</span><span class="o">[(</span><span class="nx">t</span><span class="o">)</span> <span class="o">?</span> <span class="nx">t</span> <span class="o">:</span> <span class="s1">&#39;isValue&#39;</span><span class="o">](</span><span class="nx">property</span><span class="o">);</span>
+    <span class="o">};</span>
+    
+    <span class="c">// todo: implement value restrictions specification - for example, range for number, length for string&amp;array and so forth</span>
+<span class="c"></span>    <span class="c">// todo: implement structure of nested arguments - like objects passed in method or something like that</span>
+<span class="c"></span>    
+<span class="o">},</span> <span class="s1">&#39;0.0.1&#39;</span><span class="o">,</span> <span class="o">[</span>
+    <span class="o">{</span> <span class="nx">name</span> <span class="o">:</span> <span class="s1">&#39;lang&#39;</span><span class="o">,</span> <span class="nx">minversion</span> <span class="o">:</span> <span class="s1">&#39;0.0.3&#39;</span> <span class="o">},</span>
+    <span class="o">{</span> <span class="nx">name</span> <span class="o">:</span> <span class="s1">&#39;array&#39;</span><span class="o">,</span> <span class="nx">minversion</span> <span class="o">:</span> <span class="s1">&#39;1.0.0&#39;</span> <span class="o">}</span>
+<span class="o">]);</span>
+</pre></div>
+                    </div>
+			</div>
+		</div>
+		<div class="yui-b">
+            <div class="nav">
+
+                    <div id="moduleList" class="module">
+                        <h4>Modules</h4>
+                        <ul class="content">
+                                <li class=""><a href="module_ap.html" title="ap">ap</a></li>
+                                <li class=""><a href="module_cookie.html" title="cookie">cookie</a></li>
+                                <li class=""><a href="module_history.html" title="history">history</a></li>
+                                <li class=""><a href="module_imageloader.html" title="imageloader">imageloader</a></li>
+                                <li class=""><a href="module_json.html" title="json">json</a></li>
+                                <li class="selected"><a href="module_queue.html" title="queue">queue</a></li>
+                                <li class=""><a href="module_spinner.html" title="spinner">spinner</a></li>
+                                <li class=""><a href="module_supreme.html" title="supreme">supreme</a></li>
+                        </ul>
+                    </div>
+
+                    <div id="classList" class="module">
+                        <h4>Classes</h4>
+                        <ul class="content">
+                                <li class=""><a href="Queue.html" title="Queue">Queue</a></li>
+                        </ul>
+                    </div>
+
+                    <div id="fileList" class="module">
+                        <h4>Files</h4>
+                        <ul class="content">        
+                                <li class=""><a href="editArea.js.html" title="editArea.js">editArea.js</a></li>
+                                <li class=""><a href="rte.js.html" title="rte.js">rte.js</a></li>
+                                <li class="selected"><a href="specification.js.html" title="specification.js">specification.js</a></li>
+                        </ul>
+                    </div>
+
+
+
+
+
+            </div>
+		</div>
+	</div>
+	<div id="ft">
+        <hr />
+        Copyright &copy; 2009 Yahoo! Inc. All rights reserved.
+	</div>
+</div>
+<script type="text/javascript">
+    ALL_YUI_PROPS = [{"url": "Queue.html#method_add", "access": "", "host": "Queue", "type": "method", "name": "add"}, {"url": "Queue.html#method__exec", "access": "protected", "host": "Queue", "type": "method", "name": "_exec"}, {"url": "Queue.html#property_p", "access": "protected", "host": "Queue", "type": "property", "name": "p"}, {"url": "Queue.html#method_pause", "access": "", "host": "Queue", "type": "method", "name": "pause"}, {"url": "Queue.html#method_run", "access": "", "host": "Queue", "type": "method", "name": "run"}, {"url": "Queue.html#property_s", "access": "protected", "host": "Queue", "type": "property", "name": "s"}];
+</script>
+</body>
+</html>

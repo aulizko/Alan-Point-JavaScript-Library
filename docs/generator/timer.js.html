@@ -1,0 +1,168 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html xmlns:yui="http://yuilibrary.com/rdf/1.0/yui.rdf#">
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+	<title>API: supreme   timer.js  (YUI Library)</title>
+
+	<link rel="stylesheet" type="text/css" href="assets/reset-fonts-grids-min.css?stamp=1235697936.71" />
+	<link rel="stylesheet" type="text/css" href="assets/api.css?stamp=1235697936.71" />
+
+    <script type="text/javascript" src="assets/api-js?stamp=1235697936.71"></script>
+    <script type="text/javascript" src="assets/ac-js?stamp=1235697936.71"></script>
+</head>
+
+<body id="yahoo-com">
+
+<div id="doc3" class="yui-t2">
+	<div id="hd">
+        <h1><a href="http://developer.yahoo.com/yui/" title="Yahoo! UI Library">Yahoo! UI Library</a></h1>
+        <h3>supreme&nbsp; <span class="subtitle">0.0.2</span></h3>
+        <a href="./index.html" title="Yahoo! UI Library">Yahoo! UI Library</a> 
+            &gt; <a href="./module_supreme.html" title="supreme">supreme</a>
+                
+                 &gt; timer.js (source view) 
+        <form onsubmit="return false">
+            <div id="propertysearch">
+                Search: <input autocomplete="off" id="searchinput" />
+                <div id="searchresults">
+                    &nbsp;
+                </div>
+            </div>
+        </form>
+	</div>
+
+	<div id="bd">
+		<div id="yui-main">
+			<div class="yui-b">
+            <form action="#" name="yui-classopts-form" method="get" id="yui-classopts-form">
+                <fieldset>
+                    <legend>Filters</legend>
+                <span class="classopts"><input type="checkbox" name="show_private" id="show_private" /> <label for="show_private">Show Private</label></span>
+                <span class="classopts"><input type="checkbox" name="show_protected" id="show_protected" /> <label for="show_protected">Show Protected</label></span>
+                <span class="classopts"><input type="checkbox" name="show_deprecated" id="show_deprecated" /> <label for="show_deprecated">Show Deprecated</label></span>
+                </fieldset>
+            </form>
+
+                    <div id="srcout">
+                        <style>
+                            #doc3 .classopts { display:none; }
+                        </style>
+<div class="highlight" ><pre><span class="nx">AP</span><span class="o">.</span><span class="nx">add</span><span class="o">(</span><span class="s1">&#39;timer&#39;</span><span class="o">,</span> <span class="k">function</span> <span class="o">(</span><span class="nx">A</span><span class="o">)</span> <span class="o">{</span>
+    <span class="nx">A</span><span class="o">.</span><span class="nx">Timer</span> <span class="o">=</span> <span class="nx">A</span><span class="o">.</span><span class="nx">Timer</span> <span class="o">||</span> <span class="o">{};</span>
+
+    <span class="k">var</span> <span class="nx">L</span> <span class="o">=</span> <span class="nx">A</span><span class="o">.</span><span class="nx">Lang</span><span class="o">;</span>
+
+
+    <span class="c">/**</span>
+<span class="c">     * Executes the supplied function in the context of the supplied</span>
+<span class="c">     * object &#39;when&#39; milliseconds later.  Executes the function a</span>
+<span class="c">     * single time unless periodic is set to true.</span>
+<span class="c">     * @method later</span>
+<span class="c">     * @param when {int} the number of milliseconds to wait until the fn</span>
+<span class="c">     * is executed</span>
+<span class="c">     * @param o the context object</span>
+<span class="c">     * @param fn {Function|String} the function to execute or the name of</span>
+<span class="c">     * the method in the &#39;o&#39; object to execute</span>
+<span class="c">     * @param data [Array] data that is provided to the function.  This accepts</span>
+<span class="c">     * either a single item or an array.  If an array is provided, the</span>
+<span class="c">     * function is executed with one parameter for each array item.  If</span>
+<span class="c">     * you need to pass a single array parameter, it needs to be wrapped in</span>
+<span class="c">     * an array [myarray]</span>
+<span class="c">     * @param periodic {boolean} if true, executes continuously at supplied</span>
+<span class="c">     * interval until canceled</span>
+<span class="c">     * @return a timer object. Call the cancel() method on this object to</span>
+<span class="c">     * stop the timer.</span>
+<span class="c">     */</span>
+    <span class="nx">A</span><span class="o">.</span><span class="nx">Timer</span><span class="o">.</span><span class="nx">later</span> <span class="o">=</span> <span class="k">function</span><span class="o">(</span><span class="nx">when</span><span class="o">,</span> <span class="nx">o</span><span class="o">,</span> <span class="nx">fn</span><span class="o">,</span> <span class="nx">data</span><span class="o">,</span> <span class="nx">periodic</span><span class="o">)</span> <span class="o">{</span>
+        <span class="nx">when</span> <span class="o">=</span> <span class="nx">when</span> <span class="o">||</span> <span class="m">0</span><span class="o">;</span>
+        <span class="nx">o</span> <span class="o">=</span> <span class="nx">o</span> <span class="o">||</span> <span class="o">{};</span>
+        <span class="k">var</span> <span class="nx">m</span> <span class="o">=</span> <span class="nx">fn</span><span class="o">,</span> <span class="nx">d</span> <span class="o">=</span> <span class="nx">data</span><span class="o">,</span> <span class="nx">f</span><span class="o">,</span> <span class="nx">r</span><span class="o">;</span>
+
+        <span class="k">if</span> <span class="o">(</span><span class="nx">L</span><span class="o">.</span><span class="nx">isString</span><span class="o">(</span><span class="nx">fn</span><span class="o">))</span> <span class="o">{</span>
+            <span class="nx">m</span> <span class="o">=</span> <span class="nx">o</span><span class="o">[</span><span class="nx">fn</span><span class="o">];</span>
+        <span class="o">}</span>
+
+        <span class="k">if</span> <span class="o">(!</span><span class="nx">m</span><span class="o">)</span> <span class="o">{</span>
+            <span class="k">throw</span> <span class="k">new</span> <span class="nx">TypeError</span><span class="o">(</span><span class="s2">&quot;method undefined&quot;</span><span class="o">);</span>
+        <span class="o">}</span>
+
+        <span class="k">if</span> <span class="o">(!</span><span class="nx">L</span><span class="o">.</span><span class="nx">isArray</span><span class="o">(</span><span class="nx">d</span><span class="o">))</span> <span class="o">{</span>
+            <span class="nx">d</span> <span class="o">=</span> <span class="o">[</span><span class="nx">data</span><span class="o">];</span>
+        <span class="o">}</span>
+
+        <span class="nx">f</span> <span class="o">=</span> <span class="k">function</span><span class="o">()</span> <span class="o">{</span>
+            <span class="nx">m</span><span class="o">.</span><span class="nx">apply</span><span class="o">(</span><span class="nx">o</span><span class="o">,</span> <span class="nx">d</span><span class="o">);</span>
+        <span class="o">};</span>
+
+        <span class="nx">r</span> <span class="o">=</span> <span class="o">(</span><span class="nx">periodic</span><span class="o">)</span> <span class="o">?</span> <span class="nx">setInterval</span><span class="o">(</span><span class="nx">f</span><span class="o">,</span> <span class="nx">when</span><span class="o">)</span> <span class="o">:</span> <span class="nx">setTimeout</span><span class="o">(</span><span class="nx">f</span><span class="o">,</span> <span class="nx">when</span><span class="o">);</span>
+
+        <span class="k">return</span> <span class="o">{</span>
+            <span class="nx">interval</span><span class="o">:</span> <span class="nx">periodic</span><span class="o">,</span>
+            <span class="nx">cancel</span><span class="o">:</span> <span class="k">function</span><span class="o">()</span> <span class="o">{</span>
+                <span class="k">if</span> <span class="o">(</span><span class="k">this</span><span class="o">.</span><span class="nx">interval</span><span class="o">)</span> <span class="o">{</span>
+                    <span class="nx">clearInterval</span><span class="o">(</span><span class="nx">r</span><span class="o">);</span>
+                <span class="o">}</span> <span class="k">else</span> <span class="o">{</span>
+                    <span class="nx">clearTimeout</span><span class="o">(</span><span class="nx">r</span><span class="o">);</span>
+                <span class="o">}</span>
+            <span class="o">}</span>
+        <span class="o">};</span>
+    <span class="o">};</span>
+
+<span class="o">},</span> <span class="s1">&#39;0.0.1&#39;</span><span class="o">,</span> <span class="o">[</span>
+    <span class="o">{</span> <span class="nx">name</span> <span class="o">:</span> <span class="s1">&#39;lang&#39;</span><span class="o">,</span> <span class="nx">minVersion</span> <span class="o">:</span> <span class="s1">&#39;0.0.1&#39;</span> <span class="o">}</span>
+<span class="o">]);</span>
+</pre></div>
+                    </div>
+			</div>
+		</div>
+		<div class="yui-b">
+            <div class="nav">
+
+                    <div id="moduleList" class="module">
+                        <h4>Modules</h4>
+                        <ul class="content">
+                                <li class=""><a href="module_ap.html" title="ap">ap</a></li>
+                                <li class=""><a href="module_cookie.html" title="cookie">cookie</a></li>
+                                <li class=""><a href="module_history.html" title="history">history</a></li>
+                                <li class=""><a href="module_imageloader.html" title="imageloader">imageloader</a></li>
+                                <li class=""><a href="module_json.html" title="json">json</a></li>
+                                <li class=""><a href="module_queue.html" title="queue">queue</a></li>
+                                <li class=""><a href="module_spinner.html" title="spinner">spinner</a></li>
+                                <li class="selected"><a href="module_supreme.html" title="supreme">supreme</a></li>
+                        </ul>
+                    </div>
+
+                    <div id="classList" class="module">
+                        <h4>Classes</h4>
+                        <ul class="content">
+                                <li class=""><a href="Supreme.html" title="Supreme">Supreme</a></li>
+                        </ul>
+                    </div>
+
+                    <div id="fileList" class="module">
+                        <h4>Files</h4>
+                        <ul class="content">        
+                                <li class=""><a href="ap.widget.spinner-0.0.1.js.html" title="ap.widget.spinner-0.0.1.js">ap.widget.spinner-0.0.1.js</a></li>
+                                <li class=""><a href="templateEngine.js.html" title="templateEngine.js">templateEngine.js</a></li>
+                                <li class="selected"><a href="timer.js.html" title="timer.js">timer.js</a></li>
+                                <li class=""><a href="toolbar.js.html" title="toolbar.js">toolbar.js</a></li>
+                        </ul>
+                    </div>
+
+
+
+
+
+            </div>
+		</div>
+	</div>
+	<div id="ft">
+        <hr />
+        Copyright &copy; 2009 Yahoo! Inc. All rights reserved.
+	</div>
+</div>
+<script type="text/javascript">
+    ALL_YUI_PROPS = [{"url": "Supreme.html#method_add", "access": "", "host": "Supreme", "type": "method", "name": "add"}, {"url": "Supreme.html#method_later", "access": "", "host": "Supreme", "type": "method", "name": "later"}, {"url": "Supreme.html#property_p", "access": "protected", "host": "Supreme", "type": "property", "name": "p"}, {"url": "Supreme.html#method_processTemplate", "access": "", "host": "Supreme", "type": "method", "name": "processTemplate"}, {"url": "Supreme.html#method_run", "access": "", "host": "Supreme", "type": "method", "name": "run"}, {"url": "Supreme.html#method_unload", "access": "protected", "host": "Supreme", "type": "method", "name": "unload"}];
+</script>
+</body>
+</html>

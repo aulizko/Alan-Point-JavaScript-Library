@@ -2,13 +2,13 @@
 <html xmlns:yui="http://yuilibrary.com/rdf/1.0/yui.rdf#">
 <head>
     <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
-	<title>API: ap  AP~object   (YUI Library)</title>
+	<title>API: json  AP~object   (YUI Library)</title>
 
-	<link rel="stylesheet" type="text/css" href="assets/reset-fonts-grids-min.css?stamp=1228895591.51" />
-	<link rel="stylesheet" type="text/css" href="assets/api.css?stamp=1228895591.51" />
+	<link rel="stylesheet" type="text/css" href="assets/reset-fonts-grids-min.css?stamp=1235697937.09" />
+	<link rel="stylesheet" type="text/css" href="assets/api.css?stamp=1235697937.09" />
 
-    <script type="text/javascript" src="assets/api-js?stamp=1228895591.51"></script>
-    <script type="text/javascript" src="assets/ac-js?stamp=1228895591.51"></script>
+    <script type="text/javascript" src="assets/api-js?stamp=1235697937.09"></script>
+    <script type="text/javascript" src="assets/ac-js?stamp=1235697937.09"></script>
 </head>
 
 <body id="yahoo-com">
@@ -16,9 +16,9 @@
 <div id="doc3" class="yui-t2">
 	<div id="hd">
         <h1><a href="http://developer.yahoo.com/yui/" title="Yahoo! UI Library">Yahoo! UI Library</a></h1>
-        <h3>ap&nbsp; <span class="subtitle">0.0.2</span></h3>
+        <h3>json&nbsp; <span class="subtitle">0.0.2</span></h3>
         <a href="./index.html" title="Yahoo! UI Library">Yahoo! UI Library</a> 
-            &gt; <a href="./module_ap.html" title="ap">ap</a>
+            &gt; <a href="./module_json.html" title="json">json</a>
                  &gt; AP~object 
                 
         <form onsubmit="return false">
@@ -46,7 +46,7 @@
                     <h2>
                         
 
-                        <code>static</code>
+                        
                         
                             Class <b property="yui:name">AP~object</b>
                         <span class="extends">
@@ -59,7 +59,7 @@
   
 
                     <div class="summary description" property="yui:description">
-                        A.Object(o) returns a new object based upon the supplied object.
+                        Adds the following Object utilities to the YUI instance
                     </div>
 
                     
@@ -71,31 +71,28 @@
                         <div class="section method details">
                             <h3 id="methods">Methods</h3>
                             <div class="content">
-                                    <div class="" rel="yui:method" resource="#method_equal">
+                                    <div class="" rel="yui:method" resource="#method_Object">
                                     <h4>
-                                        <a name="method_equal">equal</a></h4>
+                                        <a name="method_Object">Object</a></h4>
                                     <div class="detail" >
                                         <code>
                                         
+                                         static 
                                         
-                                        
-                                        Boolean
-                                            <strong property="yui:name">equal</strong>
+                                        object
+                                            <strong property="yui:name">Object</strong>
                                            (
                                                 
                                                         
-                                                         expected
-                                                    
-                                                
-                                                        , 
-                                                         actual
+                                                         o
                                                     
                                                 
                                             )
                                         </code>
                                         
                                         <div class="description" property="yui:description">
-                                            Check properties presence i\and equality of its values in two provided objects. If properties are same, return true.
+                                            A.Object(o) returns a new object based upon the supplied object.  
+Inspired from the Douglas Crockford 'object' method
                                         </div>
 
                                         <div class="description">
@@ -103,25 +100,70 @@
                                                 <dl rel="yui:parameters">
                                                     <dt>Parameters:</dt>
                                                         <dd rel="yui:parameter">
-                                                        <code><span property="yui:name">expected</span>
-                                                        &lt;<span property="yui:type">Object</span>&gt;
+                                                        <code><span property="yui:name">o</span>
+                                                        &lt;<span property="yui:type">object</span>&gt;
                                                         </code>
-                                                        <span property="yui:description">  object to compare with</span>
-                                                        </dd>
-                                                        <dd rel="yui:parameter">
-                                                        <code><span property="yui:name">actual</span>
-                                                        &lt;<span property="yui:type">Object</span>&gt;
-                                                        </code>
-                                                        <span property="yui:description">  object to compare with</span>
+                                                        <span property="yui:description"> the supplier object</span>
                                                         </dd>
                                                 </dl>
 
                                                 <dl>
                                                     <dt>Returns:
                                                     <code property="yui:return">
-                                                        Boolean
+                                                        object
                                                     </code></dt>
-                                                    <dd property="yui:returnInfo">true if properties are equal, false in other way.</dd>
+                                                    <dd property="yui:returnInfo">the new object</dd>
+                                                </dl>
+
+
+             
+
+                                        </div>
+
+                                    </div>
+                                    <hr />
+                                    </div>
+                                    <div class="" rel="yui:method" resource="#method_Object.clean">
+                                    <h4>
+                                        <a name="method_Object.clean">Object.clean</a></h4>
+                                    <div class="detail" >
+                                        <code>
+                                        
+                                         static 
+                                        
+                                        Object
+                                            <strong property="yui:name">Object.clean</strong>
+                                           (
+                                                
+                                                        
+                                                         o
+                                                    
+                                                
+                                            )
+                                        </code>
+                                        
+                                        <div class="description" property="yui:description">
+                                            Cleans passed in object - remove properties which value is null or undefined.
+                                        </div>
+
+                                        <div class="description">
+
+                                                <dl rel="yui:parameters">
+                                                    <dt>Parameters:</dt>
+                                                        <dd rel="yui:parameter">
+                                                        <code><span property="yui:name">o</span>
+                                                        &lt;<span property="yui:type">Object</span>&gt;
+                                                        </code>
+                                                        <span property="yui:description">  'dirty' object</span>
+                                                        </dd>
+                                                </dl>
+
+                                                <dl>
+                                                    <dt>Returns:
+                                                    <code property="yui:return">
+                                                        Object
+                                                    </code></dt>
+                                                    <dd property="yui:returnInfo">clean object</dd>
                                                 </dl>
 
 
@@ -215,6 +257,205 @@ as paramters (in that order).
                                     </div>
                                     <hr />
                                     </div>
+                                    <div class="" rel="yui:method" resource="#method_Object.every">
+                                    <h4>
+                                        <a name="method_Object.every">Object.every</a></h4>
+                                    <div class="detail" >
+                                        <code>
+                                        
+                                         static 
+                                        
+                                        boolean
+                                            <strong property="yui:name">Object.every</strong>
+                                           (
+                                                
+                                                        
+                                                         o
+                                                    
+                                                
+                                                        , 
+                                                         f
+                                                    
+                                                
+                                                        , 
+                                                         c
+                                                    
+                                                
+                                            )
+                                        </code>
+                                        
+                                        <div class="description" property="yui:description">
+                                            Executes provided function on each property of the supplied object.
+If all properties value match comparator, than, return true. Otherwise, return false.
+                                        </div>
+
+                                        <div class="description">
+
+                                                <dl rel="yui:parameters">
+                                                    <dt>Parameters:</dt>
+                                                        <dd rel="yui:parameter">
+                                                        <code><span property="yui:name">o</span>
+                                                        &lt;<span property="yui:type">Object</span>&gt;
+                                                        </code>
+                                                        <span property="yui:description">  object to iterate</span>
+                                                        </dd>
+                                                        <dd rel="yui:parameter">
+                                                        <code><span property="yui:name">f</span>
+                                                        &lt;<span property="yui:type">Function</span>&gt;
+                                                        </code>
+                                                        <span property="yui:description">  comparator</span>
+                                                        </dd>
+                                                        <dd rel="yui:parameter">
+                                                        <code><span property="yui:name">c</span>
+                                                        &lt;<span property="yui:type">Object</span>&gt;
+                                                        </code>
+                                                        <span property="yui:description">  execution context</span>
+                                                        </dd>
+                                                </dl>
+
+                                                <dl>
+                                                    <dt>Returns:
+                                                    <code property="yui:return">
+                                                        boolean
+                                                    </code></dt>
+                                                    <dd property="yui:returnInfo"></dd>
+                                                </dl>
+
+
+             
+
+                                        </div>
+
+                                    </div>
+                                    <hr />
+                                    </div>
+                                    <div class="" rel="yui:method" resource="#method_Object.filter">
+                                    <h4>
+                                        <a name="method_Object.filter">Object.filter</a></h4>
+                                    <div class="detail" >
+                                        <code>
+                                        
+                                         static 
+                                        
+                                        Object
+                                            <strong property="yui:name">Object.filter</strong>
+                                           (
+                                                
+                                                        
+                                                         o
+                                                    
+                                                
+                                                        , 
+                                                         f
+                                                    
+                                                
+                                                        , 
+                                                         c
+                                                    
+                                                
+                                            )
+                                        </code>
+                                        
+                                        <div class="description" property="yui:description">
+                                            Return new object based on passed in object.
+New object contains public properties from the supplier, if passed in function return true
+when evaluated property value.
+                                        </div>
+
+                                        <div class="description">
+
+                                                <dl rel="yui:parameters">
+                                                    <dt>Parameters:</dt>
+                                                        <dd rel="yui:parameter">
+                                                        <code><span property="yui:name">o</span>
+                                                        &lt;<span property="yui:type">Object</span>&gt;
+                                                        </code>
+                                                        <span property="yui:description">  the object to filter</span>
+                                                        </dd>
+                                                        <dd rel="yui:parameter">
+                                                        <code><span property="yui:name">f</span>
+                                                        &lt;<span property="yui:type">Function</span>&gt;
+                                                        </code>
+                                                        <span property="yui:description">  the function to execute</span>
+                                                        </dd>
+                                                        <dd rel="yui:parameter">
+                                                        <code><span property="yui:name">c</span>
+                                                        &lt;<span property="yui:type">Object</span>&gt;
+                                                        </code>
+                                                        <span property="yui:description">  execution context</span>
+                                                        </dd>
+                                                </dl>
+
+                                                <dl>
+                                                    <dt>Returns:
+                                                    <code property="yui:return">
+                                                        Object
+                                                    </code></dt>
+                                                    <dd property="yui:returnInfo">new object</dd>
+                                                </dl>
+
+
+             
+
+                                        </div>
+
+                                    </div>
+                                    <hr />
+                                    </div>
+                                    <div class="" rel="yui:method" resource="#method_Object.indexOf">
+                                    <h4>
+                                        <a name="method_Object.indexOf">Object.indexOf</a></h4>
+                                    <div class="detail" >
+                                        <code>
+                                        
+                                         static 
+                                        
+                                        
+                                            <strong property="yui:name">Object.indexOf</strong>
+                                           (
+                                                
+                                                        
+                                                         o
+                                                    
+                                                
+                                                        , 
+                                                         v
+                                                    
+                                                
+                                            )
+                                        </code>
+                                        
+                                        <div class="description" property="yui:description">
+                                            Return name of the property which value equal passed value
+                                        </div>
+
+                                        <div class="description">
+
+                                                <dl rel="yui:parameters">
+                                                    <dt>Parameters:</dt>
+                                                        <dd rel="yui:parameter">
+                                                        <code><span property="yui:name">o</span>
+                                                        &lt;<span property="yui:type">Object</span>&gt;
+                                                        </code>
+                                                        <span property="yui:description">  source hash</span>
+                                                        </dd>
+                                                        <dd rel="yui:parameter">
+                                                        <code><span property="yui:name">v</span>
+                                                        &lt;<span property="yui:type">object</span>&gt;
+                                                        </code>
+                                                        <span property="yui:description"> value to compare with</span>
+                                                        </dd>
+                                                </dl>
+
+
+
+             
+
+                                        </div>
+
+                                    </div>
+                                    <hr />
+                                    </div>
                                     <div class="" rel="yui:method" resource="#method_Object.keys">
                                     <h4>
                                         <a name="method_Object.keys">Object.keys</a></h4>
@@ -266,6 +507,150 @@ as paramters (in that order).
                                     </div>
                                     <hr />
                                     </div>
+                                    <div class="" rel="yui:method" resource="#method_Object.map">
+                                    <h4>
+                                        <a name="method_Object.map">Object.map</a></h4>
+                                    <div class="detail" >
+                                        <code>
+                                        
+                                         static 
+                                        
+                                        Object
+                                            <strong property="yui:name">Object.map</strong>
+                                           (
+                                                
+                                                        
+                                                         o
+                                                    
+                                                
+                                                        , 
+                                                         f
+                                                    
+                                                
+                                                        , 
+                                                         c
+                                                    
+                                                
+                                            )
+                                        </code>
+                                        
+                                        <div class="description" property="yui:description">
+                                            Create mapping of the input object
+                                        </div>
+
+                                        <div class="description">
+
+                                                <dl rel="yui:parameters">
+                                                    <dt>Parameters:</dt>
+                                                        <dd rel="yui:parameter">
+                                                        <code><span property="yui:name">o</span>
+                                                        &lt;<span property="yui:type">Object</span>&gt;
+                                                        </code>
+                                                        <span property="yui:description">  source object</span>
+                                                        </dd>
+                                                        <dd rel="yui:parameter">
+                                                        <code><span property="yui:name">f</span>
+                                                        &lt;<span property="yui:type">Function</span>&gt;
+                                                        </code>
+                                                        <span property="yui:description">  function to execute</span>
+                                                        </dd>
+                                                        <dd rel="yui:parameter">
+                                                        <code><span property="yui:name">c</span>
+                                                        &lt;<span property="yui:type">Object</span>&gt;
+                                                        </code>
+                                                        <span property="yui:description">  execution context</span>
+                                                        </dd>
+                                                </dl>
+
+                                                <dl>
+                                                    <dt>Returns:
+                                                    <code property="yui:return">
+                                                        Object
+                                                    </code></dt>
+                                                    <dd property="yui:returnInfo">mapped object</dd>
+                                                </dl>
+
+
+             
+
+                                        </div>
+
+                                    </div>
+                                    <hr />
+                                    </div>
+                                    <div class="" rel="yui:method" resource="#method_Object.some">
+                                    <h4>
+                                        <a name="method_Object.some">Object.some</a></h4>
+                                    <div class="detail" >
+                                        <code>
+                                        
+                                         static 
+                                        
+                                        boolean
+                                            <strong property="yui:name">Object.some</strong>
+                                           (
+                                                
+                                                        
+                                                         o
+                                                    
+                                                
+                                                        , 
+                                                         f
+                                                    
+                                                
+                                                        , 
+                                                         c
+                                                    
+                                                
+                                            )
+                                        </code>
+                                        
+                                        <div class="description" property="yui:description">
+                                            Executes provided function on each property of the supplied object
+If at least one property value, passed in the function, return true, return true.
+Otherwise, return false.
+                                        </div>
+
+                                        <div class="description">
+
+                                                <dl rel="yui:parameters">
+                                                    <dt>Parameters:</dt>
+                                                        <dd rel="yui:parameter">
+                                                        <code><span property="yui:name">o</span>
+                                                        &lt;<span property="yui:type">Object</span>&gt;
+                                                        </code>
+                                                        <span property="yui:description">  object to iterate</span>
+                                                        </dd>
+                                                        <dd rel="yui:parameter">
+                                                        <code><span property="yui:name">f</span>
+                                                        &lt;<span property="yui:type">Function</span>&gt;
+                                                        </code>
+                                                        <span property="yui:description">  comparator</span>
+                                                        </dd>
+                                                        <dd rel="yui:parameter">
+                                                        <code><span property="yui:name">c</span>
+                                                        &lt;<span property="yui:type">Object</span>&gt;
+                                                        </code>
+                                                        <span property="yui:description">  execution context</span>
+                                                        </dd>
+                                                </dl>
+
+                                                <dl>
+                                                    <dt>Returns:
+                                                    <code property="yui:return">
+                                                        boolean
+                                                    </code></dt>
+                                                    <dd property="yui:returnInfo">match at least one property value comparator or not</dd>
+                                                </dl>
+
+
+             
+
+                                        </div>
+
+                                    </div>
+                                    <hr />
+                                    </div>
                             </div>
                         </div>
 
@@ -288,11 +673,11 @@ as paramters (in that order).
                     <div id="moduleList" class="module">
                         <h4>Modules</h4>
                         <ul class="content">
-                                <li class="selected"><a href="module_ap.html" title="ap">ap</a></li>
+                                <li class=""><a href="module_ap.html" title="ap">ap</a></li>
                                 <li class=""><a href="module_cookie.html" title="cookie">cookie</a></li>
                                 <li class=""><a href="module_history.html" title="history">history</a></li>
                                 <li class=""><a href="module_imageloader.html" title="imageloader">imageloader</a></li>
-                                <li class=""><a href="module_json.html" title="json">json</a></li>
+                                <li class="selected"><a href="module_json.html" title="json">json</a></li>
                                 <li class=""><a href="module_queue.html" title="queue">queue</a></li>
                                 <li class=""><a href="module_spinner.html" title="spinner">spinner</a></li>
                                 <li class=""><a href="module_supreme.html" title="supreme">supreme</a></li>
@@ -302,25 +687,17 @@ as paramters (in that order).
                     <div id="classList" class="module">
                         <h4>Classes</h4>
                         <ul class="content">
-                                <li class=""><a href="AP.html" title="AP">AP</a></li>
-                                <li class=""><a href="AP~array.html" title="AP~array">AP~array</a></li>
-                                <li class=""><a href="AP~Lang.html" title="AP~Lang">AP~Lang</a></li>
                                 <li class="selected"><a href="AP~object.html" title="AP~object">AP~object</a></li>
-                                <li class=""><a href="Log.html" title="Log">Log</a></li>
-                                <li class=""><a href="Observer.html" title="Observer">Observer</a></li>
-                                <li class=""><a href="String.html" title="String">String</a></li>
-                                <li class=""><a href="StringBuffer.html" title="StringBuffer">StringBuffer</a></li>
+                                <li class=""><a href="Lang.html" title="Lang">Lang</a></li>
                         </ul>
                     </div>
 
                     <div id="fileList" class="module">
                         <h4>Files</h4>
                         <ul class="content">        
-                                <li class=""><a href="ap.base-0.0.1.js.html" title="ap.base-0.0.1.js">ap.base-0.0.1.js</a></li>
-                                <li class=""><a href="ap.cookie-0.0.1.js.html" title="ap.cookie-0.0.1.js">ap.cookie-0.0.1.js</a></li>
-                                <li class=""><a href="ap.ordain-0.0.1.js.html" title="ap.ordain-0.0.1.js">ap.ordain-0.0.1.js</a></li>
-                                <li class=""><a href="ap.queue-0.0.1.js.html" title="ap.queue-0.0.1.js">ap.queue-0.0.1.js</a></li>
-                                <li class=""><a href="ap.supreme-0.0.1.js.html" title="ap.supreme-0.0.1.js">ap.supreme-0.0.1.js</a></li>
+                                <li class=""><a href="lang.js.html" title="lang.js">lang.js</a></li>
+                                <li class=""><a href="object.js.html" title="object.js">object.js</a></li>
+                                <li class=""><a href="observer.js.html" title="observer.js">observer.js</a></li>
                         </ul>
                     </div>
 
@@ -328,9 +705,15 @@ as paramters (in that order).
                     <div id="methodsList" class="module">
                         <h4>Methods</h4>
                         <ul class="content">        
-                                <li class=""><a href="#method_equal" title="equal">equal</a></li>
+                                <li class=""><a href="#method_Object" title="Object">Object</a></li>
+                                <li class=""><a href="#method_Object.clean" title="Object.clean">Object.clean</a></li>
                                 <li class=""><a href="#method_Object.each" title="Object.each">Object.each</a></li>
+                                <li class=""><a href="#method_Object.every" title="Object.every">Object.every</a></li>
+                                <li class=""><a href="#method_Object.filter" title="Object.filter">Object.filter</a></li>
+                                <li class=""><a href="#method_Object.indexOf" title="Object.indexOf">Object.indexOf</a></li>
                                 <li class=""><a href="#method_Object.keys" title="Object.keys">Object.keys</a></li>
+                                <li class=""><a href="#method_Object.map" title="Object.map">Object.map</a></li>
+                                <li class=""><a href="#method_Object.some" title="Object.some">Object.some</a></li>
                         </ul>
                     </div>
 
@@ -341,11 +724,11 @@ as paramters (in that order).
 	</div>
 	<div id="ft">
         <hr />
-        Copyright &copy; 2008 Yahoo! Inc. All rights reserved.
+        Copyright &copy; 2009 Yahoo! Inc. All rights reserved.
 	</div>
 </div>
 <script type="text/javascript">
-    ALL_YUI_PROPS = [{"url": "AP.html#method_add", "access": "", "host": "AP", "type": "method", "name": "add"}, {"url": "AP.html#method_applyTo", "access": "", "host": "AP", "type": "method", "name": "applyTo"}, {"url": "AP~array.html#method_Array", "access": "", "host": "AP~array", "type": "method", "name": "Array"}, {"url": "AP~array.html#method_Array.each", "access": "", "host": "AP~array", "type": "method", "name": "Array.each"}, {"url": "AP~array.html#method_Array.hash", "access": "", "host": "AP~array", "type": "method", "name": "Array.hash"}, {"url": "AP~array.html#method_Array.indexOf", "access": "", "host": "AP~array", "type": "method", "name": "Array.indexOf"}, {"url": "AP~array.html#method_Array.test", "access": "", "host": "AP~array", "type": "method", "name": "Array.test"}, {"url": "AP.html#method__configureEnvinronment", "access": "private", "host": "AP", "type": "method", "name": "_configureEnvinronment"}, {"url": "AP~array.html#method_equal", "access": "", "host": "AP~array", "type": "method", "name": "equal"}, {"url": "AP~object.html#method_equal", "access": "", "host": "AP~object", "type": "method", "name": "equal"}, {"url": "AP~array.html#method_filter", "access": "", "host": "AP~array", "type": "method", "name": "filter"}, {"url": "AP.html#method_guid", "access": "", "host": "AP", "type": "method", "name": "guid"}, {"url": "AP.html#property__iefix", "access": "private", "host": "AP", "type": "property", "name": "_iefix"}, {"url": "AP.html#method__init", "access": "private", "host": "AP", "type": "method", "name": "_init"}, {"url": "AP~Lang.html#method_isArray", "access": "", "host": "AP~Lang", "type": "method", "name": "isArray"}, {"url": "AP~Lang.html#method_isBoolean", "access": "", "host": "AP~Lang", "type": "method", "name": "isBoolean"}, {"url": "AP~Lang.html#method_isDate", "access": "", "host": "AP~Lang", "type": "method", "name": "isDate"}, {"url": "AP~Lang.html#method_isEmpty", "access": "", "host": "AP~Lang", "type": "method", "name": "isEmpty"}, {"url": "AP~Lang.html#method_isFunction", "access": "", "host": "AP~Lang", "type": "method", "name": "isFunction"}, {"url": "AP~Lang.html#method_isNull", "access": "", "host": "AP~Lang", "type": "method", "name": "isNull"}, {"url": "AP~Lang.html#method_isNumber", "access": "", "host": "AP~Lang", "type": "method", "name": "isNumber"}, {"url": "AP~Lang.html#method_isObject", "access": "", "host": "AP~Lang", "type": "method", "name": "isObject"}, {"url": "AP~Lang.html#method_isString", "access": "", "host": "AP~Lang", "type": "method", "name": "isString"}, {"url": "AP~Lang.html#method_isUndefined", "access": "", "host": "AP~Lang", "type": "method", "name": "isUndefined"}, {"url": "AP~Lang.html#method_isValue", "access": "", "host": "AP~Lang", "type": "method", "name": "isValue"}, {"url": "Log.html#method_log", "access": "", "host": "Log", "type": "method", "name": "log"}, {"url": "AP~array.html#method_map", "access": "", "host": "AP~array", "type": "method", "name": "map"}, {"url": "AP.html#method_merge", "access": "", "host": "AP", "type": "method", "name": "merge"}, {"url": "AP.html#method_mix", "access": "", "host": "AP", "type": "method", "name": "mix"}, {"url": "AP.html#method_namespace", "access": "", "host": "AP", "type": "method", "name": "namespace"}, {"url": "AP~object.html#method_Object.each", "access": "", "host": "AP~object", "type": "method", "name": "Object.each"}, {"url": "AP~object.html#method_Object.keys", "access": "", "host": "AP~object", "type": "method", "name": "Object.keys"}, {"url": "AP.html#method__setup", "access": "private", "host": "AP", "type": "method", "name": "_setup"}, {"url": "AP.html#method_stamp", "access": "", "host": "AP", "type": "method", "name": "stamp"}, {"url": "AP~Lang.html#method_trim", "access": "", "host": "AP~Lang", "type": "method", "name": "trim"}, {"url": "AP~array.html#method_unique", "access": "", "host": "AP~array", "type": "method", "name": "unique"}, {"url": "AP.html#method_use", "access": "", "host": "AP", "type": "method", "name": "use"}];
+    ALL_YUI_PROPS = [{"url": "Lang.html#method_compare", "access": "", "host": "Lang", "type": "method", "name": "compare"}, {"url": "Lang.html#method_isArray", "access": "", "host": "Lang", "type": "method", "name": "isArray"}, {"url": "Lang.html#method_isBoolean", "access": "", "host": "Lang", "type": "method", "name": "isBoolean"}, {"url": "Lang.html#method_isDate", "access": "", "host": "Lang", "type": "method", "name": "isDate"}, {"url": "Lang.html#method_isFunction", "access": "", "host": "Lang", "type": "method", "name": "isFunction"}, {"url": "Lang.html#method_isNull", "access": "", "host": "Lang", "type": "method", "name": "isNull"}, {"url": "Lang.html#method_isNumber", "access": "", "host": "Lang", "type": "method", "name": "isNumber"}, {"url": "Lang.html#method_isObject", "access": "", "host": "Lang", "type": "method", "name": "isObject"}, {"url": "Lang.html#method_isString", "access": "", "host": "Lang", "type": "method", "name": "isString"}, {"url": "Lang.html#method_isUndefined", "access": "", "host": "Lang", "type": "method", "name": "isUndefined"}, {"url": "Lang.html#method_isValue", "access": "", "host": "Lang", "type": "method", "name": "isValue"}, {"url": "AP~object.html#method_Object", "access": "", "host": "AP~object", "type": "method", "name": "Object"}, {"url": "AP~object.html#method_Object.clean", "access": "", "host": "AP~object", "type": "method", "name": "Object.clean"}, {"url": "AP~object.html#method_Object.each", "access": "", "host": "AP~object", "type": "method", "name": "Object.each"}, {"url": "AP~object.html#method_Object.every", "access": "", "host": "AP~object", "type": "method", "name": "Object.every"}, {"url": "AP~object.html#method_Object.filter", "access": "", "host": "AP~object", "type": "method", "name": "Object.filter"}, {"url": "AP~object.html#method_Object.indexOf", "access": "", "host": "AP~object", "type": "method", "name": "Object.indexOf"}, {"url": "AP~object.html#method_Object.keys", "access": "", "host": "AP~object", "type": "method", "name": "Object.keys"}, {"url": "AP~object.html#method_Object.map", "access": "", "host": "AP~object", "type": "method", "name": "Object.map"}, {"url": "AP~object.html#method_Object.some", "access": "", "host": "AP~object", "type": "method", "name": "Object.some"}];
 </script>
 </body>
 </html>

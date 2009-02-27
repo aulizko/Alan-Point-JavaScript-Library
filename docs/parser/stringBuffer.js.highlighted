@@ -1,0 +1,84 @@
+<div class="highlight" ><pre><span class="c">/**</span>
+<span class="c"> * Fast string concatenation</span>
+<span class="c"> * @module ap</span>
+<span class="c"> * @submodule stringBuffer</span>
+<span class="c"> */</span>
+<span class="nx">AP</span><span class="o">.</span><span class="nx">add</span><span class="o">(</span><span class="s1">&#39;stringBuffer&#39;</span><span class="o">,</span> <span class="k">function</span> <span class="o">(</span><span class="nx">A</span><span class="o">)</span> <span class="o">{</span>
+    <span class="k">var</span> <span class="nx">ie6</span> <span class="o">=</span> <span class="nx">A</span><span class="o">.</span><span class="nx">Browser</span><span class="o">.</span><span class="nx">trident</span> <span class="o">==</span> <span class="m">6</span><span class="o">;</span>
+    
+    <span class="c">/**</span>
+<span class="c">     * Fast string buffer utility - usefull for robust string concatenation</span>
+<span class="c">     * @class StringBuffer</span>
+<span class="c">     * @constructor</span>
+<span class="c">     * @param strings* {String} any number of strings to concatenate</span>
+<span class="c">     */</span>
+    <span class="nx">A</span><span class="o">.</span><span class="nx">StringBuffer</span> <span class="o">=</span> <span class="o">(</span><span class="nx">ie6</span><span class="o">)</span> <span class="o">?</span>
+        <span class="k">function</span> <span class="o">()</span> <span class="o">{</span>
+            <span class="k">this</span><span class="o">.</span><span class="nx">buffer</span> <span class="o">=</span> <span class="o">[];</span>
+            
+            <span class="k">this</span><span class="o">.</span><span class="nx">index</span> <span class="o">=</span> <span class="m">0</span><span class="o">;</span>
+            
+            <span class="k">var</span> <span class="nx">i</span> <span class="o">=</span> <span class="m">0</span><span class="o">,</span> <span class="nx">arg</span><span class="o">;</span>
+            <span class="k">while</span> <span class="o">(</span><span class="nx">arg</span> <span class="o">=</span> <span class="nx">arguments</span><span class="o">[</span><span class="nx">i</span><span class="o">++])</span> <span class="o">{</span>
+                <span class="k">this</span><span class="o">.</span><span class="nx">buffer</span><span class="o">[</span><span class="k">this</span><span class="o">.</span><span class="nx">index</span><span class="o">++]</span> <span class="o">=</span> <span class="nx">arg</span><span class="o">;</span>
+            <span class="o">}</span>
+        <span class="o">}</span> <span class="o">:</span>
+        <span class="k">function</span> <span class="o">()</span> <span class="o">{</span>
+            <span class="k">this</span><span class="o">.</span><span class="nx">buffer</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span><span class="o">;</span>
+            
+            <span class="k">var</span> <span class="nx">i</span> <span class="o">=</span> <span class="m">0</span><span class="o">,</span> <span class="nx">arg</span><span class="o">;</span>
+            <span class="k">while</span> <span class="o">(</span><span class="nx">arg</span> <span class="o">=</span> <span class="nx">arguments</span><span class="o">[</span><span class="nx">i</span><span class="o">++])</span> <span class="o">{</span>
+                <span class="k">this</span><span class="o">.</span><span class="nx">buffer</span> <span class="o">+=</span> <span class="nx">arg</span><span class="o">;</span>
+            <span class="o">}</span>
+        <span class="o">};</span>
+    
+    
+    <span class="c">/**</span>
+<span class="c">     * Add string snippet to stringbuffer. As method returns stringBuffer object itself, it is possible to chain methods</span>
+<span class="c">     * @method add</span>
+<span class="c">     * @param e {String}</span>
+<span class="c">     * @public</span>
+<span class="c">     * @return {StringBuffer}</span>
+<span class="c">     */</span>
+    <span class="nx">A</span><span class="o">.</span><span class="nx">StringBuffer</span><span class="o">.</span><span class="nx">prototype</span><span class="o">.</span><span class="nx">add</span> <span class="o">=</span> <span class="o">(</span><span class="nx">ie6</span><span class="o">)</span> <span class="o">?</span>
+        <span class="k">function</span><span class="o">(</span><span class="nx">e</span><span class="o">)</span> <span class="o">{</span>
+            <span class="k">this</span><span class="o">.</span><span class="nx">buffer</span><span class="o">[</span><span class="k">this</span><span class="o">.</span><span class="nx">index</span><span class="o">++]</span> <span class="o">=</span> <span class="nx">e</span><span class="o">;</span>
+            <span class="k">return</span> <span class="k">this</span><span class="o">;</span>
+        <span class="o">}</span> <span class="o">:</span>
+        <span class="k">function</span> <span class="o">(</span><span class="nx">e</span><span class="o">)</span> <span class="o">{</span>
+            <span class="k">this</span><span class="o">.</span><span class="nx">buffer</span> <span class="o">+=</span> <span class="nx">e</span><span class="o">;</span>
+            <span class="k">return</span> <span class="k">this</span><span class="o">;</span>
+        <span class="o">};</span>
+    
+    <span class="c">/**</span>
+<span class="c">     * Return stored string snippets as one concatenated string</span>
+<span class="c">     * @method toString</span>
+<span class="c">     * @public</span>
+<span class="c">     * @return {String}</span>
+<span class="c">     */</span>
+    <span class="nx">A</span><span class="o">.</span><span class="nx">StringBuffer</span><span class="o">.</span><span class="nx">prototype</span><span class="o">.</span><span class="nx">toString</span> <span class="o">=</span> <span class="o">(</span><span class="nx">ie6</span><span class="o">)</span> <span class="o">?</span>
+        <span class="k">function</span> <span class="o">()</span> <span class="o">{</span>
+            <span class="k">return</span> <span class="k">this</span><span class="o">.</span><span class="nx">buffer</span><span class="o">.</span><span class="nx">join</span><span class="o">(</span><span class="s1">&#39;&#39;</span><span class="o">);</span>
+        <span class="o">}</span> <span class="o">:</span>
+        <span class="k">function</span> <span class="o">()</span> <span class="o">{</span>
+            <span class="k">return</span> <span class="k">this</span><span class="o">.</span><span class="nx">buffer</span><span class="o">;</span>
+        <span class="o">};</span>
+    
+    <span class="c">/**</span>
+<span class="c">     * Clear stored string snippets</span>
+<span class="c">     * @method empty</span>
+<span class="c">     * @public</span>
+<span class="c">     */</span>
+    <span class="nx">A</span><span class="o">.</span><span class="nx">StringBuffer</span><span class="o">.</span><span class="nx">prototype</span><span class="o">.</span><span class="nx">empty</span> <span class="o">=</span> <span class="o">(</span><span class="nx">ie6</span><span class="o">)</span> <span class="o">?</span>
+        <span class="k">function</span> <span class="o">()</span> <span class="o">{</span>
+            <span class="k">this</span><span class="o">.</span><span class="nx">buffer</span><span class="o">.</span><span class="nx">length</span> <span class="o">=</span> <span class="m">0</span><span class="o">;</span>
+            <span class="k">this</span><span class="o">.</span><span class="nx">index</span> <span class="o">=</span> <span class="m">0</span><span class="o">;</span>
+        <span class="o">}</span> <span class="o">:</span>
+        <span class="k">function</span> <span class="o">()</span> <span class="o">{</span>
+            <span class="k">this</span><span class="o">.</span><span class="nx">buffer</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span><span class="o">;</span>
+        <span class="o">};</span>
+    
+<span class="o">},</span> <span class="s1">&#39;1.0.3&#39;</span><span class="o">,</span> <span class="o">[</span>
+    <span class="o">{</span> <span class="nx">name</span> <span class="o">:</span> <span class="s1">&#39;browser&#39;</span><span class="o">,</span> <span class="nx">minVersion</span> <span class="o">:</span> <span class="s1">&#39;0.0.2&#39;</span> <span class="o">}</span>
+<span class="o">]);</span>
+</pre></div>

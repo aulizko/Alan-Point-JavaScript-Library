@@ -1,0 +1,472 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html xmlns:yui="http://yuilibrary.com/rdf/1.0/yui.rdf#">
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+	<title>API: ap  AP~specification   (YUI Library)</title>
+
+	<link rel="stylesheet" type="text/css" href="assets/reset-fonts-grids-min.css?stamp=1235697936.77" />
+	<link rel="stylesheet" type="text/css" href="assets/api.css?stamp=1235697936.77" />
+
+    <script type="text/javascript" src="assets/api-js?stamp=1235697936.77"></script>
+    <script type="text/javascript" src="assets/ac-js?stamp=1235697936.77"></script>
+</head>
+
+<body id="yahoo-com">
+
+<div id="doc3" class="yui-t2">
+	<div id="hd">
+        <h1><a href="http://developer.yahoo.com/yui/" title="Yahoo! UI Library">Yahoo! UI Library</a></h1>
+        <h3>ap&nbsp; <span class="subtitle">0.0.2</span></h3>
+        <a href="./index.html" title="Yahoo! UI Library">Yahoo! UI Library</a> 
+            &gt; <a href="./module_ap.html" title="ap">ap</a>
+                 &gt; AP~specification 
+                
+        <form onsubmit="return false">
+            <div id="propertysearch">
+                Search: <input autocomplete="off" id="searchinput" />
+                <div id="searchresults">
+                    &nbsp;
+                </div>
+            </div>
+        </form>
+	</div>
+
+	<div id="bd">
+		<div id="yui-main">
+			<div class="yui-b">
+            <form action="#" name="yui-classopts-form" method="get" id="yui-classopts-form">
+                <fieldset>
+                    <legend>Filters</legend>
+                <span class="classopts"><input type="checkbox" name="show_private" id="show_private" /> <label for="show_private">Show Private</label></span>
+                <span class="classopts"><input type="checkbox" name="show_protected" id="show_protected" /> <label for="show_protected">Show Protected</label></span>
+                <span class="classopts"><input type="checkbox" name="show_deprecated" id="show_deprecated" /> <label for="show_deprecated">Show Deprecated</label></span>
+                </fieldset>
+            </form>
+
+                    <h2>
+                        
+
+                        
+                        
+                            Class <b property="yui:name">AP~specification</b>
+                        <span class="extends">
+                        </span>
+
+                    </h2>
+                    <!-- class tree goes here -->
+                    
+                
+  
+
+                    <div class="summary description" property="yui:description">
+                        Creates Specification object to AP instance
+                    </div>
+
+                    
+                    <div rel="yui:properties" resource="#properties">
+
+                    </div>
+
+                    <div rel="yui:methods" resource="#methods">
+                        <div class="section method details">
+                            <h3 id="methods">Methods</h3>
+                            <div class="content">
+                                    <div class="private" rel="yui:method" resource="#method___arraySpecificationCheck">
+                                    <h4>
+                                        <a name="method___arraySpecificationCheck">__arraySpecificationCheck</a></h4>
+                                    <div class="detail" >
+                                        <code>
+                                         private 
+                                        
+                                        
+                                        void
+                                            <strong property="yui:name">__arraySpecificationCheck</strong>
+                                           (
+                                                
+                                                        
+                                                         specification
+                                                    
+                                                
+                                                        , 
+                                                         args
+                                                    
+                                                
+                                            )
+                                        </code>
+                                        
+                                        <div class="description" property="yui:description">
+                                            Inner method called inside check method when array-like specification passed in
+                                        </div>
+
+                                        <div class="description">
+
+                                                <dl rel="yui:parameters">
+                                                    <dt>Parameters:</dt>
+                                                        <dd rel="yui:parameter">
+                                                        <code><span property="yui:name">specification</span>
+                                                        &lt;<span property="yui:type">Array</span>&gt;
+                                                        </code>
+                                                        <span property="yui:description">  - specification object (@see AP~specification~check)</span>
+                                                        </dd>
+                                                        <dd rel="yui:parameter">
+                                                        <code><span property="yui:name">args</span>
+                                                        &lt;<span property="yui:type">Arguments</span>&gt;
+                                                        </code>
+                                                        <span property="yui:description">  - real-world arguments which check retreived from the parent-level function</span>
+                                                        </dd>
+                                                </dl>
+
+                                                <dl>
+                                                    <dt>Returns:
+                                                    <code property="yui:return">
+                                                        void
+                                                    </code></dt>
+                                                    <dd property="yui:returnInfo"></dd>
+                                                </dl>
+
+
+             
+
+                                        </div>
+
+                                    </div>
+                                    <hr />
+                                    </div>
+                                    <div class="private" rel="yui:method" resource="#method___checkType">
+                                    <h4>
+                                        <a name="method___checkType">__checkType</a></h4>
+                                    <div class="detail" >
+                                        <code>
+                                         private 
+                                        
+                                        
+                                        Boolean
+                                            <strong property="yui:name">__checkType</strong>
+                                           (
+                                                
+                                                        
+                                                         requiredType
+                                                    
+                                                
+                                                        , 
+                                                         property
+                                                    
+                                                
+                                            )
+                                        </code>
+                                        
+                                        <div class="description" property="yui:description">
+                                            Inner method called inside check method implementations which interpreur user-level type names like 'string' into
+AP~lang module method names like 'isString' and pass property into that method
+                                        </div>
+
+                                        <div class="description">
+
+                                                <dl rel="yui:parameters">
+                                                    <dt>Parameters:</dt>
+                                                        <dd rel="yui:parameter">
+                                                        <code><span property="yui:name">requiredType</span>
+                                                        &lt;<span property="yui:type">String</span>&gt;
+                                                        </code>
+                                                        <span property="yui:description">  - any-case named type. String, nUmber, Date and all that.</span>
+                                                        </dd>
+                                                        <dd rel="yui:parameter">
+                                                        <code><span property="yui:name">property</span>
+                                                        &lt;<span property="yui:type">object</span>&gt;
+                                                        </code>
+                                                        <span property="yui:description"> - property to check type of</span>
+                                                        </dd>
+                                                </dl>
+
+                                                <dl>
+                                                    <dt>Returns:
+                                                    <code property="yui:return">
+                                                        Boolean
+                                                    </code></dt>
+                                                    <dd property="yui:returnInfo">is property match type</dd>
+                                                </dl>
+
+
+             
+
+                                        </div>
+
+                                    </div>
+                                    <hr />
+                                    </div>
+                                    <div class="private" rel="yui:method" resource="#method___objectSpecificationCheck">
+                                    <h4>
+                                        <a name="method___objectSpecificationCheck">__objectSpecificationCheck</a></h4>
+                                    <div class="detail" >
+                                        <code>
+                                         private 
+                                        
+                                        
+                                        void
+                                            <strong property="yui:name">__objectSpecificationCheck</strong>
+                                           (
+                                                
+                                                        
+                                                         specification
+                                                    
+                                                
+                                                        , 
+                                                         args
+                                                    
+                                                
+                                            )
+                                        </code>
+                                        
+                                        <div class="description" property="yui:description">
+                                            Inner method which called inside check method when object-like specification passed in
+                                        </div>
+
+                                        <div class="description">
+
+                                                <dl rel="yui:parameters">
+                                                    <dt>Parameters:</dt>
+                                                        <dd rel="yui:parameter">
+                                                        <code><span property="yui:name">specification</span>
+                                                        &lt;<span property="yui:type">Object</span>&gt;
+                                                        </code>
+                                                        <span property="yui:description">  - specification object (@see AP~specification~check)</span>
+                                                        </dd>
+                                                        <dd rel="yui:parameter">
+                                                        <code><span property="yui:name">args</span>
+                                                        &lt;<span property="yui:type">Arguments</span>&gt;
+                                                        </code>
+                                                        <span property="yui:description">  - real-world arguments which check retreived from the parent-level function</span>
+                                                        </dd>
+                                                </dl>
+
+                                                <dl>
+                                                    <dt>Returns:
+                                                    <code property="yui:return">
+                                                        void
+                                                    </code></dt>
+                                                    <dd property="yui:returnInfo"></dd>
+                                                </dl>
+
+
+             
+
+                                        </div>
+
+                                    </div>
+                                    <hr />
+                                    </div>
+                                    <div class="" rel="yui:method" resource="#method_augment">
+                                    <h4>
+                                        <a name="method_augment">augment</a></h4>
+                                    <div class="detail" >
+                                        <code>
+                                        
+                                        
+                                        
+                                        void
+                                            <strong property="yui:name">augment</strong>
+                                           (
+                                                
+                                                        
+                                                         fn
+                                                    
+                                                
+                                                        , 
+                                                         specification
+                                                    
+                                                
+                                            )
+                                        </code>
+                                        
+                                        <div class="description" property="yui:description">
+                                            This method augment replace original method, passed in
+with new function which first call check with passed in specification and arguments
+and than throw error or call old method
+                                        </div>
+
+                                        <div class="description">
+
+                                                <dl rel="yui:parameters">
+                                                    <dt>Parameters:</dt>
+                                                        <dd rel="yui:parameter">
+                                                        <code><span property="yui:name">fn</span>
+                                                        &lt;<span property="yui:type">String</span>&gt;
+                                                        </code>
+                                                        <span property="yui:description">  name of the method(function) to replace</span>
+                                                        </dd>
+                                                        <dd rel="yui:parameter">
+                                                        <code><span property="yui:name">specification</span>
+                                                        &lt;<span property="yui:type">Object|Array</span>&gt;
+                                                        </code>
+                                                        <span property="yui:description">   specification (@see AP~specification~check)</span>
+                                                        </dd>
+                                                </dl>
+
+                                                <dl>
+                                                    <dt>Returns:
+                                                    <code property="yui:return">
+                                                        void
+                                                    </code></dt>
+                                                    <dd property="yui:returnInfo"></dd>
+                                                </dl>
+
+
+             
+
+                                        </div>
+
+                                    </div>
+                                    <hr />
+                                    </div>
+                                    <div class="" rel="yui:method" resource="#method_check">
+                                    <h4>
+                                        <a name="method_check">check</a></h4>
+                                    <div class="detail" >
+                                        <code>
+                                        
+                                         static 
+                                        
+                                        void
+                                            <strong property="yui:name">check</strong>
+                                           (
+                                                
+                                                        
+                                                         specification
+                                                    
+                                                
+                                            )
+                                        </code>
+                                        
+                                        <div class="description" property="yui:description">
+                                            Check validates arguments, passed into parent-level function (got by arguments.callee.caller.arguments chain)
+through so-called specification which passed as argument to the check method itself
+                                        </div>
+
+                                        <div class="description">
+
+                                                <dl rel="yui:parameters">
+                                                    <dt>Parameters:</dt>
+                                                        <dd rel="yui:parameter">
+                                                        <code><span property="yui:name">specification</span>
+                                                        &lt;<span property="yui:type">Array|Object} can be passed with three possible ways: 
+<ul><li>As Object - so that every property will expect property with same name at the real-world arguments. 
+Every property can have up to two properties:
+<ul><li>required {Boolean} - if true, check should throw error if won't found that method at the real-world arguments</li>
+<li>type {String</span>&gt;
+                                                        </code>
+                                                        <span property="yui:description">  - determine which type must be paramether(todo: check spelling)</li></ul></li>
+<li>As array - so that every property (if have true as required sub-property) expect same property at same index-based position.
+Every property can have object-way subproperties</li>
+<li>As regular arguments. Works same as array-like way, but beware not to left 1 argument, cause check method should consider it like object-like way</li>
+</ul></span>
+                                                        </dd>
+                                                </dl>
+
+                                                <dl>
+                                                    <dt>Returns:
+                                                    <code property="yui:return">
+                                                        void
+                                                    </code></dt>
+                                                    <dd property="yui:returnInfo"></dd>
+                                                </dl>
+
+
+             
+
+                                        </div>
+
+                                    </div>
+                                    <hr />
+                                    </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div rel="yui:events" resource="#events">
+
+
+                    </div>
+
+                    <div rel="yui:attributes" resource="#configattributes">
+
+                    </div>
+
+			</div>
+		</div>
+		<div class="yui-b">
+            <div class="nav">
+
+                    <div id="moduleList" class="module">
+                        <h4>Modules</h4>
+                        <ul class="content">
+                                <li class="selected"><a href="module_ap.html" title="ap">ap</a></li>
+                                <li class=""><a href="module_cookie.html" title="cookie">cookie</a></li>
+                                <li class=""><a href="module_history.html" title="history">history</a></li>
+                                <li class=""><a href="module_imageloader.html" title="imageloader">imageloader</a></li>
+                                <li class=""><a href="module_json.html" title="json">json</a></li>
+                                <li class=""><a href="module_queue.html" title="queue">queue</a></li>
+                                <li class=""><a href="module_spinner.html" title="spinner">spinner</a></li>
+                                <li class=""><a href="module_supreme.html" title="supreme">supreme</a></li>
+                        </ul>
+                    </div>
+
+                    <div id="classList" class="module">
+                        <h4>Classes</h4>
+                        <ul class="content">
+                                <li class=""><a href="AP.html" title="AP">AP</a></li>
+                                <li class=""><a href="AP~OOP.html" title="AP~OOP">AP~OOP</a></li>
+                                <li class="selected"><a href="AP~specification.html" title="AP~specification">AP~specification</a></li>
+                                <li class=""><a href="Observer.html" title="Observer">Observer</a></li>
+                                <li class=""><a href="String.html" title="String">String</a></li>
+                                <li class=""><a href="StringBuffer.html" title="StringBuffer">StringBuffer</a></li>
+                        </ul>
+                    </div>
+
+                    <div id="fileList" class="module">
+                        <h4>Files</h4>
+                        <ul class="content">        
+                                <li class=""><a href="ap.ordain-0.0.1.js.html" title="ap.ordain-0.0.1.js">ap.ordain-0.0.1.js</a></li>
+                                <li class=""><a href="ap.queue-0.0.1.js.html" title="ap.queue-0.0.1.js">ap.queue-0.0.1.js</a></li>
+                                <li class=""><a href="ap.supreme-0.0.1.js.html" title="ap.supreme-0.0.1.js">ap.supreme-0.0.1.js</a></li>
+                                <li class=""><a href="class.js.html" title="class.js">class.js</a></li>
+                                <li class=""><a href="color.js.html" title="color.js">color.js</a></li>
+                                <li class=""><a href="history.js.html" title="history.js">history.js</a></li>
+                                <li class=""><a href="innerHTML.js.html" title="innerHTML.js">innerHTML.js</a></li>
+                                <li class=""><a href="jquery.js.html" title="jquery.js">jquery.js</a></li>
+                                <li class=""><a href="node.js.html" title="node.js">node.js</a></li>
+                                <li class=""><a href="oop.js.html" title="oop.js">oop.js</a></li>
+                                <li class=""><a href="panel.js.html" title="panel.js">panel.js</a></li>
+                                <li class=""><a href="sizzle.js.html" title="sizzle.js">sizzle.js</a></li>
+                                <li class=""><a href="string.js.html" title="string.js">string.js</a></li>
+                                <li class=""><a href="stringBuffer.js.html" title="stringBuffer.js">stringBuffer.js</a></li>
+                        </ul>
+                    </div>
+
+
+                    <div id="methodsList" class="module">
+                        <h4>Methods</h4>
+                        <ul class="content">        
+                                <li class="private"><a href="#method___arraySpecificationCheck" title="__arraySpecificationCheck">__arraySpecificationCheck</a></li>
+                                <li class="private"><a href="#method___checkType" title="__checkType">__checkType</a></li>
+                                <li class="private"><a href="#method___objectSpecificationCheck" title="__objectSpecificationCheck">__objectSpecificationCheck</a></li>
+                                <li class=""><a href="#method_augment" title="augment">augment</a></li>
+                                <li class=""><a href="#method_check" title="check">check</a></li>
+                        </ul>
+                    </div>
+
+
+
+            </div>
+		</div>
+	</div>
+	<div id="ft">
+        <hr />
+        Copyright &copy; 2009 Yahoo! Inc. All rights reserved.
+	</div>
+</div>
+<script type="text/javascript">
+    ALL_YUI_PROPS = [{"url": "AP.html#method_add", "access": "", "host": "AP", "type": "method", "name": "add"}, {"url": "AP~specification.html#method___arraySpecificationCheck", "access": "private", "host": "AP~specification", "type": "method", "name": "__arraySpecificationCheck"}, {"url": "AP~specification.html#method_augment", "access": "", "host": "AP~specification", "type": "method", "name": "augment"}, {"url": "AP~specification.html#method_check", "access": "", "host": "AP~specification", "type": "method", "name": "check"}, {"url": "AP~specification.html#method___checkType", "access": "private", "host": "AP~specification", "type": "method", "name": "__checkType"}, {"url": "AP.html#method_generateUID", "access": "", "host": "AP", "type": "method", "name": "generateUID"}, {"url": "AP.html#method_init", "access": "private", "host": "AP", "type": "method", "name": "init"}, {"url": "AP.html#method_lambda", "access": "", "host": "AP", "type": "method", "name": "lambda"}, {"url": "AP.html#method_namespace", "access": "", "host": "AP", "type": "method", "name": "namespace"}, {"url": "AP~specification.html#method___objectSpecificationCheck", "access": "private", "host": "AP~specification", "type": "method", "name": "__objectSpecificationCheck"}, {"url": "AP.html#method_stamp", "access": "", "host": "AP", "type": "method", "name": "stamp"}];
+</script>
+</body>
+</html>

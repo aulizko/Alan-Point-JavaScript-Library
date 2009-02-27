@@ -1,4 +1,4 @@
-YAHOO.env.classMap = {"Queue": "queue", "Supreme": "supreme", "Log": "ap", "Observer": "ap", "ImageLoader.pngBgImgObj": "imageloader", "StringBuffer": "ap", "AP~array": "ap", "SpinnerOnSteroids": "spinner", "AP~Lang": "ap", "AP": "ap", "ImageLoader.image": "imageloader", "String": "ap", "Cookie": "cookie", "AP.JSON": "imageloader", "AP~object": "ap", "ImageLoader.group": "imageloader", "ImageLoader.imgObj": "imageloader", "ImageLoader.backgroundImage": "imageloader", "History": "history"};
+YAHOO.env.classMap = {"Lang": "json", "Supreme": "supreme", "Observer": "ap", "AP~specification": "ap", "ImageLoader.pngBgImgObj": "imageloader", "ImageLoader.backgroundImage": "imageloader", "AP~array": "cookie", "SpinnerOnSteroids": "spinner", "Queue": "queue", "AP": "ap", "ImageLoader.image": "imageloader", "String": "ap", "ImageLoader.group": "imageloader", "AP~OOP": "ap", "AP.JSON": "imageloader", "AP~object": "json", "ImageLoader.imgObj": "imageloader", "History": "history", "AP~Cookie": "cookie", "StringBuffer": "ap", "Browser": "cookie"};
 
 YAHOO.env.resolveClass = function(className) {
     var a=className.split('.'), ns=YAHOO.env.classMap;
