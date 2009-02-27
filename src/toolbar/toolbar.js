@@ -16,6 +16,7 @@ AP.add('toolbar', function (A) {
             this.conf.activeTabCssClass = o.activeTabCssClass || 'activePage';
             AP.stamp(this);
             this.uniqueIdRegex = /%UNIQUE_ID%/g;
+            this.mediator = o.mediator || function () {};
         },
         render : function () {
             var root = this.conf.parent;
@@ -108,7 +109,8 @@ AP.add('toolbar', function (A) {
             var b = this.buttons, 
                 t = this.tabs, 
                 d = this.domReferences,
-                activeButtonCssClass = this.conf.activeButtonCssClass;
+                activeButtonCssClass = this.conf.activeButtonCssClass,
+                self = this;
             // create functions 'make button active' and 'tab active'. 
             O.each(b, function (button) {
                 var title = button.title;
@@ -117,13 +119,13 @@ AP.add('toolbar', function (A) {
                     if (button.active) return;
                     button.active = true;
                     d.buttons[title].addClass(activeButtonCssClass);
-                    button.onActivateCallback(); // call button callback
+                    button.onActivateCallback.call(self, button); // call button callback
                 };
                 button.deactivate = function () {
                     if (!button.active) return;
                     button.active = false;
                     d.buttons[title].removeClass(activeButtonCssClass);
-                    button.onDeactivateCallback();
+                    button.onDeactivateCallback.call(self, button);
                 };
                 d.buttons[title].click(function (e) {
                     if (!button.active) {
@@ -163,10 +165,11 @@ AP.add('toolbar', function (A) {
         },
         initializeCallbacks : function () {
             var s = this.selects,
-                d = this.domReferences;
+                d = this.domReferences,
+                self = this;
             
             O.each(s, function (select, title) {
-                d.selects[title].change(function (e) { return select.onChange(e); });
+                d.selects[title].change(function (e) { return select.onChange.call(self, d.selects[title][0]); });
             }, this);
             // initialize button callback
             // initialize tabs content event listeners and so on
@@ -191,6 +194,9 @@ AP.add('toolbar', function (A) {
                 tab.content.hide();
             }, this);
             this.container.hide();
+        },
+        setMediator : function (mediator) {
+            this.mediator = mediator;
         }
     });
 }, '0.0.1', [

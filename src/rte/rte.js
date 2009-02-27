@@ -12,85 +12,108 @@ AP.add('rte', function (A) {
     A.Widget.RTE = A.Widget.extend({
         init : function (o) {
             this.base(o);
-            this.conf.uniqueId = (new Date()).valueOf() + '_' + Math.floor(Math.random()*1000);
-            this.conf.uniqueIdRegex = /%UNIQUE_ID%/g;
+            
+            var e = this.editArea = o.editArea, 
+                t = this.toolbar = o.toolbar;;
+            
+            e.setMediator(this);
+            t.setMediator(this);
         },
-        editArea : {},
-        render : function () {
-            var conf = this.conf;
-            // build inner html for the future editor
-            var html = new A.StringBuffer('<div id="clicheEditorContainer%UNIQUE_ID%" class="' + conf.containerClass + '">'); // begin of the container block
-            html.add(this.generateHTMLForToolbar())
-                .add(this.generateHTMLForEditArea())
-                .add('</div>');
+        updateState : function (state) {
+            this.state = state;
             
-            $(this.conf.targetElement).replaceWith(html);
-            delete this.conf.targetElement;
+            if (state.strong) this.toolbar.buttons.Bold.activate();
+            else this.toolbar.buttons.Bold.deactivate();
             
-            this.initializeDOMReferences();
-            this.initializeEditArea();
-            this.initializeEventListeners();
-        },
-        initializeEditArea : function (o) {            
-            var t = this.editArea.textarea = $('textarea.' + o.textareaClass).hide().get(0), // remember textarea have been replaced with iframe.
-            c = this.container = $('<div class="' + o.containerClass + '"></div>').appendTo(t.parentNode).get(0),
-            i = this.editArea.iframe = $('<iframe class="' + o.iframeClass + '" frameborder="0"></iframe>').get(0),
-            h = this.editArea.input = $('<input type="hidden" name="' + t.name + '" value="' + o.value + '"></input>').get(0), // create input which value we will pass through the form
-            e = this.editArea.extraInput = $('<input type="hidden" name="' + t.name + 'ClicheEditor" value="true"></input>').get(0); // create an extra input to determine if the submitted data is from the normal textarea or from the clicheEditor
-
-            // get values from config object, replace its with defaults, if needed
-            var pathToStylesheet = o.pathToStyleSheet || '/css/clicheEditor.css';
-
-            $(t).replaceWith(c);
-            $(c).append(i).append(h).append(e);// append iframe to the root element
+            if (state.emphasis) this.toolbar.buttons.Italic.activate();
+            else this.toolbar.buttons.Italic.deactivate();
             
-            // remember initial content of the textarea for future use
-            var initial_content = t.value;
-
-            // remove textarea from the DOM
-            $(t).remove();
-            this.editArea.textArea = null;
-            delete this.editArea.textArea; // remove textarea property from the EditArea object
-
-            // fill iframe with old textarea value
-            var html = '<'+'?xml version="1.0" encoding="UTF-8"?'+'><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">STYLE_SHEET</head><body>INITIAL_CONTENT</body></html>';
-            var style = '<link rel="stylesheet" type="text/css" media="screen" href="' + pathToStylesheet + '" />';
+            if (state.unOrderedList) this.toolbar.buttons.UnorderedList.activate();
+            else this.toolbar.buttons.UnorderedList.deactivate();
             
-            var d = this.editArea.doc = i.contentWindow.document;
+            if (state.orderedList) this.toolbar.buttons.OrderedList.activate();
+            else this.toolbar.buttons.OrderedList.deactivate();
             
-            d.open();
-            d.write(html
-              .replace(/INITIAL_CONTENT/, initial_content)
-              .replace(/STYLE_SHEET/, style));
-            d.close();
-            d.contentEditable = 'true';
+            if (state.heading) $(this.toolbar.domReferences.selects.formatText).val('<' + state.heading + '>');
+            else $(this.toolbar.domReferences.selects.formatText).val('<p>');
             
-            this.editArea.body = d.body;
-            
-            try {
-                d.designMode = 'on';
-            } catch ( e ) {
-                // Will fail on Gecko if the editor is placed in an hidden container element
-                // The design mode will be set ones the editor is focused
-
-                $(d).focus(function() {
-                    d.designMode = 'on';
-                });
+            if (state.link) {
+                this.toolbar.tabs.Link.content.show();
+                this.toolbar.domReferences.tabs.Link.addClass(this.toolbar.conf.activeTabCssClass);
+                this.toolbar.tabs.Link.content.components.linkAddress.DOM.val(state.link.source);
+                this.toolbar.tabs.Link.content.components.linkContent.DOM.val(state.link.text);
+                // todo: show remove link button
+            } else {
+                this.toolbar.tabs.Link.content.hide();
+                this.toolbar.domReferences.tabs.Link.removeClass(this.toolbar.conf.activeTabCssClass);
+                this.toolbar.tabs.Link.content.components.linkAddress.DOM.val('');
+                this.toolbar.tabs.Link.content.components.linkContent.DOM.val('');
+                // todo: show add link button
             }
             
-            // EditArea.fn.defineMaxAndMinHeight();
-            // EditArea.fn.initializeHeigthPoints();
+            if (state.img) {
+                this.toolbar.tabs.Picture.content.show();
+                this.toolbar.domReferences.tabs.Picture.addClass(this.toolbar.conf.activeTabCssClass);
+                this.toolbar.tabs.Picture.content.components.pictureAddress.DOM.val(state.img.source);
+                this.toolbar.tabs.Picture.content.components.pictureTitle.DOM.val(state.img.alternate);
+            } else {
+                this.toolbar.tabs.Picture.content.hide();
+                this.toolbar.domReferences.tabs.Picture.removeClass(this.toolbar.conf.activeTabCssClass);
+                this.toolbar.tabs.Picture.content.components.pictureAddress.DOM.val('');
+                this.toolbar.tabs.Picture.content.components.pictureTitle.DOM.val('');
+            }
             
-            // EditArea.fn.initializeBackupSelection();
-            
-            // EditArea.fn.initializeEvents();
-            
-            // EditArea.fn.initializeObservers();
-            
-            // EditArea.fn.focusWindowOnLoad();
+            if (state.table) {
+                this.toolbar.tabs.Table.content.show();
+                this.toolbar.domReferences.tabs.Table.addClass(this.toolbar.conf.activeTabCssClass);
+                if (state.table.visible) {
+                    this.toolbar.tabs.Table.content.components.makeTableInvisible.DOM.attr('checked', false);
+                } else {
+                    this.toolbar.tabs.Table.content.components.makeTableInvisible.DOM.attr('checked', true);
+                }
+            } else {
+                this.toolbar.tabs.Table.content.hide();
+                this.toolbar.domReferences.tabs.Table.removeClass(this.toolbar.conf.activeTabCssClass);
+                this.toolbar.tabs.Table.content.components.makeTableInvisible.DOM.attr('checked', true);
+            }
         },
-        generateHTMLForToolbar : function () {
-            // get code for the toolbar container
+        toggleBold : function () {
+            this.editArea.conf.doc.execCommand('bold', false, null);
+            this.editArea.rememberSelection();
+            this.editArea.conf.iframe[0].contentWindow.focus();
+        },
+        toggleItalic : function () {
+            this.editArea.conf.doc.execCommand('italic', false, null);
+            this.editArea.rememberSelection();
+            this.editArea.conf.iframe[0].contentWindow.focus();
+        },
+        toggleUnOrderedList : function () {
+            this.editArea.conf.doc.execCommand('insertunorderedlist', false, null);
+            this.editArea.conf.iframe[0].contentWindow.focus();
+        },
+        toggleOrderedList : function () {
+            this.editArea.conf.doc.execCommand('insertorderedlist', false, null);
+            this.editArea.conf.iframe[0].contentWindow.focus();
+        },
+        formatText : function (action) {
+            this.editArea.conf.doc.execCommand('formatBlock', false, action);
+            this.editArea.rememberSelection();
+            this.editArea.conf.iframe[0].contentWindow.focus();
+        },
+        createLink : function () {
+            var source = this.toolbar.tabs.Link.content.components.linkAddress.val(),
+                content = this.toolbar.tabs.Link.content.components.linkContent.val();
+            
+            this.editArea.restoreSelection();
+            
+            if (linkText && (linkText.length > 0)) {
+                if (linkAddress && (linkAddress.length > 0)) {
+                    var html = "<a href='" + linkAddress + "'>" + linkText + "</a>";
+                    EditArea.fn.doc.execCommand('InsertHTML', false, html);
+                }
+            }
+            raiseEvent('clearToolBarFields');
+            EditArea.fn.iframe.contentWindow.focus();
         }
     });
 }, '0.0.1', [

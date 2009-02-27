@@ -7,26 +7,42 @@
     rteToolBar.addButton({
         title : 'Bold',
         cssClass : 'boldIcon',
-        onActivateCallback : function () {},
-        onDeactivateCallback : function () {}
+        onActivateCallback : function () {
+            this.mediator.toggleBold();
+        },
+        onDeactivateCallback : function () {
+            this.mediator.toggleBold();
+        }
     });
     rteToolBar.addButton({
         title : 'Italic',
         cssClass : 'italicIcon',
-        onActivateCallback : function () {},
-        onDeactivateCallback : function () {}
+        onActivateCallback : function () {
+            this.mediator.toggleItalic();
+        },
+        onDeactivateCallback : function () {
+            this.mediator.toggleItalic();
+        }
     });
     rteToolBar.addButton({
         title : 'UnorderedList', 
         cssClass : 'markedListIcon',
-        onActivateCallback : function () {},
-        onDeactivateCallback : function () {}
+        onActivateCallback : function () {
+            this.mediator.toggleUnOrderedList();
+        },
+        onDeactivateCallback : function () {
+            this.mediator.toggleUnOrderedList();
+        }
     });
     rteToolBar.addButton({
         title : 'OrderedList', 
         cssClass : 'numListIcon',
-        onActivateCallback : function () {},
-        onDeactivateCallback : function () {}
+        onActivateCallback : function () {
+            this.mediator.toggleOrderedList();
+        },
+        onDeactivateCallback : function () {
+            this.mediator.toggleOrderedList();
+        }
     });
     rteToolBar.addButton({
         title : 'alignTextLeft',
@@ -49,7 +65,9 @@
             '<h3>' : 'Малый заголовок'
         },
         defaultValue : '<p>',
-        onChange : function () {  }
+        onChange : function (select) {
+            this.mediator.formatText(select.value);
+        }
     });
     
     
@@ -66,7 +84,7 @@
                 title : 'linkContent',
                 id : 'linkContent',
                 eventListeners : {
-                    focus : function () {  }
+                    focus : function () { /* this.mediator.updateLinkContent(); */ }
                 },
                 html : '<div class="settingsInput">\
                              <div class="settingsInputLabel">Текст ссылки</div>\
@@ -85,20 +103,13 @@
                          </div>'
             });
             a.registerComponent({
-                title : 'linkTooptip',
-                id : 'linkTooptip',
-                eventListeners : {
-                    focus : function () {  }
-                },
-                html : '<div class="settingsInput">\
-                             <div class="settingsInputLabel">Подсказка</div>\
-                             <input value="" id="linkTooptip%UNIQUE_ID%">\
-                         </div>'
-            });
-            a.registerComponent({
                 title : 'addLink',
                 id : 'addLink',
-                eventListeners : {},
+                eventListeners : { 
+                    click : function () {
+                        this.mediator.createLink();
+                    }
+                },
                 html : '<div class="settingsPanelLinkWithImage"><div class="plusIcon"></div><a href="#" id="addLink%UNIQUE_ID%">Добавить ссылку</a></div>'
             });
             a.registerComponent({
@@ -389,25 +400,20 @@
         }
         
     });
-    
+    var e;
     $('.centralColumnContentWrapper.block').dblclick(function (e) {
         
-        var e = new AP.EditArea({
+        e = new AP.EditArea({
             target : this,
             iframeCssClass : 'textarea',
-            pathToStyleSheet : 'clicheEditor.css',
+            pathToStyleSheet : 'clicheEditor.css'
+        });
+        
+        var e = new AP.Widget.RTE({
+            toolbar : rteToolBar,
+            editArea : e
         });
     });
     
-    // var e = new AP.Widget.RTE({
-    //         textareaClass : 'wisywig',
-    //         containerClass : 'clicheEditor',
-    //         iframeClass : 'textarea',
-    //         pathToStyleSheet : 'clicheEditor.css'
-    //     });
-    //     e.render();
-    // a.registerComponent({
-    //     title : 'separator',
-    //     html : '<div class="settingsPanelSeparator"></div>'
-    // });
+    
 })();
