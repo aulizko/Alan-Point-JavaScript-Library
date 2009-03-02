@@ -101,4 +101,8 @@ AP.add('supreme', function(A) {
         };
     }();
     
-}, '0.0.1');
+}, '0.0.1', [
+    { name : 'lang', minVersion : '0.0.3' },
+    { name : 'array', minVersion : '1.0.0' },
+    { name : 'queue', minVersion : '0.0.1' }
+]);

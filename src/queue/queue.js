@@ -112,4 +112,6 @@ AP.add('queue', function (A) {
     };
 
 
-}, '0.0.1');
+}, '0.0.1', [
+    { name : 'lang', minVersion : '0.0.3' }
+]);
