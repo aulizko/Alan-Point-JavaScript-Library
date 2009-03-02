@@ -1,10 +1,13 @@
 AP.add('panel', function (A) {
+    
     var $ = A.Query, O = A.Object, StringBuffer = A.StringBuffer, L = A.Lang;
+    
     A.Panel = A.Widget.extend({
         init : function (o) {
             this.base(o);
+            
             A.stamp(this);
-            this.uniqueIdRegex = /%UNIQUE_ID%/g;
+            
             this.conf = {};
             
             if (o.html) {

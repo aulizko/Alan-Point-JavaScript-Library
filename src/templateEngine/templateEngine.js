@@ -6,8 +6,9 @@ AP.add('templateEngine', function (A) {
     var T = A.TemplateEngine, L = A.Lang, Ar = A.Array, O = A.Object;
     
     T.compileTemplate = function (templateHolder, templateName) {
+        templateHolder = (templateHolder.value) ? templateHolder.value : ( (templateHolder.nodeName.toLowerCase() == 'script') ? templateHolder.innerHTML : templateHolder);
         var instructionRegex = /%\{[%\s\w,'\(\)=\{\}\.]+\}/gim,
-            rawTemplateText = templateHolder.value.replace(/<\!--\s*<\!\[CDATA\[\s*|\s*\]\]>\s*-->/gim, '').replace(/\s{2,}/gim, ' '),
+            rawTemplateText = templateHolder.replace(/<\!--\s*<\!\[CDATA\[\s*|\s*\]\]>\s*-->/gim, '').replace(/\s{2,}/gim, ' '),
             stringFragments = rawTemplateText.split(instructionRegex), 
             stringFragment, instruction,
             instructions = [], 

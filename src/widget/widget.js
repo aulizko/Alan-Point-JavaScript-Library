@@ -4,6 +4,7 @@ AP.add('widget', function (A) {
         init : function (o) {
             this.rendered = false;
             this.conf = o;
+            this.uniqueIdRegex = /%UNIQUE_ID%/g;
         },
         plugins : {},
         className : 'widget',

@@ -28,7 +28,10 @@ AP.add('rte', function (A) {
             if (state.emphasis) this.toolbar.buttons.Italic.activate();
             else this.toolbar.buttons.Italic.deactivate();
             
-            if (state.unOrderedList) this.toolbar.buttons.UnorderedList.activate();
+            if (state.unOrderedList) {
+                // this.toolbar.buttons.UnorderedList.activate();
+                console.log('we are on unoredered list');
+            }
             else this.toolbar.buttons.UnorderedList.deactivate();
             
             if (state.orderedList) this.toolbar.buttons.OrderedList.activate();
@@ -38,42 +41,37 @@ AP.add('rte', function (A) {
             else $(this.toolbar.domReferences.selects.formatText).val('<p>');
             
             if (state.link) {
-                this.toolbar.tabs.Link.content.show();
-                this.toolbar.domReferences.tabs.Link.addClass(this.toolbar.conf.activeTabCssClass);
+                console.log('we are on link node');
+                this.toolbar.domReferences.tabs.Link.addClass(this.conf.activeButtonCssClass);
                 this.toolbar.tabs.Link.content.components.linkAddress.DOM.val(state.link.source);
                 this.toolbar.tabs.Link.content.components.linkContent.DOM.val(state.link.text);
                 // todo: show remove link button
             } else {
-                this.toolbar.tabs.Link.content.hide();
-                this.toolbar.domReferences.tabs.Link.removeClass(this.toolbar.conf.activeTabCssClass);
+                this.toolbar.domReferences.tabs.Link.removeClass(this.conf.activeButtonCssClass);
                 this.toolbar.tabs.Link.content.components.linkAddress.DOM.val('');
                 this.toolbar.tabs.Link.content.components.linkContent.DOM.val('');
                 // todo: show add link button
             }
             
             if (state.img) {
-                this.toolbar.tabs.Picture.content.show();
-                this.toolbar.domReferences.tabs.Picture.addClass(this.toolbar.conf.activeTabCssClass);
+                this.toolbar.domReferences.tabs.Picture.addClass(this.toolbar.conf.activeButtonCssClass);
                 this.toolbar.tabs.Picture.content.components.pictureAddress.DOM.val(state.img.source);
                 this.toolbar.tabs.Picture.content.components.pictureTitle.DOM.val(state.img.alternate);
             } else {
-                this.toolbar.tabs.Picture.content.hide();
-                this.toolbar.domReferences.tabs.Picture.removeClass(this.toolbar.conf.activeTabCssClass);
+                this.toolbar.domReferences.tabs.Picture.removeClass(this.toolbar.conf.activeButtonCssClass);
                 this.toolbar.tabs.Picture.content.components.pictureAddress.DOM.val('');
                 this.toolbar.tabs.Picture.content.components.pictureTitle.DOM.val('');
             }
             
             if (state.table) {
-                this.toolbar.tabs.Table.content.show();
-                this.toolbar.domReferences.tabs.Table.addClass(this.toolbar.conf.activeTabCssClass);
+                this.toolbar.domReferences.tabs.Table.addClass(this.toolbar.conf.activeButtonCssClass);
                 if (state.table.visible) {
                     this.toolbar.tabs.Table.content.components.makeTableInvisible.DOM.attr('checked', false);
                 } else {
                     this.toolbar.tabs.Table.content.components.makeTableInvisible.DOM.attr('checked', true);
                 }
             } else {
-                this.toolbar.tabs.Table.content.hide();
-                this.toolbar.domReferences.tabs.Table.removeClass(this.toolbar.conf.activeTabCssClass);
+                this.toolbar.domReferences.tabs.Table.removeClass(this.toolbar.conf.activeButtonCssClass);
                 this.toolbar.tabs.Table.content.components.makeTableInvisible.DOM.attr('checked', true);
             }
         },

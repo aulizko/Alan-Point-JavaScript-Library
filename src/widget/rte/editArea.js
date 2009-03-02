@@ -1,5 +1,7 @@
 AP.add('editArea', function (A) {
-    var $ = A.Query, L = A.Lang;
+    var $ = A.Query, 
+        L = A.Lang,
+        mediatorDummy = { updateState : function () {} };
     A.EditArea = A.Widget.extend({
         init : function (o) {
             this.conf = {};
@@ -12,7 +14,7 @@ AP.add('editArea', function (A) {
             this.conf.height = t.height();
             this.conf.width = t.width();
             
-            this.conf.mediator = o.mediator || { updateState : function () {} };
+            this.conf.mediator = o.mediator || mediatorDummy;
                 
             var i = this.conf.iframe = $('<iframe class="' + this.conf.iframeCssClass + ' block" frameborder="0" height="' + this.conf.height + '" width="' + this.conf.width + '"></iframe>'),
                 h = this.conf.input = $('<input type="hidden" name="editArea%UNIQUE_ID%" value=""></input>'); // create input which value we will pass through the form
@@ -228,16 +230,17 @@ AP.add('editArea', function (A) {
         restoreSelection : function () {
             var range = this.conf.doc.createRange(), 
                 b = this.backupSelection;
+                
             range.setStart(b.startContainer, (b.startOffset) );
             if (!b.endContainer || !b.endOffset) {
-                range.setEnd(EditArea.fn.backupSelection.startContainer, EditArea.fn.backupSelection.startOffset);
+                range.setEnd(b.startContainer, b.startOffset);
             } else {
-                range.setEnd(EditArea.fn.backupSelection.endContainer, EditArea.fn.backupSelection.endOffset);
+                range.setEnd(b.endContainer, b.endOffset);
             }
-            if (EditArea.fn.backupSelection.collapse) {
+            if (b.collapse) {
                 range.collapse(true);
             }
-            var localSelection = EditArea.fn.iframe.contentWindow.getSelection();
+            var localSelection = this.conf.iframe[0].contentWindow.getSelection();
 
             localSelection.removeAllRanges();
             localSelection.addRange(range);

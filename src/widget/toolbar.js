@@ -14,8 +14,9 @@ AP.add('toolbar', function (A) {
             this.conf.settingsPanelCssClass = o.settingsPanelCssClass || 'settingsPanel';
             this.conf.activeButtonCssClass = o.activeButtonCssClass || 'activeItem';
             this.conf.activeTabCssClass = o.activeTabCssClass || 'activePage';
+            
             AP.stamp(this);
-            this.uniqueIdRegex = /%UNIQUE_ID%/g;
+
             this.mediator = o.mediator || function () {};
         },
         render : function () {
