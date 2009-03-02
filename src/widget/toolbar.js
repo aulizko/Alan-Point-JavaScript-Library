@@ -3,6 +3,7 @@ AP.add('toolbar', function (A) {
     
     A.ToolBar = A.Class.extend({
         init : function (o) {
+            this.uniqueIdRegex = /%UNIQUE_ID%/g;
             this.title = o.title || 'Текст';
             this.rendered = false;
             this.buttons = {};
@@ -116,16 +117,28 @@ AP.add('toolbar', function (A) {
             O.each(b, function (button) {
                 var title = button.title;
                 button.active = false;
+                button.highlighted = false;
+                button.highlight = function () {
+                    if (button.highlighted) return;
+                    button.highlighted = true;
+                    d.buttons[title].addClass(activeButtonCssClass);
+                };
+                button.turnOffHighlight = function () {
+                    if (!button.highlighted) return;
+                    button.highlighted = false;
+                    d.buttons[title].removeClass(activeButtonCssClass);
+                };
                 button.activate = function () {
                     if (button.active) return;
                     button.active = true;
-                    d.buttons[title].addClass(activeButtonCssClass);
+                    button.highlight();
                     button.onActivateCallback.call(self, button); // call button callback
                 };
+                
                 button.deactivate = function () {
                     if (!button.active) return;
                     button.active = false;
-                    d.buttons[title].removeClass(activeButtonCssClass);
+                    button.turnOffHighlight();
                     button.onDeactivateCallback.call(self, button);
                 };
                 d.buttons[title].click(function (e) {

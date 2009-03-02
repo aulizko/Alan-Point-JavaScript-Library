@@ -21,57 +21,54 @@ AP.add('rte', function (A) {
         },
         updateState : function (state) {
             this.state = state;
+            var activeButtonCssClass = this.toolbar.conf.activeButtonCssClass;
             
-            if (state.strong) this.toolbar.buttons.Bold.activate();
-            else this.toolbar.buttons.Bold.deactivate();
+            if (state.strong) this.toolbar.buttons.Bold.highlight();
+            else this.toolbar.buttons.Bold.turnOffHighlight();
             
-            if (state.emphasis) this.toolbar.buttons.Italic.activate();
-            else this.toolbar.buttons.Italic.deactivate();
+            if (state.emphasis) this.toolbar.buttons.Italic.highlight();
+            else this.toolbar.buttons.Italic.turnOffHighlight();
             
-            if (state.unOrderedList) {
-                // this.toolbar.buttons.UnorderedList.activate();
-                console.log('we are on unoredered list');
-            }
-            else this.toolbar.buttons.UnorderedList.deactivate();
+            if (state.unOrderedList) this.toolbar.buttons.UnorderedList.highlight();
+            else this.toolbar.buttons.UnorderedList.turnOffHighlight();
             
-            if (state.orderedList) this.toolbar.buttons.OrderedList.activate();
-            else this.toolbar.buttons.OrderedList.deactivate();
+            if (state.orderedList) this.toolbar.buttons.OrderedList.highlight();
+            else this.toolbar.buttons.OrderedList.turnOffHighlight();
             
             if (state.heading) $(this.toolbar.domReferences.selects.formatText).val('<' + state.heading + '>');
             else $(this.toolbar.domReferences.selects.formatText).val('<p>');
             
             if (state.link) {
-                console.log('we are on link node');
-                this.toolbar.domReferences.tabs.Link.addClass(this.conf.activeButtonCssClass);
+                this.toolbar.domReferences.tabs.Link.addClass(activeButtonCssClass);
                 this.toolbar.tabs.Link.content.components.linkAddress.DOM.val(state.link.source);
                 this.toolbar.tabs.Link.content.components.linkContent.DOM.val(state.link.text);
                 // todo: show remove link button
             } else {
-                this.toolbar.domReferences.tabs.Link.removeClass(this.conf.activeButtonCssClass);
+                this.toolbar.domReferences.tabs.Link.removeClass(activeButtonCssClass);
                 this.toolbar.tabs.Link.content.components.linkAddress.DOM.val('');
                 this.toolbar.tabs.Link.content.components.linkContent.DOM.val('');
                 // todo: show add link button
             }
             
             if (state.img) {
-                this.toolbar.domReferences.tabs.Picture.addClass(this.toolbar.conf.activeButtonCssClass);
+                this.toolbar.domReferences.tabs.Picture.addClass(activeButtonCssClass);
                 this.toolbar.tabs.Picture.content.components.pictureAddress.DOM.val(state.img.source);
                 this.toolbar.tabs.Picture.content.components.pictureTitle.DOM.val(state.img.alternate);
             } else {
-                this.toolbar.domReferences.tabs.Picture.removeClass(this.toolbar.conf.activeButtonCssClass);
+                this.toolbar.domReferences.tabs.Picture.removeClass(activeButtonCssClass);
                 this.toolbar.tabs.Picture.content.components.pictureAddress.DOM.val('');
                 this.toolbar.tabs.Picture.content.components.pictureTitle.DOM.val('');
             }
             
             if (state.table) {
-                this.toolbar.domReferences.tabs.Table.addClass(this.toolbar.conf.activeButtonCssClass);
+                this.toolbar.domReferences.tabs.Table.addClass(activeButtonCssClass);
                 if (state.table.visible) {
                     this.toolbar.tabs.Table.content.components.makeTableInvisible.DOM.attr('checked', false);
                 } else {
                     this.toolbar.tabs.Table.content.components.makeTableInvisible.DOM.attr('checked', true);
                 }
             } else {
-                this.toolbar.domReferences.tabs.Table.removeClass(this.toolbar.conf.activeButtonCssClass);
+                this.toolbar.domReferences.tabs.Table.removeClass(activeButtonCssClass);
                 this.toolbar.tabs.Table.content.components.makeTableInvisible.DOM.attr('checked', true);
             }
         },
