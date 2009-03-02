@@ -107,7 +107,7 @@
                 id : 'addLink',
                 eventListeners : { 
                     click : function () {
-                        this.mediator.createLink();
+                        this.toolbar.mediator.createLink();
                     }
                 },
                 html : '<div class="settingsPanelLinkWithImage"><div class="plusIcon"></div><a href="#" id="addLink%UNIQUE_ID%">Добавить ссылку</a></div>'
@@ -115,7 +115,11 @@
             a.registerComponent({
                 title : 'deleteLink',
                 id : 'deleteLink',
-                eventListeners : {},
+                eventListeners : {
+                    click : function () {
+                        this.toolbar.mediator.deleteLink();
+                    }
+                },
                 html : '<div class="settingsPanelLinkWithImage hidden"><div class="deleteIcon"></div><a href="#" id="deleteLink%UNIQUE_ID%">Удалить ссылку</a></div>'
             });
             return a;
@@ -151,14 +155,22 @@
             a.registerComponent({
                 title : 'addPicture',
                 id : 'addPicture',
-                eventListeners : {},
+                eventListeners : {
+                    click : function () {
+                        this.toolbar.mediator.addPicture();
+                    }
+                },
                 html : '<div class="settingsPanelLinkWithImage"><div class="plusIcon"></div><a href="#" id="addPicture%UNIQUE_ID%">Добавить изображение</a></div>'
             });
             a.registerComponent({
                 title : 'deletePicture',
                 id : 'deletePicture', 
-                eventListeners : {},
-                html : '<div class="settingsPanelLinkWithImage hidden"><div class="deleteIcon"></div><a href="#" id="deltePicture%UNIQUE_ID%">Удалить изображение</a></div>'
+                eventListeners : {
+                    click : function () {
+                        this.toolbar.mediator.deletePicture();
+                    }
+                },
+                html : '<div class="settingsPanelLinkWithImage hidden"><div class="deleteIcon"></div><a href="#" id="deletePicture%UNIQUE_ID%">Удалить изображение</a></div>'
             });
             return a;
         }()

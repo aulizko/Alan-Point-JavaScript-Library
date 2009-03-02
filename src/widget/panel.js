@@ -23,6 +23,8 @@ AP.add('panel', function (A) {
             
             this.components = {};
             
+            this.toolbar = {}; // remove
+            
             this.rendered = false;
             this.visible = false;
         },
@@ -87,13 +89,17 @@ AP.add('panel', function (A) {
             }, this);
         },
         initializeEventListeners : function () {
-            var components = this.components;
+            var components = this.components, self = this;
             O.each(components, function (component) {
                 O.each(component.eventListeners, function (handler, type) {
                     if (L.isFunction (handler)) {
-                        component.DOM.bind(type, handler);
+                        component.DOM.bind(type, function (e) {
+                            handler.call(self, e);
+                        });
                     } else {
-                        component.DOM.bind(type, handler.data, handler.fn);
+                        component.DOM.bind(type, handler.data, function (e) {
+                            handler.fn.call(self.e);
+                        });
                     }
                 });
             }, this);
@@ -135,6 +141,9 @@ AP.add('panel', function (A) {
             if (animationSpeed) this.container.hide(animationSpeed);
             else this.container.hide();
             this.visible = false;
+        },
+        setToolBar : function (toolbar) { // todo: remove
+            this.toolbar = toolbar;
         }
     });
 }, '0.0.1', [

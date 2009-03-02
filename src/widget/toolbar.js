@@ -17,7 +17,7 @@ AP.add('toolbar', function (A) {
             this.conf.activeTabCssClass = o.activeTabCssClass || 'activePage';
             
             AP.stamp(this);
-
+            
             this.mediator = o.mediator || function () {};
         },
         render : function () {
@@ -153,6 +153,8 @@ AP.add('toolbar', function (A) {
             O.each(t, function (tab, title) {
                 var content = t[title].content,
                     activeTabCssClass = this.conf.activeTabCssClass;
+                    
+                content.setToolBar(this); // todo remove
                 
                 d.tabs[title].click(function (e) {
                     

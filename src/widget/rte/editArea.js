@@ -244,6 +244,21 @@ AP.add('editArea', function (A) {
 
             localSelection.removeAllRanges();
             localSelection.addRange(range);
+        },
+        focus : function () {
+            this.conf.iframe[0].focus();
+        },
+        restoreFullTextNodeSelection : function () {
+            var range = this.conf.doc.createRange(), 
+                b = this.backupSelection;
+
+            range.setStart(b.startContainer, 0);
+            range.setEnd(b.endContainer, b.endContainer.length);
+
+            var localSelection = this.conf.iframe[0].contentWindow.getSelection();
+
+            localSelection.removeAllRanges();
+            localSelection.addRange(range);
         }
     });
 }, '0.0.1', [
