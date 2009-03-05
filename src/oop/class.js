@@ -6,7 +6,7 @@
  * @submodule class
  */
 AP.add('class', function(A) {
-    var initializing = false, fnTest = /xyz/.test(function() { xyz; }) ? /\bbase\b/: /.*/;
+    var initializing = false, fnTest = /xyz/.test(function() { xyz; }) ? /\bbase\b/: /.*/, O = A.Object;
     // The base Class implementation (does nothing)
     var Class = A.Class = function () {};
 
@@ -19,6 +19,27 @@ AP.add('class', function(A) {
         initializing = true;
         var prototype = new this();
         initializing = false;
+
+        // take mixin array (if it is array… uhm, whatever) from prop
+        var mixins = A.Array(prop.mixins);
+
+        // remove mixins from the prop object
+        var t = {};
+        for (var name in prop) {
+            if (name != 'mixins') {
+                t[name] = prop[name];
+            }
+        }
+        prop = t;
+
+        // copy mixins public properties into prototype (we should suck this from it later)
+
+        A.Array.each(mixins, function (mixin) {
+            O.each(mixin, function (value, name) {
+                prop[name] = value;
+            }, this);
+        }, this);
+
 
         // Copy the properties over onto the new prototype
         for (var name in prop) {
@@ -63,4 +84,7 @@ AP.add('class', function(A) {
         return Class;
     };
 
-}, '0.0.2', []);
+}, '0.0.2', [
+    { name : 'array', minVersion : '0.0.1' },
+    { name : 'object', minVersion : '0.0.1' }
+]);

@@ -36,7 +36,8 @@ var Builder = {
             'json'      : ['json'],
             'string'    : ['string', 'stringBuffer'],
             'data'      : ['map'],
-			'widget'    : ['widget']
+            'widget'    : ['widget'],
+            'event'     : ['observable', 'mediator']
 		},
 
 		specs: {
@@ -48,7 +49,8 @@ var Builder = {
 			'oop'       : ['oop', 'class'],
             'string'    : ['string', 'stringBuffer'],
             'data'      : ['map'],
-			'widget'    : ['widget']
+            'widget'    : ['widget'],
+            'event'     : ['observable', 'mediator']
 		}
 	},
 
