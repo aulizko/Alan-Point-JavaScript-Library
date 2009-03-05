@@ -1,86 +1,60 @@
 AP.add('panel', function (A) {
     
-    var $ = A.Query, O = A.Object, StringBuffer = A.StringBuffer, L = A.Lang;
-    
-    A.Panel = A.Widget.extend({
+    // todo review: does panel need ability "render by html code"?
+    var $ = A.Query, 
+        O = A.Object, 
+        StringBuffer = A.StringBuffer, 
+        L = A.Lang,
+        PANEL_CSS_CLASS = 'panel';
+    A.Widget.Panel = A.Widget.extend({
         init : function (o) {
             this.base(o);
             
             A.stamp(this);
+            this.cssClass = o.cssClass || PANEL_CSS_CLASS;
             
-            this.conf = {};
-            
-            if (o.html) {
-                this.conf.html = o.html;
-                this.conf.renderFromHtml = true;
-            } else {
-                this.conf.renderFromHtml = false;
-            }
-            
-            this.conf.cssClass = o.cssClass || 'panel';
-            
-            this.parent = $(o.parent) || null;
-            
-            this.components = {};
-            
-            this.toolbar = {}; // remove
-            
-            this.rendered = false;
-            this.visible = false;
+            this.items = {};
+            var items = o.items;
+            O.each(items, function (item, index) {
+                this.items[item.title]
+            }, this);
         },
+        rendered : false,
+        visible : false,
         className : 'panel',
-        setParent : function (el) {
-            var c = $(el);
-            if (c[0].nodeType == 1) {
-                this.parent = c;
-            } else {
-                throw new Error(el + ' cannot be parent for panel');
-            }
-        },
-        appendTo : function (el) {
-            this.setParent(el);
-            this.render();
-        },
-        setHTML : function (html) {
-            this.conf.html = html;
-            this.conf.renderFromHtml = true;
-            this.render();
-        },
-        getHTML : function () {
-            return this.container.html();
-        },
         render : function () {
-            this.removeEventListeners();
-            this.removeDomReferences();
-            if (this.conf.renderFromHtml) {
-                this.setContainerInnerHTML(this.conf.html);
-            } else {
-                this.setContainerInnerHTML(this.generateHTML());
-            }
+            // 1. generate template for the items
+            // 2. if there with the help of the templateEngine render html
+            // 3. initialize dom references to the correspond items
+            // 4. activate event listeners
+            // 5. ?????
+            // 6. PROFIT
+            
+            this.generateTemplate();
+            this.processTemplate();
             this.buildDOMReferences();
             this.initializeEventListeners();
             this.rendered = true;
             this.visible = this.container.is(':visible');
         },
-        generateHTML : function () {
-            var components = this.components,
+        generateTemplate : function () {
+            var items = this.items,
                 html = new StringBuffer('');
+            O.each(items, function (item, index) {
+                
+            }, this);
             O.each(components, function (component) {
-                if (component.html) html.add(component.html);
-                else html.add('<')
+                if (component.html) { html.add(component.html);}
+                /*else html.add('<')
                         .add(component.nodeName)
                         .add((component.id) ? (' id="' + component.id + '%UNIQUE_ID%"') : '')
                         .add((component.cssClass) ? (' class="' + component.cssClass + '"') : '')
                         .add('></')
                         .add(component.nodeName)
-                        .add('>');
+                        .add('>');*/
             }, this);
             
             return html.toString().replace(this.uniqueIdRegex, this._uid);
-        },
-        registerComponent : function (component) {
-            var c = this.components[component.title] = component;
-            if (L.isValue(c.init)) c.init.call(this);
         },
         buildDOMReferences : function () {
             var components = this.components;
@@ -149,5 +123,6 @@ AP.add('panel', function (A) {
 }, '0.0.1', [
     { name : 'lang', minVersion : '0.0.3' },
     { name : 'object', minVersion : '0.0.1' },
-    { name : 'stringBuffer', minVersion : '1.0.3' }
+    { name : 'stringBuffer', minVersion : '1.0.3' },
+    { name : 'widget', minVersion : '0.0.1' }
 ]);

@@ -4,13 +4,13 @@ AP.add('widget', function (A) {
         init : function (o) {
             this.rendered = false;
             this.conf = o;
-            this.uniqueIdRegex = /%UNIQUE_ID%/g;
         },
         plugins : {},
         className : 'widget',
         toString : function () {
             return this.className;
         },
+        uniqueIdRegex : /%UNIQUE_ID%/g,
         plug : function (plugin) {
             if (this.plugins[plugin.name]) return;
             var p = this.plugins[plugin.name] = {};

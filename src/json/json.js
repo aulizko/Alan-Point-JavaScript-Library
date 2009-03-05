@@ -161,7 +161,7 @@ var isA = A.Lang.isArray;
 
 
 
-A.mix(A.JSON,{
+A.OOP.mix(A.JSON,{
     /**
      * Regex used to capture characters that need escaping before enclosing
      * their containing string in quotes.
@@ -343,4 +343,6 @@ A.mix(A.JSON,{
 });
 
 
-}, '0.0.1' );
+}, '0.0.1', [
+    { name : 'oop', minVersion : '0.0.1' } // TODO: review
+]);

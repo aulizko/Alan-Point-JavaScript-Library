@@ -33,7 +33,9 @@ var Builder = {
 			'object'    : ['object'],
 			'specification' : ['specification'],
 			'oop'       : ['oop', 'class'],
-			'string'    : ['string', 'stringBuffer'],
+            'json'      : ['json'],
+            'string'    : ['string', 'stringBuffer'],
+            'data'      : ['map'],
 			'widget'    : ['widget']
 		},
 
@@ -41,10 +43,11 @@ var Builder = {
 			'core'      : ['core'],
 			'lang'      : ['lang', 'isUndefined', 'isNull', 'isArray', 'isBoolean', 'isFunction', 'isDate', 'isNumber', 'isObject', 'isString', 'isValue', 'compare'],
 			'array'     : ['array'],
-			'object'    : ['object'],
+            'object'    : ['object'],
 			'specification' : ['specification'],
 			'oop'       : ['oop', 'class'],
-			'string'    : ['string', 'stringBuffer'],
+            'string'    : ['string', 'stringBuffer'],
+            'data'      : ['map'],
 			'widget'    : ['widget']
 		}
 	},

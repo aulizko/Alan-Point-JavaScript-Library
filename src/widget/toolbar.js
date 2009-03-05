@@ -1,7 +1,7 @@
 AP.add('toolbar', function (A) {
     var $ = A.Query, L = A.Lang, StringBuffer = A.StringBuffer, O = A.Object;
     
-    A.ToolBar = A.Class.extend({
+    A.Widget.ToolBar = A.Class.extend({
         init : function (o) {
             this.uniqueIdRegex = /%UNIQUE_ID%/g;
             this.title = o.title || 'Текст';

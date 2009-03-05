@@ -35,7 +35,9 @@
             }
         };
     }
-
+   save_excursion(function (){
+		    /* another one comment line */
+		  });
     AP.prototype = {
         /**
          * Initialize this AP instance

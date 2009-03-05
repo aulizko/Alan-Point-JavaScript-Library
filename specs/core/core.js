@@ -12,7 +12,14 @@ describe('core', {
     },
     
     'should allow create packages and sub-packages with namespace method' : function () {
-        AP.namespace('Test');
+        AP.namespace('test');
+        value_of(!!AP.test).should_be_true();
+        value_of(typeof AP.test).should_be('object');
+    },
+
+    'should create subpackage for the project name passed in' : function () {
+        
+        AP.project('Test');
         value_of(AP.Project.Test).should_not_be_undefined();
         value_of(AP.Project.Test).should_not_be_null();
         value_of(typeof AP.Project.Test).should_be('object');
@@ -22,7 +29,7 @@ describe('core', {
         value_of(prop).should_be(undefined);
         
         // test sub-packages
-        AP.namespace('Test.SubPackage');
+        AP.project('Test.SubPackage');
         value_of(AP.Project.Test.SubPackage).should_not_be_undefined();
         value_of(AP.Project.Test.SubPackage).should_not_be_null();
         value_of(typeof AP.Project.Test.SubPackage).should_be('object');
@@ -39,9 +46,9 @@ describe('core', {
         for (prop in AP.Project.Test.SubPackage) {}
         value_of(prop).should_be_null;
         
-        // test that AP.namespace('Test.AnotherOneSubPackage')
+        // test that AP.project('Test.AnotherOneSubPackage')
         // should not override existing package
-        AP.namespace('Test.AnotherOneSubPackage');
+        AP.project('Test.AnotherOneSubPackage');
         count = 0;
         for (prop in AP.Project.Test) {
             count++;

@@ -2,7 +2,9 @@ AP.add('editArea', function (A) {
     var $ = A.Query, 
         L = A.Lang,
         mediatorDummy = { updateState : function () {} };
-    A.EditArea = A.Widget.extend({
+
+
+    A.Widget.EditArea = A.Widget.extend({
         init : function (o) {
             this.conf = {};
             
