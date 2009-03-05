@@ -139,6 +139,16 @@ AP.add('map', function (A) {
                  */
                 equal : function (that) {
                     return L.compare(silo, that.valueOf());
+                },
+
+                /**
+                 * Call passed function on the each value. Pass value and key into that function.
+                 * @method each
+                 * @param fn {Function} function to call. Map should pass value, key and whole inner silo into it
+                 * @param context {Mixed} context from which this function will be called
+                 */
+                each : function (fn, context) {
+                    O.each(silo, fn, context);
                 }
             };    
 

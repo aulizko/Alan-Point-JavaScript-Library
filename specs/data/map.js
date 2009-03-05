@@ -176,6 +176,24 @@
                 surName : 'Smith'
             });
             value_of(AP.Lang.compare(a.valueOf(), { name : 'Joe', surName : 'Smith' })).should_be_true();
+        },
+
+        /* each */
+
+        'should invoke passed function onto each value' : function () {
+            var a = new Map({
+                name : 'Joe',
+                surName : 'Doe'
+            });
+
+            var dump = '';
+
+            a.each(function(item, name) {
+                dump += '"' + name + '":"' + item + '" ';
+            });
+
+            value_of(AP.String.trim(dump)).should_be('"name":"Joe" "surName":"Doe"');
+
         }
     });    
 })();
