@@ -26,6 +26,7 @@ A.Layout = A.Widget.Layout = new (A.Class.extend({
          */
         render : function () {
             this.appendHTML();
+            this.publish('layout:htmlReady');
             this.initializeComponents();
             //this.initializeCallbacks(); // wtf? What did I mean? %)
             this.publish('layout:ready');
@@ -33,8 +34,17 @@ A.Layout = A.Widget.Layout = new (A.Class.extend({
 
         initializeComponents : function () {
             this._components.each(function (component) {
+                component.initializeDOMReference();
+            }, this);
+            this.publish('layout:domReferencesReady');
+            this._components.each(function (component) {
+                component.initializeEventListeners();
+            }, this);
+            this.publish('layout:eventListenersReady');
+            this._components.each(function (component) {
                 component.initializeLogic(); // I mean: I obey you, nasty components, to initialize your business logic!
             }, this);
+            this.publish('layout:businessLogicReady');
             $(A.config.win).bind('resize', this.onResize);
         },
 
