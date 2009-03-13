@@ -8,22 +8,14 @@ AP.add('widget-container', function (A) {
 
     A.Widget.Container = A.Widget.Component.extend({
         init : function (o) {
+            this.template = ((this.template) ? this.template : (o.template || CONTAINER_TEMPLATE));
             this.base(o);
-
             A.stamp(this);
-            this.template = o.template || CONTAINER_TEMPLATE;
             // register parent
-            if (o.parent) { this.setParent(o.parent); }
-            if (o.target) { this.setTarget(o.target); }
-            this.publish(this.title + '.initialized');
-            A.Layout.registerTemplateForCompilation(this);
-        },
-
-        setParent : function(parent) {
-            this.parent = parent;
-            // subscribe parent to the events produced by container
-
-            this.subscribe(this.title + '.initialized', parent);
+            this.dataForTemplate = [{
+                title : this.title,
+                uniqueId : this._uid
+            }];
         },
 
         registerChild : function (child) {
@@ -32,22 +24,26 @@ AP.add('widget-container', function (A) {
             child.setParent(this);
         },
 
+        removeChild : function (child) {
+            if (this.__children.get(child.title)) {
+                this.__children.remove(child.title);
+            }
+        },
+
         generateHTML : function () {
             var innerHTML = new A.StringBuffer('');
             this.__children.each(function (child, title) {
-                innerHTML.add(T.processTemplate(child.type, child.dataForTemplate));
+                innerHTML.add(T.processTemplate(child.template.name, child.dataForTemplate));
             }, this); 
-            this.dataForTemplate = {
-                content : innerHTML.toString(),
-                uniqueId : this._uid,
-                title : this.title
-            }; 
+            this.dataForTemplate = [A.OOP.mix(this.dataForTemplate[0], {
+                content : innerHTML.toString()
+            })];
             return T.processTemplate(this.template.name, this.dataForTemplate);
         },
 
         setTarget : function (el) {
             this.target = $(el);
-        }
+        },
 
         mixins : A.util.Event.Observable,
 
@@ -55,6 +51,7 @@ AP.add('widget-container', function (A) {
 
     });
 }, '0.0.1', [
+    { name : 'oop', minVersion : '0.0.1' },
     { name : 'widget', minVersion : '0.0.1' },
     { name : 'observable', minVersion : '0.0.1' },
     { name : 'map', minVersion : '0.0.1' },

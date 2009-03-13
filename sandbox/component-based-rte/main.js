@@ -8,10 +8,19 @@
         title : 'Italic'
     }), buttons = [boldButton, italicButton];
     
-    for (var i = buttons.length - 1; i > -1; i--) {
-        console.log(buttons[i]);
-        console.log(buttons[i].generateHTML());
-    }
+
+    var textPanel = new AP.Widget.Panel({
+        title : 'textPanel',
+        parent : AP.Layout
+    });
+
+    textPanel.registerChild(boldButton);
+    textPanel.registerChild(italicButton);
+
+    var  html = textPanel.generateHTML();
+
+    AP.Layout.render();
+
 //    var linkAddress = new AP.Widget.Input({
 //            type : 'text',
 //            title : 'linkAddress',

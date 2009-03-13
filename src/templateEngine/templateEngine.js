@@ -144,6 +144,7 @@ AP.add('templateEngine', function (A) {
         var template = this.templates[name];
 
         if ((data instanceof Object) && O.keys(data).length > 1) {
+
             O.each(data, function (item) {
                 var node, i = 0;
                 while (node = template[i++]) {
@@ -159,7 +160,7 @@ AP.add('templateEngine', function (A) {
                 }
             }, A);
         }
-        
+
         return result.toString();
     };
     /**

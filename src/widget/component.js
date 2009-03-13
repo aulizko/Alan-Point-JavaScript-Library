@@ -19,7 +19,8 @@ AP.add('component', function (A){
                 body : '<div id="%{title}:%{uniqueId}" class="%{cssClass}"><div class="panelIcon %{title}Icon"></div></div>'
             }
         },
-        OOP = A.OOP;
+        OOP = A.OOP,
+        L = A.Lang;
 
     AP.Widget.Component = AP.Widget.extend({
         init : function (o) {
@@ -27,20 +28,27 @@ AP.add('component', function (A){
             
             A.stamp(this);
             this.rendered = false;
-            this.parent = this.parent || A.Widget.Layout;
             this.title = o.title;
 
             this.cssClass = o.cssClass || COMPONENT_CSS_CLASS;
             this.hoverCssClass = o.hoverCssClass || HOVER_CSS_CLASS;
             
             this.type = o.type || DEFAULT_TYPE_PREFIX + ':' + DEFAULT_TYPE;
-            this.template = o.template || defineTemplateForCorrespondType[this.type];
+            this.template = ((this.template) ? this.template : (o.template || defineTemplateForCorrespondType[this.type]));
             this.dataForTemplate = [{
                 title : this.title,
                 cssClass : this.cssClass,
                 uniqueId : this._uid
             }];
-            
+
+            if (L.isValue(this.parent) && !L.isValue(this.target)) {
+                this.parent.registerChild(this);
+            }
+
+            // define parent
+            var parent = o.parent || A.Layout;
+            parent.registerChild(this);
+
             this.handlers = o.handlers || {};
             A.Layout.registerTemplateForCompilation(this);
         },
@@ -54,9 +62,15 @@ AP.add('component', function (A){
             this.publish('component.rendered.' + this.title);
         },
         setParent : function (/* Component */parent) {
+            if (L.isValue(this.parent)) { 
+                this.parent.removeChild(this); this.unsubscribe('component.rendered' + this.title, parent);
+            }
             this.parent = parent;
             this.subscribe('component.rendered' + this.title, parent);
         },
+
+        
+
         initializeDOMReference : function () {
             this.DOM = $('#' + this.title + this._uid);
         },
@@ -155,6 +169,7 @@ AP.add('component', function (A){
     });
     
 }, '0.0.1', [
+    { name : 'lang', minVersion : '0.0.1' },
     { name : 'string', minVersion : '0.0.1' },
     { name : 'observable', minVersion : '0.0.1', },
     { name : 'templateEngine', minVersion : '0.0.1' },
