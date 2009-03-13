@@ -4,7 +4,7 @@
             this.height = o.height;
             this.width = o.width;
             AP.stamp(this);
-            this._subsribers = {};
+            this._subscribers = {};
         },
 
         mixins : AP.util.Event.Observable,
@@ -29,7 +29,7 @@
 
             value_of(!!c.subscribe).should_be_true();
             value_of(!!c.publish).should_be_true();
-            value_of(!!c._subsribers).should_be_true();
+            value_of(!!c._subscribers).should_be_true();
         },
 
         /* subscribing listeners */
@@ -44,7 +44,7 @@
             c.publish('customEvent');
 
             value_of(trigger).should_be_true();
-            value_of(c._subsribers.customEvent.length).should_be(1);
+            value_of(c._subscribers.customEvent.length).should_be(1);
         },
 
         /* publish */
@@ -83,7 +83,7 @@
 
             c.unsubscribe('customEvent', a);
 
-            value_of(c._subsribers.customEvent.length).should_be(0);
+            value_of(c._subscribers.customEvent.length).should_be(0);
         }
     });    
 })();

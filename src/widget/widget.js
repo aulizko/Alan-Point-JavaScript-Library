@@ -10,7 +10,6 @@ AP.add('widget', function (A) {
         toString : function () {
             return this.className;
         },
-        uniqueIdRegex : /%UNIQUE_ID%/g,
         plug : function (plugin) {
             if (this.plugins[plugin.name]) return;
             var p = this.plugins[plugin.name] = {};

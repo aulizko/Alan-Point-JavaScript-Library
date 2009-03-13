@@ -15,7 +15,7 @@ AP.add("observable", function (A) {
          * Inner property which contains all subscribers
          * @prop {AP~data~List}
          */
-        _subsribers : {},
+        _subscribers : {},
         /**
          * Subscribe function as event listener
          * @method subscribe
@@ -24,11 +24,11 @@ AP.add("observable", function (A) {
          * @param context {Mixed} context which from event should be invoked
          */
         subscribe : function (eventName, method, context) {
-            if (!L.isValue(this._subsribers[eventName])) { this._subsribers[eventName] = []; }
+            if (!L.isValue(this._subscribers[eventName])) { this._subscribers[eventName] = []; }
             method = Ar(method);
 
             Ar.each(method, function (m) {
-                this._subsribers[eventName].push({
+                this._subscribers[eventName].push({
                     fn : m,
                     c  : ((context) ? context : A)
                 });
@@ -42,8 +42,8 @@ AP.add("observable", function (A) {
          * @param data {Mixed} data which should be passed as the parameter into event listener
          */
         publish : function (eventName, data) {
-            if (!L.isValue(this._subsribers[eventName])) this._subsribers[eventName] = [];
-            Ar.each(this._subsribers[eventName], function (handler) {
+            if (!L.isValue(this._subscribers[eventName])) this._subscribers[eventName] = [];
+            Ar.each(this._subscribers[eventName], function (handler) {
                 handler.fn.call(handler.c, data);
             }, this);
         },
@@ -55,11 +55,11 @@ AP.add("observable", function (A) {
          * @param method {Funciton} function to unsubscribe
          */
         unsubscribe : function (eventName, method) {
-            var eventListeners = this._subsribers[eventName];
+            var eventListeners = this._subscribers[eventName];
 
             for (var i = 0, length = eventListeners.length; i < length; i++) {
                 if (eventListeners[i].fn == method) {
-                    this._subsribers[eventName].splice(i, 1);
+                    this._subscribers[eventName].splice(i, 1);
                     break;
                 }
             }

@@ -41,10 +41,9 @@ AP.add('map', function (A) {
                 remove : function (key) {
                     if (L.isValue(key)) {
                         var value = silo[key];
-                        silo[key] = null;
                         var temp = {};
                         O.each(silo, function (item, name) {
-                            if (name !== key) temp[name] = key;
+                            if (name !== key) temp[name] = item;
                         }, this);
                         silo = temp;
                         this.length = length();

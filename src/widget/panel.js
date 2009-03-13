@@ -130,10 +130,12 @@ AP.add('widget-panel', function (A) {
         init : function (o) {
             this.template = o.template || DEFAULT_PANEL_TEMPLATE;
             this.base(o);
+            this.type = 'container:panel';
             this.dataForTemplate = [A.OOP.mix(this.dataForTemplate[0], {
                 cssClass : ((o.cssClass) ? o.cssClass : PANEL_CSS_CLASS)
             })];
-        }
+        },
+        className : 'panel'
     });
 
 }, '0.0.1', [

@@ -6,19 +6,40 @@
         title : 'Bold'
     }), italicButton = new AP.Widget.ToolbarButton({
         title : 'Italic'
-    }), buttons = [boldButton, italicButton];
-    
+    });
+
+
 
     var textPanel = new AP.Widget.Panel({
         title : 'textPanel',
-        parent : AP.Layout
+        target : $('.cmsHeader'),
+        items : [
+            boldButton,
+            italicButton
+        ]
     });
 
-    textPanel.registerChild(boldButton);
-    textPanel.registerChild(italicButton);
+    AP.Mediator().registerEvent('Bold.activate', boldButton);
+    AP.Mediator().registerEvent('Bold.deactivate', boldButton);
 
-    var  html = textPanel.generateHTML();
+    AP.Mediator().addEventListener('Bold.activate', function () {
+        console.log('bold.activate event received');
+    });
 
+
+    AP.Mediator().addEventListener('Bold.deactivate', function () {
+        console.log('bold.deactivate event received');
+    });
+ 
+    AP.Mediator().registerEvent('layout:ready', AP.Layout);
+
+    AP.Mediator().addEventListener('layout:ready', function () {
+        console.log('catched event layout:ready');
+    });
+
+    console.log('boldButton(main.js): %o', boldButton);
+    console.log('italicButton(main.js): %o', italicButton);
+    console.log('textPanel(main.js): %o', textPanel);
     AP.Layout.render();
 
 //    var linkAddress = new AP.Widget.Input({

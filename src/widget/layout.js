@@ -7,7 +7,7 @@ AP.add('layout', function (A) {
    * @submodule widget
    * @class Layout
    */
-    A.Layout = A.Widget.Layout = {
+A.Layout = A.Widget.Layout = new (A.Class.extend({
         _components : new A.data.Map(),
 
         /**
@@ -16,19 +16,7 @@ AP.add('layout', function (A) {
          * @method onResize
          */
         onResize : function () {},
-        /**
-         * Add component to the layout (assume that you should add different containers to the layout
-         * and components to the particular containers)
-         * @method add
-         * @param {Component} component
-         */
-        add : function (component) {
-          this._components.add(component.title, component);
-          // we need to subscribe layout someway to the events of the components
-          component.setParent(this);
-        },
-
-        mixins : A.util.Event.Mediator,
+        mixins : A.util.Event.Observable,
 
         /**
          * Render all child components html,
@@ -38,32 +26,45 @@ AP.add('layout', function (A) {
          */
         render : function () {
             this.appendHTML();
-            //this.initializeComponents();
-            //this.initializeCallbacks();
+            this.initializeComponents();
+            //this.initializeCallbacks(); // wtf? What did I mean? %)
+            this.publish('layout:ready');
         },
 
+        initializeComponents : function () {
+            this._components.each(function (component) {
+                component.initializeLogic(); // I mean: I obey you, nasty components, to initialize your business logic!
+            }, this);
+            $(A.config.win).bind('resize', this.onResize);
+        },
+
+        /**
+         * Add component to the layout (assume that you should add different containers to the layout
+         * and components to the particular containers)
+         * @method registerChild 
+         * @param {Component} component
+         */
         registerChild : function (component) {
-            this.add(component);
+              this._components.add(component.title, component);
+              // we need to subscribe layout someway to the events of the components
+              component.setParent(this);
         },
 
         removeChild : function (component) {
-            if (this._components.get(component.title)) {
-                this._components.remove(component.title);
-            }
+            this._components.remove(component.title);
         },
 
         appendHTML : function () {
-            var layoutHTML = new A.StringBuffer(), containerRegex = /container/;
-            this._components.each(function (component) {
-                if (containerRegex.test(component.type) && L.isUndefined(component.parent)) {
+            var layoutHTML = new A.StringBuffer(''), containerRegex = /container/;
+            this._components.each(function (component, index) {
+                if (containerRegex.test(component.type) && component.target && component.target[0]) {
                     var html = component.generateHTML();
-                    if (component.target && component.target[0]) {
-                        component.target.append(html);
-                    }
+                    component.target.append(html);
                 }
-                if (containerRegex.test(component.type) && component.parent === this) {
-                    layoutHTML.add(component.generateHTML);
+                if (containerRegex.test(component.type) && component.parent === this && L.isUndefined(component.target)) {
+                    layoutHTML.add(component.generateHTML());
                 }
+                // TODO: what shall we do if meet component which hasn't parent or target?
             }, this);
             $(A.config.doc.body).append(layoutHTML.toString());
         },
@@ -74,7 +75,7 @@ AP.add('layout', function (A) {
 
             T.compileTemplate(component.template.body, component.template.name);
         }
-    };
+    }))();
 
 }, '0.0.1', [
     { name : 'stringBuffer', minVersion : '0.0.1' },
