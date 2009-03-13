@@ -1,10 +1,25 @@
 AP.add('templateEngine', function (A) {
+    /**
+     * Fast and robust template engine
+     * @module AP
+     * @class TemplateEngine
+     */
     A.TemplateEngine = A.TemplateEngine || {
+        /**
+         * Inner silo, which store compiled templates
+         * @field templates
+         */
         templates : {}
     };
     
     var T = A.TemplateEngine, L = A.Lang, Ar = A.Array, O = A.Object;
-    
+    /**
+     * Convert template from the string to the json object for fast processing
+     * Register result json object as inner "template" in the templates field
+     * @method compileTemplate
+     * @param templateHolder {Mixed} script tag with type = 'text/html' or textarea or string. Ctags should be stripped automatically
+     * @param templateName {String} name of the template. If there is template with same name, TemplateEngine shouldn't register new template
+     */
     T.compileTemplate = function (templateHolder, templateName) {
         templateHolder = (templateHolder.value) ? templateHolder.value : ( (templateHolder.nodeName && templateHolder.nodeName.toLowerCase() == 'script') ? templateHolder.innerHTML : templateHolder);
         var instructionRegex = /%\{[%\s\w,'\(\)=\{\}\.]+\}/gim,
@@ -147,7 +162,14 @@ AP.add('templateEngine', function (A) {
         
         return result.toString();
     };
-    
+    /**
+     * Process different type of nodes into the compiled template
+     * @method processNode
+     * @private
+     * @param node {Object} node to process
+     * @param data {Mixed} data to fill in node
+     * return {String} result of the node processing
+     */
     T.processNode = function (node, data) {
         // text node - simply return value
         switch (node.type) {
@@ -168,7 +190,14 @@ AP.add('templateEngine', function (A) {
         }
         return '';
     };
-    
+    /**
+     * Process eval expressions with data
+     * @method evaluateSimpleExpression
+     * @private
+     * @param exp {String} Expression to evaluate
+     * @param data {Mixed} data to fill in expression
+     * @return {String} evaluated expression
+     */
     T.evaluateSimpleExpression = function (exp, data) {
         if (!!data[exp]) return data[exp];
         var sExp = exp.replace(/^\w\./, '');
@@ -189,7 +218,14 @@ AP.add('templateEngine', function (A) {
         }
         return ''; // todo: maybe better to throw error parsing expression?
     };
-    
+    /**
+     * Evaluate %eval instruction
+     * @method evaluateToughExpression
+     * @private
+     * @param exp {String} expression to evaluate
+     * @param data {Mixed} data to fill in expression
+     * @return {String} processed expression
+     */
     T.evaluateToughExpression = function (exp, data) {
         // check if exp is javascript expression
         if (/[\W\s]+/.test(exp)) {
@@ -206,23 +242,15 @@ AP.add('templateEngine', function (A) {
             return T.evaluateSimpleExpression(exp, data);
         }
     };
-    
+    /**
+     * Render template into container
+     * @method render
+     * @param template {String} name of the compiled template
+     * @param el {String} container which innerHTML should be replaced with result of template processing
+     * @param data {Mixed} data to fill in template
+     */
     T.render = function (template, el, data) {
         T.replaceHTML(el, T.processTemplate(template, data));
-    };
-    
-    T.replaceHTML = function (el, html) {
-         var oldEl = typeof el === "string" ? document.getElementById(el) : el;
-         /*@cc_on // Pure innerHTML is slightly faster in IE
-         oldEl.innerHTML = html;
-         return oldEl;
-         @*/
-         var newEl = oldEl.cloneNode(false);
-         newEl.innerHTML = html;
-         oldEl.parentNode.replaceChild(newEl, oldEl);
-         /* Since we just removed the old element from the DOM, return a reference
-         to the new element, which can be used to restore variable references. */
-         return newEl;
     };
 }, '0.0.1', [
     { name : 'array', minVersion : '1.0.0' },
