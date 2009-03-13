@@ -1,9 +1,20 @@
 (function () {
     
+    var Publisher = AP.Class.extend({
+        init : function () {
+            this._subscribers = {};
+        },
+
+        mixins : AP.util.Event.Observable
+    }), 
+    L = AP.Lang;
+
+
     describe('mediator', {
         'should exist at the util namespace' : function () {
-            value_of(!!AP.util.Mediator()).should_be_true();
-            value_of(typeof AP.util.Mediator()).should_be('object');
+            console.log(AP);
+            value_of(!!AP.util.Event.Mediator()).should_be_true();
+            value_of(typeof AP.util.Event.Mediator()).should_be('object');
         },
 
         'should exists on the global AP namespace' : function () {
@@ -18,10 +29,20 @@
 
         /* register as publisher */
 
-        'should allow register as publisher' : function () {},
+        'should allow register as publisher' : function () {
+            var m = AP.Mediator(), dump = 1,
+                publisher = new Publisher();
+            function updateTrigger () {
+                dump *= 3;
+            };
+            function renderView () {
+                dump *= 5;
+            };
+            m.registerEvent('customEvent', publisher);
+            m.addEventListener('customEvent', [ updateTrigger, renderView ]);
 
-        'should allow subscribe on the topic' : function () {},
-
-        'should a' : function () {}
+            publisher.publish('customEvent');
+            value_of(dump).should_be(15);
+        }
     });    
 })();

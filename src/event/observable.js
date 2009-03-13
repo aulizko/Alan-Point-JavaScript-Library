@@ -3,8 +3,8 @@
  * @module ap
  * @submodule  observable
  */
-AP.add("Observable", function (A) {
-    var event = A.namespace('util.Event'), L = A.Lang, Ar = A.Array, O = A.Object, List = A.data.List;
+AP.add("observable", function (A) {
+    var event = A.namespace('util.Event'), L = A.Lang, Ar = A.Array, O = A.Object;
 
     /**
      * Provides observable functionality to the classes. Usually used as mixin
@@ -67,5 +67,7 @@ AP.add("Observable", function (A) {
     };
     
 }, '0.0.1', [
-    { name : 'lang', minVersion : '0.0.3' }
+    { name : 'lang', minVersion : '0.0.3' },
+    { name : 'array', minVersion : '0.0.1' },
+    { name : 'object', minVersion : '0.0.1' }
 ]);

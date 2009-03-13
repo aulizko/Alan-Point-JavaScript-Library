@@ -6,7 +6,7 @@
  * @submodule class
  */
 AP.add('class', function(A) {
-    var initializing = false, fnTest = /xyz/.test(function() { xyz; }) ? /\bbase\b/: /.*/, O = A.Object;
+    var initializing = false, fnTest = /xyz/.test(function() { xyz; }) ? /\bbase\b/: /.*/, O = A.Object, L = A.Lang;
     // The base Class implementation (does nothing)
     var Class = A.Class = function () {};
 
@@ -36,7 +36,7 @@ AP.add('class', function(A) {
 
         A.Array.each(mixins, function (mixin) {
             O.each(mixin, function (value, name) {
-                prop[name] = value;
+                if (L.isUndefined(prop[name]) || !(name in prop)) { prop[name] = value; }
             }, this);
         }, this);
 
@@ -85,6 +85,7 @@ AP.add('class', function(A) {
     };
 
 }, '0.0.2', [
+    { name : 'lang', minVersion : '0.0.1' },
     { name : 'array', minVersion : '0.0.1' },
     { name : 'object', minVersion : '0.0.1' }
 ]);
