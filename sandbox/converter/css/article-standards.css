@@ -1,0 +1,497 @@
+@charset "utf-8";
+ 
+/* This stylesheet is for standards mode browser display.  It should overwrite or repeat all the properties in basic.css. */
+ 
+/* set margins */
+p, h2, h3, dl, div#footer, div.example { margin-left: 7.5%; margin-right: 32%; }
+ul, ol { margin-left: 9%; margin-right: 34%; }
+ul ul { margin-left: 2%; margin-right: 5%; }
+table { margin-left: 7.5%;  }
+table.inband { margin-right: 32%; }
+blockquote { margin-left: 11%; margin-right: 34%; }
+ 
+li p { margin-left: 0; margin-right: 0; }
+blockquote p { margin-left: 0; margin-right: 0; }
+#footer p { margin-left: 0; margin-right: 0; }
+div.example p { margin-left: 0; margin-right: 0; }
+div.sidenote p { margin-left: 0; margin-right: 0; }
+div.example blockquote { margin-left: 1em; margin-right: 1em; }
+ 
+a:link {
+	color: teal;
+	text-decoration: none;
+	}
+a:visited {
+	color: teal;
+	text-decoration: none;
+	}
+a:hover {
+	color:  #005a9c;
+	background: white;
+	text-decoration: underline;
+	}
+	/*
+a:link in */ div#site-navigation a:link {
+	color: white;
+	}
+	/*
+a:link in */ div.section h2 a:link { 
+	text-decoration: none;
+	color: #005a9c;
+	}
+	/*
+a:visited in */ div.section h2 a:visited { 
+	color: #005a9c;
+	text-decoration: none;
+	}
+	/*
+a:visited in */ div.section h2	 a:hover { 
+	color: #005a9c;
+	text-decoration: none; 
+	}
+	/*
+a:hover in */ #siteicons a:hover {
+	text-decoration: none;
+	}
+	/*
+a:hover in */ #site-navigation a:hover {
+	color: #005a9c;
+	background-color: #003163; 
+	}
+	/*
+a:visited in */ div#site-navigation a:visited {
+	color: white;
+	text-decoration: none;
+	}
+	/*
+a in */ #alternates a {
+	text-transform: none;
+	}
+acronym {
+	text-transform: capitalize;
+	}
+address {
+	font-style: normal;
+	}
+#author {
+	margin-top: 5em;
+	}
+.background-link {
+	margin-bottom: 0;
+	margin-top: 0;
+	}
+blockquote {
+	text-align: left;
+	}
+.box-header {
+	font-weight: bold;
+	}
+body {
+	margin: 0;
+	padding: 0;
+	background-color: white;
+	color: black;
+	font-family: arial, "lucida grande", helvetica, sans-serif;
+	font-size: 0.9em;
+	}
+#disclaimer {
+	background-color: #eee;
+	padding: 0.5em;
+	}
+div.code {
+	display: block;
+	overflow: auto;
+	width: 100%;
+	white-space: pre;
+  	font-family: 'Andale Mono', Courier, monospace;
+	font-size: 95%;
+	line-height: 120%;
+	}
+div.example {
+	border: 1px solid #000066;
+	border-left: 10px solid #000066;
+	padding: .5em;
+	padding-left: 1em;		     	
+	color: #000066;
+	background: #f9f5de; 
+	margin-top: .25em;
+	margin-bottom: .25em;
+	}
+dt {
+	font-weight: bold;
+	margin-top: 1em;
+	}
+.ed {
+	color: red;
+	}
+#footer {
+	margin-top: 5em;
+	border-top-width: 1px;
+	border-bottom: 0;
+	border-left: 0;
+	border-right: 0;
+	border-color: #333;
+	border-style: solid;
+	font-size: 90%;
+	}
+h1 {
+	text-align: left;
+	font-size: 200%;
+	font-weight: normal;
+	color: #005a9c;
+	padding: 5px;
+	padding-left: 10px;
+	margin: 0;
+	margin-top: 1em;
+	margin-right: 28%;
+	/* text-transform: lowercase; */
+	}
+p.background-link + h2 {
+	margin-top: 0;
+	}
+h2old {
+	text-align: left;
+	color: #005a9c;
+	background-color: #eee;
+	padding: 10px;
+	font-size: 140%;
+	font-weight: normal;
+	text-transform: lowercase;
+	margin-top: 2em; 
+	}
+h2 {
+	color: #005a9c;
+	text-align: left;
+	font-size: 123%;
+	font-weight: bold;
+	margin-top: 2.5em;
+	margin-bottom: 1em;
+	border-bottom: 1px solid #eee;
+	/* text-transform: lowercase; */
+	}
+h3 {
+	text-align: left;
+	font-size: 120%;
+	font-weight: bold;
+	margin-top: 2em;
+	margin-bottom: 1em;
+	border-bottom: 1px solid #eee;
+	/* text-transform: lowercase; */
+	}
+ 
+	/*
+h2 in */ .sidebar h2 {
+	margin-top: 0;
+	margin-left: 0;
+	margin-right: 0;
+	padding-left: 10px;
+	}
+h3 {
+	text-align: left;
+	font-size: 120%;
+	font-weight: bold;
+	margin-top: 2em;
+	margin-bottom: 1em;
+	/* text-transform: lowercase; */
+	}
+.hide {
+	display: none;
+	}
+#i18n-name {
+	font-size: 30px; 
+	color: #3ea7a7;
+	font-style: italic;
+	vertical-align: bottom;
+	letter-spacing: -2px;
+	line-height: 22px;
+	}
+#icon {
+	float: right;
+	width: 28%;
+	clear: right;
+	}
+p.background-link { 
+	color: teal;
+	text-align: right;
+	margin-top: 0;
+	margin-bottom: 0;
+	}
+	/*
+li in */ #sidebar li {
+	list-style-type: none;
+	}
+#line {
+	position: absolute;
+	left: 72%;
+	top: 0;
+	width: 10px;
+	border-left: 2px dotted #005a9c;
+	height: 30em;
+	}
+.kw {
+	font-family: monospaced;
+	}
+#logos {
+	float: right;
+	margin-left: 1em;
+	margin-top: .25em;
+	}
+#navigation {
+	line-height: 150%;
+	background-color: transparent;
+	color: #555;
+	font-weight: bold;
+	margin-top: 3em;
+	margin-bottom: 1.5em;
+	text-transform: lowercase;
+	}
+.newterm {
+	font-weight: bold;
+	}
+	/*
+p in */ #author p {
+	padding-top: .5em;
+	padding-bottom: .5em;
+	border-top: 1px solid gray;
+	border-bottom: 1px solid gray;
+	}
+	/*
+p in */ #navigation p {
+	margin-top: 0;
+	margin-bottom: .25em;
+	text-align: left;
+	font-size: 90%;
+	}
+	/*
+p in */ .sidebar p {
+	margin-left: 2em;
+	margin-right: 1em; 
+	}
+	/*
+p in */ #site-navigation p {
+	margin-left: 32px;
+	margin-right: 1em; 
+	margin-top: 0;
+	margin-bottom: 0;
+	}
+img#picture {
+	margin-top: .5em;
+	margin-bottom: .5em;
+	margin-left: 20px;
+	display: block;
+	}
+pre {
+	line-height: 1.3em;
+	}
+.qchar {
+	font-size: 110%;
+	color: black;
+	}
+.qchar:before {
+	content: '\27';
+	font-style: normal;
+	font-size: 100%;
+	}
+.qchar:after {
+	content: '\27';
+	font-style: normal;
+	font-size: 100%;
+	}
+.question {
+	font-weight: bold;
+	text-align: left;
+	}
+div.section {
+	line-height: 150%;
+	background-color: white;
+	color: #333;
+	text-align: justify;
+	}
+#references p {
+	text-align: left;
+	}
+.sidebar {
+	float: right;
+	width: 28%;
+	clear: right;
+/*	 border-left: 2px dotted #005a9c; */
+	}
+.sidenote {
+	position: absolute;
+	top: 0;
+	right: 2em;
+	width: 24%;
+	font-size: 80%;
+	line-height: 1em;
+	text-align: left;
+	}
+div.sidenoteGroup {
+	position: relative;
+	width: 100%;
+	}
+div#siteicons {
+	background-color: #003163;
+	}
+#sitelinks {
+	text-align: right;
+	}
+#site-navigation {
+	float: right; 
+	background-color: #000066;
+	background-color: #003163; 
+	color: white;
+	width: 28%;
+	clear: right;
+	padding-top: 1em;
+	padding-bottom: 1em;
+	}
+div.smallprint {
+	font-size: 90%;
+	}
+table, td, th {
+	font-size: 1em;
+	}
+table.inband {
+	margin-top: 1em;
+	margin-bottom: 1em;
+	}
+	/*
+td in */ table td { 
+	border: 1px solid teal; 
+	vertical-align: top; 
+	text-align: center; 
+	border-collapse: collapse; 
+	font-family: "Arial Unicode MS", "Lucida Sans Unicode", sans-serif; 
+	}
+	/*
+td in */ table.inband td {
+	text-align: left;
+	vertical-align: top;
+	border: 1px solid #000066;
+	padding: 0.2em;
+	}
+	/*
+th in */ table th { 
+	font-size: 80%; 
+	text-align: right;
+	padding: 4px;
+	}
+	/*
+th in */ table.inband th {
+	text-align: left;
+	vertical-align: top;
+	border: 1px solid #000066;
+	font-weight: bold;
+	padding: 0.2em;
+	background-color: #f9f5de; 
+	}
+.uppercase {
+	text-transform: uppercase;
+	}
+.uri {
+	display: none;
+	}
+ 
+ 
+ 
+.oldsidenote {
+	float: right;
+	width: 20%;
+	margin-right: 8%;
+	clear: right;
+	font-size: 80%;
+	line-height: 1em;
+	text-align: left;
+	}
+ 
+@media print {
+/* ***********  PRINTING ****************** */
+ 
+ 
+body {
+	font-size: 0.8em;
+	}
+ 
+div.sidebar {
+	float: none;
+	margin-left: 10%;
+	margin-right: 12%;
+	margin-bottom: 3em;
+	width: 80%;
+	line-height: 150%;
+	text-align: justify;
+	background-color: #cccc99;
+	background-color: white;
+	color: #555;
+	}
+.sidenote:before {
+	content: 'Note: ';
+	}
+.sidenote {
+	position: static;
+	font-size: 80%;
+	line-height: 1em;
+	text-align: left;
+	width: auto;
+	margin-left: 11%; 
+	margin-right: 12%; 
+	}	
+.oldsidenote {
+	float: right;
+	width: 20%;
+	margin-right: 8%;
+	margin-left:4%;
+	margin-bottom: 1em;
+	padding: 2%;
+	clear: right;
+	font-size: 80%;
+	line-height: 1em;
+	text-align: left;
+	border: 1px solid teal;
+	}
+.newsidenote {
+	position: static;
+	margin-bottom: .5em;
+	margin-left:20%;
+	margin-right: 12%;
+	padding: 5pt;
+	font-size: 80%;
+	line-height: 1em;
+	text-align: left;
+	border: 1px solid teal;
+	width:auto;
+	}
+h1, h2  {
+	background-color: white;
+	}
+#line {
+	border: 0;
+	}
+.noprint {
+	display: none;
+	}
+code {
+	font-size: 120%;
+	}
+.uri {
+	display: inline;
+	font-style: italic;
+	}
+#full-links p { 
+	text-align: left;
+	}
+ 
+p, h2, h3, dl, div#footer { margin-left: 7.5%; margin-right: 10%; }
+li p { margin-left: 0; margin-right: 0; }
+ul, ol, blockquote { margin-left: 11%; margin-right: 12%; }
+table { margin-left: 7.5%;  }
+div.example { margin-left: 7.5%; margin-right: 10%; }
+ 
+/* a:after { 
+	content: "[" attr(href) "]";
+	}
+*/
+ 
+ 
+} /*end of print section */
+

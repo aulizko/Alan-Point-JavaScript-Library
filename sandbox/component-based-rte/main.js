@@ -3,14 +3,8 @@
     var $ = AP.Query;
 
     var x = new AP.Widget.ToolbarButton({
-        title : 'Bold',
-        handlers : {
-            click : function () {
-                
-            }
-        }
+        title : 'Bold'
     });
-    console.log(x);
 
     var linkAddress = new AP.Widget.Input({
             type : 'text',
@@ -26,7 +20,7 @@
     linkText = new AP.Widget.Input({
         type : 'text',
         title : 'linkText',
-        label : 'Текст ссылки',
+        label : '',
         handlers : {
             focus : {
                 data : {somethingStrange : 'someData'},
@@ -64,4 +58,11 @@
     });
     
     rteToolBar.render();
+
+
+    // describe every button
+    // host it on the tabPanel (described before)
+    // host all tabPanel on the toolbar
+    // register toolbar on the layout
+
 })();

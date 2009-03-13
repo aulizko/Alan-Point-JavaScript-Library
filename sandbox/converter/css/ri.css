@@ -1,0 +1,41 @@
+#topbar {
+	text-align: left;
+	font-size: 200%;
+	color: #005a9c;
+	background-color: #eee;
+	padding: 5px;
+	padding-left: 10px;
+	margin: 0;
+	margin-right: 28%;
+	}
+#site-navigation {
+	float: right; 
+	background-color: #fff;
+	color: black;
+	width: 28%;
+	clear: right;
+	padding-top: 1em;
+	padding-bottom: 1em;
+	}
+img#picture {
+	margin-top: 5em;
+	margin-bottom: 3em;
+	margin-left: 20px;
+	display: block;
+	}
+#sitelinks a {
+	color: gray;
+	}
+div#navigation {
+	margin-top: 3em;
+	margin-bottom: 2em;
+	}
+h1 {
+	margin-top: 2em;
+	margin-left: 5.5%;
+	}
+	/*
+a:link in */ div#site-navigation a:link {
+	color: black;
+	}
+

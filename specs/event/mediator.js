@@ -3,6 +3,7 @@
     var Publisher = AP.Class.extend({
         init : function () {
             this._subscribers = {};
+            AP.stamp(this);
         },
 
         mixins : AP.util.Event.Observable

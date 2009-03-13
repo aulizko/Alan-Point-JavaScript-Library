@@ -1,0 +1,230 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html lang="en" xml:lang="en" xmlns="http://www.w3.org/1999/xhtml">
+
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<title>ishida >> utilities: Unicode code converter</title>
+		<meta name="keywords" content="converter utf8 ncr hex dec percent escapes" />
+		<link rel="stylesheet" href="css/article-basic.css"/>
+		<script src="converter.js" language="JavaScript1.2" type="text/javascript"></script>
+		<script src="entities.js" language="JavaScript1.2" type="text/javascript"></script>
+
+	 <!--<link title="___VERSION DESCN IN FOREIGN LANG." type="text/html" rel="alternate" hreflang="___LANG" href="___AND THE HREF" lang="___LANG" xml:lang="___LANG" />-->
+
+		<style type="text/css" media="all">
+/* <![CDATA[ */
+@import "/rishida/style/article-standards.css";
+@import "/rishida/style/ri.css";
+/* ]]> */
+
+table#converter { border:0; padding: 0; margin-left: 3%; width: 90%;  }
+table#converter td { border: 0; padding: 0; margin: 0; text-align: left; width: 43%; }
+textarea { margin: 0; padding: 0; width: 100%; }
+body { margin: 0; padding: 0; background-color: white; color: #666; }
+h1 { margin-left: 10px; padding-left: 0; }
+p, h2 { margin-left: 10px; }
+button { font-size: 80%; color: teal; border: none; }
+code { font-size: 1em; font-family: "Courier New", Courier, monospace; color: brown; }
+</style>
+
+
+	</head>
+
+	<body>
+	
+		<div id="wai-start" class="hide"> 
+			<p>Use accesskey "n" to jump to the <a href="#internal-links">internal navigation links</a> at any point. <a href="#contentstart">Skip to
+				the content start.</a></p>
+	</div>
+		<div id="site-navigation"><!--<p class="noprint" title="___LANG version.">&gt; <a href="___HREF" lang="___LANG" xml:lang="___LANG">___LANGUAGE IN FOREIGN</a></p>-->
+			<a href="http://www.w3.org/People/Ishida/"><img id="picture" alt="World map" src="/rishida/icons/world.gif" width="150" height="61"
+			style="margin-top: 1em; margin-bottom: 1em;"/></a>
+	</div>
+		<div class="sidebar"> 
+			<div class="section" style="font-size: 90%;"> 
+				<h2>Related links</h2>
+				<p><a href="uniview.php">UniView</a></p>
+			</div>
+	</div>
+		<div id="boilerplate"> 
+			<div id="line" style="height: 14em;">&nbsp;</div>
+	</div>
+		<div id="topbar">ishida &gt;&gt; utilities</div>
+		<div> 
+			<div id="sitelinks" class="noprint">
+				<span><a href="http://www.w3.org/People/Ishida/" title="Richard Ishida's home page">home</a>&nbsp;
+				<a href="http://people.w3.org/rishida/blog/" title="Richard Ishida's blog">blog</a>&nbsp;
+				<a href="/rishida/writing" title="Papers, articles, notes, etc">writings</a>&nbsp;
+				<a href="/rishida/utilities" title="Small utilities written in xhtml and javascript">utilities</a>&nbsp;
+				<a href="/rishida/photos/" title="Photos and video clips">photos</a>&nbsp;
+				<a href="/rishida/family.html" title="Introducing the Ishida family">family</a>&nbsp;
+				<a href="/rishida/other" title="A mixed bag of ishida-related topics">other</a>&nbsp;&nbsp;</span>
+			</div>
+	</div>
+			<h1 style="margin-top: 0;">Unicode Code Converter v6</h1>
+			
+		<div class="section"> 
+			<p id="intro">Type or paste text in any of the boxes (separate hex values with spaces) and <strong>click on the button labelled <code>Convert</code></strong>. The
+				answers will appear in all the other boxes. You can then cut &amp; paste the results into documents.</p>
+	</div>
+		
+		
+		
+		<table id="converter"> 
+		  <tr><td><!--  *********** CHARACTERS *********** -->
+               	Characters: &nbsp; <button value="Convert" 
+				onclick="convertChar2CP( chars.value );
+                return false;" >Convert</button>   
+				<button  
+				onclick="convertChar2CP( chars.value ); var list = window.open( 'getName.php?list='+codePoints.value );
+                return false;" >View names</button>  
+				<button  
+				onclick="convertChar2CP( chars.value ); var list = window.open( 'uniview.php?codepoints='+codePoints.value );
+                return false;" >View in UniView</button><br/>
+				<textarea id="chars" name="chars" rows="4" cols="5"></textarea></td>
+		  <td><!--  *********** HTML/XML *********** -->
+				HTML/XML: <button value="Convert" 
+				onclick="convertXML2CP( XML.value ); 
+                return false;" >Convert</button><br/>
+				<textarea id="XML" name="XML" rows="4" cols="5"></textarea>				</td>
+              </tr>
+              
+ 		  <tr> 
+			 <td><!--  *********** U+ *********** -->
+				Unicode U+hex notation: <button value="Convert" 
+				onclick="convertUnicode2CP( Unicode.value ); 
+                return false;" >Convert</button><br/>
+				<textarea id="Unicode" name="Unicode" rows="3" cols="5"></textarea>				</td>
+
+              <td><!--  *********** % ESCAPES *********** -->
+				Percent encoding for URIs:  
+				    <button value="Convert" 
+				onclick="convertpEsc2CP( pEsc.value ); 
+                return false;" >Convert</button><br/>
+				<textarea id="pEsc" name="pEsc" rows="3" cols="5"></textarea></td>
+		  </tr> 
+		  <tr> 
+			 <td><!--  *********** HEX NCRS *********** -->
+				Hexadecimal NCRs: <button value="Convert" 
+				onclick="convertHexNCR2CP( hexNCRs.value ); 
+                return false;" >Convert</button> <button value="Show Ascii" 
+				onclick="convertHexNCR2Ascii(); 
+                return false;" >Show ASCII</button><br/>
+				<textarea id="hexNCRs" name="hexNCRs" rows="3" cols="5"></textarea></td>
+
+			 <td><!--  *********** DEC NCRS *********** -->
+				Decimal NCRs:  <button value="Convert" 
+				onclick="convertDecNCR2CP( decNCRs.value ); 
+                return false;" >Convert</button> <button value="Show Ascii" 
+				onclick="convertDecNCR2Ascii(); 
+                return false;" >Show ASCII</button><br/>
+				<textarea id="decNCRs" name="decNCRs" rows="3" cols="5"></textarea></td>
+		  </tr> 
+           <tr><td><!--  *********** CODE POINTS *********** -->
+				Hexadecimal code points: <button value="Convert" 
+				onclick="convertHex2CP( codePoints.value ); 
+                return false;" >Convert</button><br/>
+				<textarea id="codePoints" name="codePoints" rows="3" cols="5"></textarea></td>
+
+				<td><!--  *********** DEC CODE POINTS *********** -->
+				Decimal code points: <button value="Convert" 
+				onclick="convertDec2CP( decCodePoints.value ); 
+                return false;" >Convert</button><br/>
+				<textarea id="decCodePoints" name="decCodePoints" rows="3" cols="5"></textarea></td>
+			</tr> 
+		  <tr> 
+			 <td><!--  *********** UTF-8 *********** -->
+				UTF-8 code units:  <button value="Convert" 
+				onclick="convertUTF82CP( UTF8.value ); 
+                return false;" >Convert</button><br/>
+				<textarea id="UTF8" name="UTF8" rows="3" cols="5"></textarea></td>
+
+			 <td><!--  *********** UTF-16 *********** -->
+				UTF-16 code units:  <button value="Convert" 
+				onclick="convertUTF162CP( UTF16.value ); 
+                return false;" >Convert</button><br/>
+				<textarea id="UTF16" name="UTF16" rows="3" cols="5"></textarea></td>
+		  </tr>
+		  <tr>
+               <td><!--  *********** \ ESCAPES *********** -->
+				JavaScript escapes:  <button value="Convert" 
+				onclick="convertjEsc2CP( jEsc.value ); 
+                return false;" >Convert</button>
+				<button value="Switch" 
+				onclick="jEsc.value = convert2C( jEsc.value ); 
+                return false;" >C-style Supp. Chars.</button><br/>
+				<textarea id="jEsc" name="jEsc" rows="3" cols="5"></textarea></td>
+
+               <td><!--  *********** CSS ESCAPES *********** -->
+				CSS escapes:  <button value="Convert" 
+				onclick="convertCSS2CP( CSS.value ); 
+                return false;" >Convert</button><br/>
+				<textarea id="CSS" name="CSS" rows="3" cols="5"></textarea></td>
+		</tr> 
+		</table>
+		
+		
+		
+		
+		
+		
+		
+		<div class="section" style="font-size: 90%;"> 
+			<h2>Notes</h2>
+			<p><strong>Characters  </strong>You can see a list of names of characters in the <code>Characters</code> field by clicking on the <code>View names</code> button. You can view more detail for each character by clicking on <code>View in UniView</code>.</p>
+			<p><strong>HTML/XML  </strong>Input in this field will be output in other fields with any numeric character references or HTML character entities converted to ordinary characters, except that &amp;lt; &amp;gt; &amp;quot; and &amp;amp; are not affected. (Greek and mathematical entities not yet supported.)</p>
+			<p>Output to this field will be ordinary characters, except that &lt; &gt; &quot; and &amp; are converted to character entities. This is useful for preparing examples of sample code for HTML or XML. </p>
+			<p><strong>Unicode U+hex notation</strong> Input in this field can mix text and escapes. Output in this field shows escapes only and separates escapes with spaces. </p>
+			<p><em>Tip:</em> To separate a sequence of characters by spaces, paste the characters into the <code>Characters</code> field and click <code>Convert</code>. Then click <code>Convert</code> immediately in the <code>Unicode U+hex notation</code> field.</p>
+			<p><strong>Percent-encoding for URIs </strong> Input in this field can mix text and escapes. For output in this field characters allowed in URI syntax are not converted. </p>
+			<p><strong>Hexadecimal NCRs </strong> Input in this field can mix text and escapes. Output is escapes only by default. If you click on the button <code>Show ASCII</code> ASCII characters are not converted to escapes.</p>
+			<p><strong>Decimal  NCRs </strong> Input in this field can mix text and escapes. Output is escapes only by default. If you click on the button <code>Show ASCII</code> ASCII characters are not converted to escapes.</p>
+			<p><strong>JavaScript escapes</strong> Input in this field can mix text and escapes.  Output does not escape non-control ASCII  characters.</p>
+			<p>The <code>JavaScript</code> field accepts escapes as used in JavaScript, Java and C as input. Default output to this field is specifically JavaScript compliant, though this is valid Java code too (a small number of Java-only named escapes such as \e are rendered as numeric escapes). In C-style escapes, supplementary characters are rendered by a single number, rather than two adjacent surrogate codepoint numbers. You can change supplementary character representations to the C style using the <code>C-style Supp. Chars. </code> button. </p>
+			<p><strong>CSS escapes</strong> Input in this field can mix text and escapes. Output does not escape non-control ASCII  characters. Output content uses 6-digit escape forms followed by a space for supplementary characters, and 4-digit escapes followed by a space for all other escaped characters.</p>
+
+			<p><strong>New in version 6</strong></p>
+			<ul>
+				<li>Convert  from JavaScript, Java and C escape notation, and to JavaScript/Java escapes (with switch to show C-style supplementary characters)</li>
+			    <li>Convert to and from CSS escape notation </li>
+			    <li>Convert from HTML/XML code with escapes to code with just characters</li>
+			    <li>Convert &lt; &gt; &quot; or &amp; in HTML/XML code to entities</li>
+			    <li>Option to show ASCII characters  when converting to NCRs</li>
+			    <li>View a set of characters in UniView  by clicking on the View in UniView button </li>
+			</ul>
+			<p><strong>New in version 5</strong></p>
+			<ul>
+				<li>Convert to and from Unicode U+hex notation</li>
+				<li>Get a list of Unicode names for a sequence of characters by clicking on the View Names button.</li>
+				<li>You now have to click a button to start the conversion, rather than remove focus from the input area.  This provides better control and a more intuitive approach.</li>
+			</ul>
+	</div>
+		<div id="author"> 
+			<p>Developed by: <a href="http://www.w3.org/People/Ishida/">Richard Ishida</a>.<!-- [Translator: ___NAME, ____ORGANISATION.]--></p>
+	</div>
+		<div class="smallprint"> 
+			<p id="version" style="margin-bottom: 0;">Last update <span id="version-info">2006-10-21 21.25</span> GMT</p>
+			<p class="copyright" style="margin-top: 0;">Copyright © 2007 Richard Ishida, All Rights Reserved.</p>
+	</div>
+			
+			
+	<script>
+	var codePoints = document.getElementById('codePoints');
+	var decCodePoints = document.getElementById('decCodePoints');
+	var UTF8 = document.getElementById('UTF8');
+	var UTF16 = document.getElementById('UTF16');
+	var hexNCRs = document.getElementById('hexNCRs');
+	var decNCRs = document.getElementById('decNCRs');
+	var Unicode = document.getElementById('Unicode');
+	var pEsc = document.getElementById('pEsc');
+	var jEsc = document.getElementById('jEsc');
+	var chars = document.getElementById('chars');
+	var CSS = document.getElementById('CSS');
+	var XML = document.getElementById('XML');
+	</script>
+
+	
+
+	</body>
+</html>
+

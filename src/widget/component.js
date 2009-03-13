@@ -2,7 +2,6 @@ AP.add('component', function (A) {
 
     var $ = A.Query,
         T = A.TemplateEngine,
-        COMPONENT_TEMPLATE = '<div id="%{title}%{uniqueId}" class="%{cssClass}"></div>',
         COMPONENT_CSS_CLASS = 'component',
         TOOLBAR_COMPONENT_CSS_CLASS = 'toolbarItem',
         HOVER_CSS_CLASS = 'hover',
@@ -23,8 +22,7 @@ AP.add('component', function (A) {
             
             A.stamp(this);
             this.rendered = false;
-            
-            this.parent = (o.parent) ? $(o.parent) : $(A.config.win.document.body);
+            this.parent = this.parent || A.Widget.Layout;
             this.title = o.title;
 
             this.cssClass = o.cssClass || COMPONENT_CSS_CLASS;
@@ -32,7 +30,6 @@ AP.add('component', function (A) {
             
             this.type = o.type || DEFAULT_TYPE;
             
-            this.template = o.template || defineTemplateForCorrespondType[this.type];
             this.dataForTemplate = {
                 title : this.title,
                 cssClass : this.cssClass,
@@ -48,21 +45,11 @@ AP.add('component', function (A) {
             this.initializeDOMReference();
             this.initializeEventListeners();
             this.rendered = true;
+            this.publish('component.rendered.' + this.title);
         },
-        setParent : function (el) {
-            el = $(el);
-            if (el[0].nodeName) {
-                this.parent = el;
-            }
-        },
-        setTemplate : function (name, source) {
-            if (!T.templates[name]) {
-                T.compileTemplate(souce, name);
-            }
-            this.template = name;
-        },
-        generateHTML : function () {
-            return T.processTemplate(this.template, this.dataForTemplate);
+        setParent : function (/* Component */parent) {
+            this.parent = parent;
+            this.subscribe('somponent.rendered' + this.title, parent);
         },
         initializeDOMReference : function () {
             this.DOM = $('#' + this.title + this._uid);
@@ -84,7 +71,8 @@ AP.add('component', function (A) {
                     d.bind(type, handler.data, handler.fn);
                 }
             }
-        }
+        },
+        mixins : A.util.Event.Observable
     });
 
     A.Widget.ToolbarButton = A.Widget.Component.extend({
@@ -95,6 +83,42 @@ AP.add('component', function (A) {
             }); 
            
             this.base(o); 
+        },
+        active : false,
+        handlers : {
+            click : function () {
+                if (!this.active) {
+                    this.publish(this.title + '.activate');
+                } else {
+                    this.publish(this.title + '.deactivate');
+                }
+            }
+        },
+        visualState : {
+            hover : false,
+            visible : true,
+            pressed : false
+        },
+        setParent : function (parent) {
+            this.base(parent);
+            this.subscribe(this.title + '.activate', parent);
+            this.subscribe(this.title + '.deactivate', parent);
+        },
+        representState : function () {
+            for (var prop in this.state) {
+                if (this.state[prop]) { this.dom.addClass(prop); }
+                else { this.dom.removeClass(prop); }
+            }
+        },
+        /**
+         * Make toolbar button active - set inner variable 'active' to true and change state to 'pressed' (and also call 'represent state method')
+         * @method makeActive
+         * @TODO: consider does we need it at all 
+         */
+        makeActive : function () {
+            this.active = true;
+            this.visualState.pressed = true;
+            this.representState();
         }
     });
 
