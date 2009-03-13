@@ -52,7 +52,14 @@ var
  * @private
  */
     _VALUES  = /"[^"\\\n\r]*"|true|false|null|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?/g,
-
+/**
+ * Now Firefox (since 3.1b6) have native support for JSON decoding, so that 
+ * Now scripts check if there is native support and if it present, use it (cause firefox implementation 
+ * is much faster)
+ * @property {Boolean} _IS_BROWSER_SUPPORT_NATIVE
+ * @private
+ */
+    _IS_BROWSER_SUPPORT_NATIVE = typeof JSON !== 'undefined',
 /**
  * Third step in the validation.  Regex used to remove all open square
  * brackets following a colon, comma, or at the beginning of the string.
@@ -117,30 +124,32 @@ var
  * @static
  * @public
  */
-AP.JSON.decode = function (s,reviver) {
-    // Ensure valid JSON
-    if (typeof s === 'string') {
-        // Replace certain Unicode characters that are otherwise handled
-        // incorrectly by some browser implementations.
-        // NOTE: This modifies the input if such characters are found!
-        s = s.replace(_UNICODE_EXCEPTIONS, function (c) {
-            return '\\u'+('0000'+(+(c.charCodeAt(0))).toString(16)).slice(-4);
-        });
+AP.JSON.decode = (_IS_BROWSER_SUPPORT_NATIVE) ?
+    JSON.parse :
+    function (s,reviver) {
+        // Ensure valid JSON
+        if (typeof s === 'string') {
+            // Replace certain Unicode characters that are otherwise handled
+            // incorrectly by some browser implementations.
+            // NOTE: This modifies the input if such characters are found!
+            s = s.replace(_UNICODE_EXCEPTIONS, function (c) {
+                return '\\u'+('0000'+(+(c.charCodeAt(0))).toString(16)).slice(-4);
+            });
 
-        // Test for validity
-        if (_INVALID.test(s.replace(_ESCAPES,'@').
-                            replace(_VALUES,']').
-                            replace(_BRACKETS,''))) {
+            // Test for validity
+            if (_INVALID.test(s.replace(_ESCAPES,'@').
+                                replace(_VALUES,']').
+                                replace(_BRACKETS,''))) {
 
-            // Eval the text into a JavaScript data structure, apply any
-            // reviver function, and return
-            return _revive( eval('(' + s + ')'), reviver );
+                // Eval the text into a JavaScript data structure, apply any
+                // reviver function, and return
+                return _revive( eval('(' + s + ')'), reviver );
+            }
         }
-    }
 
-    // The text is not JSON parsable
-    throw new SyntaxError('decodeJSON');
-};
+        // The text is not JSON parsable
+        throw new SyntaxError('decodeJSON');
+    };
 
 
 }, '0.0.1' );
@@ -227,7 +236,7 @@ A.OOP.mix(A.JSON,{
      * @static
      * @public
      */
-    encode : function (o,w,d) {
+    encode : (_IS_BROWSER_SUPPORT_NATIVE) ? JSON.stringify : function (o,w,d) {
 
         var m      = A.JSON._CHARS,
             str_re = A.JSON._SPECIAL_CHARS,
