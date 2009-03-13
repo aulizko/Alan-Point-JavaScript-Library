@@ -1,4 +1,4 @@
-AP.add('component', function (A) {
+AP.add('component', function (A){
 
     var $ = A.Query,
         T = A.TemplateEngine,
@@ -6,16 +6,21 @@ AP.add('component', function (A) {
         TOOLBAR_COMPONENT_CSS_CLASS = 'toolbarItem',
         HOVER_CSS_CLASS = 'hover',
         DEFAULT_TYPE = 'general',
+        DEFAULT_TYPE_PREFIX = 'component',
         INPUT_CONTAINER_CSS_CLASS = 'settingsInput', 
         INPUT_COMPONENT_CSS_CLASS = 'settingInput',
         defineTemplateForCorrespondType = { 
-            general : '<div id="%{title}%{uniqueId}" class="%{cssClass}"></div>', 
-            toolbarButton : '<div id="${title}%{uniqueId}" class="%{cssClass}"><div class="panelIcon ${title}Icon"></div></div>'
+            'component:general' : {
+                name : 'component:general',
+                body : '<div id="%{title}:%{uniqueId}" class="%{cssClass}"></div>'
+            }, 
+            'component:toolbarButton' : {
+                name : 'component:toolbarButton',
+                body : '<div id="%{title}:%{uniqueId}" class="%{cssClass}"><div class="panelIcon %{title}Icon"></div></div>'
+            }
         },
         OOP = A.OOP;
 
-    T.compileTemplate(COMPONENT_TEMPLATE, 'COMPONENT_TEMPLATE');
-    
     AP.Widget.Component = AP.Widget.extend({
         init : function (o) {
             this.base(o);
@@ -28,15 +33,16 @@ AP.add('component', function (A) {
             this.cssClass = o.cssClass || COMPONENT_CSS_CLASS;
             this.hoverCssClass = o.hoverCssClass || HOVER_CSS_CLASS;
             
-            this.type = o.type || DEFAULT_TYPE;
-            
-            this.dataForTemplate = {
+            this.type = o.type || DEFAULT_TYPE_PREFIX + ':' + DEFAULT_TYPE;
+            this.template = o.template || defineTemplateForCorrespondType[this.type];
+            this.dataForTemplate = [{
                 title : this.title,
                 cssClass : this.cssClass,
                 uniqueId : this._uid
-            };
+            }];
             
             this.handlers = o.handlers || {};
+            A.Layout.registerTemplateForCompilation(this);
         },
         className : 'component',
         render : function () {
@@ -49,10 +55,13 @@ AP.add('component', function (A) {
         },
         setParent : function (/* Component */parent) {
             this.parent = parent;
-            this.subscribe('somponent.rendered' + this.title, parent);
+            this.subscribe('component.rendered' + this.title, parent);
         },
         initializeDOMReference : function () {
             this.DOM = $('#' + this.title + this._uid);
+        },
+        generateHTML : function () {
+            return T.processTemplate(this.type, this.dataForTemplate);
         },
         initializeEventListeners : function () {
             var d = this.DOM, h = this.handlers, self = this;
@@ -78,7 +87,7 @@ AP.add('component', function (A) {
     A.Widget.ToolbarButton = A.Widget.Component.extend({
         init : function (o) {
             var conf = OOP.mix(o, {
-                type : 'ToolbarButton',
+                type : DEFAULT_TYPE_PREFIX + ':toolbarButton',
                 cssClass : ((o.cssClass) ? o.cssClass : TOOLBAR_COMPONENT_CSS_CLASS)
             }); 
            
@@ -147,6 +156,7 @@ AP.add('component', function (A) {
     
 }, '0.0.1', [
     { name : 'string', minVersion : '0.0.1' },
+    { name : 'observable', minVersion : '0.0.1', },
     { name : 'templateEngine', minVersion : '0.0.1' },
     { name : 'oop', minVersion : '0.0.1' } 
 ]);

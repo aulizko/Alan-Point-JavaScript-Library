@@ -1,11 +1,13 @@
 AP.add('layout', function (A) {
+
+    var T = A.TemplateEngine, L = A.Lang;
   /**
    * Main layer at the UI implementation, analog of the global object window in the client JS
    * @module ap
    * @submodule widget
    * @class Layout
    */
-    A.Widget.Layout = {
+    A.Layout = A.Widget.Layout = {
         _components : new A.data.Map(),
 
         /**
@@ -38,10 +40,16 @@ AP.add('layout', function (A) {
             this.collectTemplates();
             this.initializeComponents();
             this.initializeCallbacks();
+        },
+
+        registerTemplateForCompilation : function (component) {
+            if (L.isValue(T.templates[component.template.name])) { return; }
+
+            T.compileTemplate(component.template.body, component.template.name);
         }
     };
 
 }, '0.0.1', [
     { name : 'widget', minVersion: '0.0.1' },
-    { name : 'list', minVersion : '0.0.1' }
+    { name : 'map', minVersion : '0.0.1' }
 ]);
