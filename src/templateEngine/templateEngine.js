@@ -142,7 +142,7 @@ AP.add('templateEngine', function (A) {
         var result = new A.StringBuffer();
         // get compiled template 
         var template = this.templates[name];
-
+        
         if ((data instanceof Object) && O.keys(data).length > 1) {
 
             O.each(data, function (item) {

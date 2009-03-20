@@ -1,45 +1,145 @@
 (function () {
 
-    var $ = AP.Query;
+    var $ = AP.Query,
+        toolbarButtonTemplate = {
+            name : 'component:toolbarButton',
+            body : '<div id="%{title}:%{uniqueId}" class="panelItem"><div class="panelIcon %{cssClass}"></div></div>'
+        };
+    
 
-    var boldButton = new AP.Widget.ToolbarButton({
-        title : 'Bold'
-    }), italicButton = new AP.Widget.ToolbarButton({
-        title : 'Italic'
+    var 
+    boldButton = new AP.Widget.ToolbarButton({
+        title : 'bold',
+        cssClass : 'boldIcon',
+        template : toolbarButtonTemplate
+    }), 
+    italicButton = new AP.Widget.ToolbarButton({
+        title : 'italic',
+        cssClass : 'italicIcon',
+        template : toolbarButtonTemplate
+    }),
+    unorderedList = new AP.Widget.ToolbarButton({
+        title : 'unorderedList',
+        cssClass : 'markedListIcon',
+        template : toolbarButtonTemplate
+    }),
+    orderedList = new AP.Widget.ToolbarButton({
+        title : 'orderedList',
+        cssClass : 'numListIcon',
+        template : toolbarButtonTemplate
+    });
+    // TODO: implement unmarked list
+    var linkTabButton = new AP.Widget.ToolbarButton({
+        title : 'linktabbutton',
+        cssClass : 'addFileIcon',
+        template : toolbarButtonTemplate
+    });
+    
+    var linkPanel = new AP.Widget.Panel({
+        title : 'linkPanel',
+        cssClass : 'settingsPanel',
+        items : [linkTabButton]
+    });
+    
+    var linkTrigger = new AP.Widget.ToolbarButton({
+        title : 'linkTrigger',
+        cssClass : 'hyperlinkIcon',
+        template : toolbarButtonTemplate,
+        open : false,
+        handlers : {
+            click : function () {
+                var meta = this.title.replace(/Trigger/, '');
+                if (!this.open) {
+                    this.publish(meta + '.activate');
+                    this.open = true;
+                } else {
+                    this.publish(meta + '.deactivate');
+                    this.open = false;
+                }
+            }
+        }
+    });
+    
+    var linkTabPanel = new AP.Widget.TabPanel({
+        panel : linkPanel,
+        trigger : linkTrigger,
+        triggerOpenCssClass : 'activePage'
     });
 
+    
 
+    var imagePanel = new AP.Widget.Panel({
+        title : 'imagePanel',
+        cssClass : 'settingsPanel'
+    });
+    
+    var imageTrigger = new AP.Widget.ToolbarButton({
+        title : 'imageTrigger',
+        cssClass : 'addPictureIcon',
+        template : toolbarButtonTemplate,
+        open : false,
+        handlers : {
+            click : function () {
+                var meta = this.title.replace(/Trigger/, '');
+                if (!this.open) {
+                    this.publish(meta + '.activate');
+                    this.open = true;
+                } else {
+                    this.publish(meta + '.deactivate');
+                    this.open = false;
+                }
+            }
+        }
+    });
+    
+    var imageTabPanel = new AP.Widget.TabPanel({
+        panel : imagePanel,
+        trigger : imageTrigger,
+        triggerOpenCssClass : 'activePage'
+    });
 
-    var textPanel = new AP.Widget.Panel({
-        title : 'textPanel',
-        target : $('.cmsHeader'),
+    var CherInfo = AP.namespace('CherInfo');
+    CherInfo.toolbar = new AP.Widget.ToolBar({
+        title : 'text',
         items : [
             boldButton,
-            italicButton
-        ]
+            italicButton,
+            unorderedList,
+            orderedList,
+            linkTabPanel,
+            imageTabPanel
+        ],
+        target : $('.cmsHeader')
     });
+    
+    
+    //var textPanel = new AP.Widget.Panel({
+        //title : 'textPanel',
+        //target : $('.cmsHeader'),
+        //items : [
+            //boldButton,
+            //italicButton
+        //]
+    //});
 
-    AP.Mediator().registerEvent('Bold.activate', boldButton);
-    AP.Mediator().registerEvent('Bold.deactivate', boldButton);
+    //AP.Mediator().registerEvent('Bold.activate', boldButton);
+    //AP.Mediator().registerEvent('Bold.deactivate', boldButton);
 
-    AP.Mediator().addEventListener('Bold.activate', function () {
-        console.log('bold.activate event received');
-    });
+    //AP.Mediator().addEventListener('Bold.activate', function () {
+        //console.log('bold.activate event received');
+    //});
 
 
-    AP.Mediator().addEventListener('Bold.deactivate', function () {
-        console.log('bold.deactivate event received');
-    });
+    //AP.Mediator().addEventListener('Bold.deactivate', function () {
+        //console.log('bold.deactivate event received');
+    //});
  
-    AP.Mediator().registerEvent('layout:ready', AP.Layout);
+    //AP.Mediator().registerEvent('layout:ready', AP.Layout);
 
-    AP.Mediator().addEventListener('layout:ready', function () {
-        console.log('catched event layout:ready');
-    });
+    //AP.Mediator().addEventListener('layout:ready', function () {
+        //console.log('catched event layout:ready');
+    //});
 
-    console.log('boldButton(main.js): %o', boldButton);
-    console.log('italicButton(main.js): %o', italicButton);
-    console.log('textPanel(main.js): %o', textPanel);
     AP.Layout.render();
 
 //    var linkAddress = new AP.Widget.Input({

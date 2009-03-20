@@ -43,8 +43,11 @@ AP.add("observable", function (A) {
          */
         publish : function (eventName, data) {
             if (!L.isValue(this._subscribers[eventName])) this._subscribers[eventName] = [];
+            
             Ar.each(this._subscribers[eventName], function (handler) {
-                handler.fn.call(handler.c, data);
+                if (L.isFunction(handler.fn)) {
+                    handler.fn.call(handler.c, eventName, data);
+                }
             }, this);
         },
 

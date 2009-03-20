@@ -10,13 +10,14 @@ AP.add('widget-component', function (A){
             name : 'component:general',
             body : '<div id="%{title}:%{uniqueId}" class="%{cssClass}"></div>'
         },
+        O = A.Object,
         OOP = A.OOP,
         L = A.Lang;
 
     AP.Widget.Component = AP.Widget.extend({
         init : function (o) {
             this.base(o);
-            this._subscribers = new A.data.Map();
+            this._subscribers = {};
             A.stamp(this);
             this.rendered = false;
             this.title = o.title;
@@ -60,31 +61,43 @@ AP.add('widget-component', function (A){
             this.subscribe('component.rendered.' + this.title, parent);
         },
         initializeDOMReference : function () {
-            this.DOM = $('#' + this.title + ':' + this._uid);
+            this.DOM = $('#' + this.title + '\\:' + this._uid);
         },
         generateHTML : function () {
             return T.processTemplate(this.type, this.dataForTemplate);
         },
         initializeEventListeners : function () {
             var d = this.DOM, h = this.handlers, self = this;
-            this.handlers.mouseover = (this.handlers.mouseover) ? this.handlers.mouseover : function (e) {
-                $(this).addClass(self.hoverCssClass);
-            };
-            this.handlers.mouseout = (this.handlers.mouseout) ? this.handlers.mouseout : function (e) {
-                $(this).addClass(self.hoverCssClass);
-            };
-             
-            for (var type in h) {
-                var handler = h[type];
-                if (L.isFunction(handler)) {
-                    d.bind(type, handler);
-                } else {
-                    d.bind(type, handler.data, handler.fn);
-                }
+            
+            if (h.self) { // hack. todo: remove or review
+                var providedContext = h.self;
+                delete h.self;
             }
+            
+            O.each(h, function (handler, type) {
+                if (L.isFunction(handler)) {
+                    d[type](function (e) {
+                        handler.call(providedContext, e, this);
+                    });
+                } else {
+                    var context = (handler.context ? handler.context : AP), fn = handler.fn;
+                    
+                    if (handler.data) {
+                        d.bind(type, handler.data, function (e) {
+                            fn.call(providedContext, e, this);
+                        });
+                    } else {
+                        d.bind(type, function (e) {
+                            fn.call(providedContext, e, this);
+                        });
+                    }
+                }
+            }, this);
         },
         initializeLogic : function () {
+            
             this.initializeDOMReference();
+            
             this.initializeEventListeners();
         },
         mixins : A.util.Event.Observable
@@ -94,8 +107,9 @@ AP.add('widget-component', function (A){
     
 }, '0.0.1', [
     { name : 'lang', minVersion : '0.0.1' },
+    { name : 'object', minVersion : '0.0.1' },
     { name : 'string', minVersion : '0.0.1' },
-    { name : 'observable', minVersion : '0.0.1', },
+    { name : 'observable', minVersion : '0.0.1' },
     { name : 'templateEngine', minVersion : '0.0.1' },
     { name : 'oop', minVersion : '0.0.1' } 
 ]);

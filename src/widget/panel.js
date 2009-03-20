@@ -9,7 +9,8 @@ AP.add('widget-panel', function (A) {
         DEFAULT_PANEL_TEMPLATE = {
             name : 'container:panel',
             body : '<div class="%{cssClass}" id="%{title}:%{uniqueId}">%{content}</div>'
-        };
+        },
+        DEFAULT_HIDDEN_CLASS = 'hidden'; // todo: remove somewhere else
 
 //    A.Widget.Panel = A.Widget.extend({
 //        init : function (o) {
@@ -134,8 +135,29 @@ AP.add('widget-panel', function (A) {
             this.dataForTemplate = [A.OOP.mix(this.dataForTemplate[0], {
                 cssClass : ((o.cssClass) ? o.cssClass : PANEL_CSS_CLASS)
             })];
+            if (o.humanizedTitle) { this.dataForTemplate[0].humanizedTitle = o.humanizedTitle; }
         },
-        className : 'panel'
+        className : 'panel',
+        show : function (animate) {
+            var d = this.DOM;
+            d.removeClass(DEFAULT_HIDDEN_CLASS);
+            
+            if (animate) {
+                d.show(100);
+            } else {
+                d.show();
+            }
+        },
+        hide : function (animate) {
+            var d = this.DOM;
+            d.removeClass(DEFAULT_HIDDEN_CLASS);
+            
+            if (animate) {
+                d.hide(100);
+            } else {
+                d.hide();
+            }
+        }
     });
 
 }, '0.0.1', [

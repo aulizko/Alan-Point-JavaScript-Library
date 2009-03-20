@@ -1,17 +1,16 @@
 AP.add('widget-tabPanel', function (A) {
+    var DEFAULT_PANEL_TITLE = 'defaultPanel',
+        DEFAULT_TRIGGER_TITLE = 'defaultTrigger';
     
     A.Widget.TabPanel = A.Widget.Container.extend({
         init : function (o) {
             this.base(o);
-            this.panel = o.panel;
-            this.trigger = o.trigger;
+            this.panel = o.panel || new A.Widget.Panel({ title : DEFAULT_PANEL_TITLE });
+            this.trigger = o.trigger || new A.Widget.ToolbarButton({
+                title : DEFAULT_TRIGGER_TITLE
+            });
         },
-        hide : function (animate) {
-            // @TODO: implement
-        }, 
-        show : function (animate) {
-            // @TODO: implement
-        }
+        className : 'tabPanel'
     });
 
 }, '0.0.1', [

@@ -1,222 +1,166 @@
-AP.add('toolbar', function (A) {
-    var $ = A.Query, L = A.Lang, StringBuffer = A.StringBuffer, O = A.Object;
+/*Что должен уметь тулбар?
+1) Регистрировать кнопки, принимать от них сообщения и менять их состояния.
+2) Регистрировать табы, принимать от них сообщения (то есть, нам надо:
+    а) компонент tabPanel - то есть соединение панели и trigger'a, то есть штуки, которая контролирует активность/открытость/закрытость панели
+    б) транслировать сообщения от панели-дочери tabPanel до toolbar'a. И обратно.
+3) Уметь транслировать сообщения дальше rte.
+4) Уметь принимать сообщения от rte и отображать состояние. 
+5) Уметь хостить input'ы. И тоже делать им represent state
+6) Уметь хостить кнопки-триггеры окон. И симметрично. */
+
+AP.add('widget-toolbar', function (A) {
+    var DEFAULT_TOOLBAR_TEMPLATE = {
+        name : 'container:toolbar',
+        body : ' %{content} '
+    }, 
+    INNER_PANEL_DEFAULT_TEMPLATE = {
+        name : 'container:innerToolbarPanel',
+        body : '<div id="%{title}:%{uniqueId}" class="%{cssClass}"><span class="panelTitle">%{humanizedTitle}</span>%{content}</div>'
+    },
+    Ar = A.Array,
+    DEFAULT_HUMANIZED_TITLE = /* Текст */ '\u0422\u0435\u043A\u0441\u0442',
+    DEFAULT_HIDDEN_CLASS = 'hidden',
+    tabActivationRegexp = /\.activate/,
+    tabDeActivationRegexp = /\.deactivate/,
+    DEFAULT_OPEN_TAB_CSS_CLASS = 'activePage';
     
-    A.Widget.ToolBar = A.Class.extend({
+    A.Widget.ToolBar = A.Widget.Container.extend({
         init : function (o) {
-            this.uniqueIdRegex = /%UNIQUE_ID%/g;
-            this.title = o.title || 'Текст';
-            this.rendered = false;
-            this.buttons = {};
-            this.selects = {};
-            this.tabs = {};
-            this.conf = {};
-            this.conf.parent = $(o.container);
-            this.conf.panelCssClass = o.cssClass || 'panel';
-            this.conf.settingsPanelCssClass = o.settingsPanelCssClass || 'settingsPanel';
-            this.conf.activeButtonCssClass = o.activeButtonCssClass || 'activeItem';
-            this.conf.activeTabCssClass = o.activeTabCssClass || 'activePage';
-            
-            AP.stamp(this);
-            
-            this.mediator = o.mediator || function () {};
-        },
-        render : function () {
-            var root = this.conf.parent;
-            if (!L.isValue(root) && !L.isValue(root[0].nodeType)) throw new Error('You must set parent dom element for the toolbar with uid ' + this._uid + ' and title ' + this.title);
-            var html = this.generateHTML().replace(this.uniqueIdRegex, this._uid);
-            root.append(html);
-            
-            var t = this.tabs;
-            O.each(t, function (tab) {
-                tab.content.setParent(root);
-                tab.content.render();
-                tab.content.hide();
-            }, this);
-            
-            this.initializeDOMReferences();
-            this.initializeGUI();
-            this.initializeCallbacks();
-            this.rendered = true;
-        },
-        generateHTML : function () {
-            var html = new StringBuffer('<div id="toolBarPanel%UNIQUE_ID%" class="' + this.conf.panelCssClass + '"><span class="panelTitle">' + this.title + '</span>'); // begin of the container code
-            html.add(this.generateHTMLForButtonsAndTabTriggers())
-                .add('</div>');
+            this.template = o.template || DEFAULT_TOOLBAR_TEMPLATE; // todo: review that template should be empty
 
-            return html.toString();
-        },
-        generateHTMLForButtonsAndTabTriggers : function () {
-            var b = this.buttons, 
-                html = new StringBuffer(''), 
-                s = this.selects,
-                t = this.tabs;
-            O.each(b, function (button) {
-                html.add('<div class="panelItem" id="button' + button.title + '%UNIQUE_ID%"><div class="panelIcon ' + button.cssClass + '"></div></div>');
+            this.type = 'container:toolbar';
+            
+
+            var items = o.items, tabPanels = [], controls = [], item, i = items.length - 1;
+
+            delete o.items; // remove items from configuration
+
+            this.base(o);
+            
+            Ar.each(items, function (item) {
+                if (item.className == 'tabPanel') {
+                    tabPanels.push(item);
+                } else {
+                    controls.push(item); // input or toolbarButton
+                }
             }, this);
-            O.each(s, function (select) {
-                html.add('<div class="settingsInput"><select id="select' + select.title + '%UNIQUE_ID%">');
+            
+            var tabTriggerrs = [], panels = [];
+            
+            var triggerRegExp = /Trigger/;
+            Ar.each(tabPanels, function (item) {
+                tabTriggerrs.push(item.trigger);
                 
-                O.each(select.values, function (value, index) {
-                    html.add('<option')
-                        .add((index == select.defaultValue) ? ' selected' : '')
-                        .add(' value="')
-                        .add(index)
-                        .add('">')
-                        .add(value)
-                        .add('</option>');
-                }, this);
+                // subscribe toolbar on the click on the trigger
+                var meta = item.trigger.title.replace(triggerRegExp, '');
                 
-                html.add('</select></div>');
-            }, this);
-            html.add('<div class="panelSeparatop"></div>');
-            O.each(t, function (tab) {
-                html.add('<div class="panelItem" id="tab' + tab.title + '%UNIQUE_ID%"><div class="panelIcon ' + tab.trigger.cssClass + '"></div></div>');
+                item.trigger.subscribe(meta + '.activate', this.openTab, this);
+                item.trigger.subscribe(meta + '.deactivate', this.closeTab, this);
+                
             }, this);
 
-            return html.toString();
-        },
-        generateHTMLForTabContent : function () {
-            var html = new StringBuffer(''), t = this.tabs;
-            O.each(t, function (tab) {
-                tab.content.setParent(this.conf.parent);
-            }, this);
+            // create panel for top level buttons, inputs, tab triggers
+            var innerPanel = new A.Widget.Panel({
+                title : 'toolbarMainPanel',
+                items : controls.concat(tabTriggerrs),
+                template : INNER_PANEL_DEFAULT_TEMPLATE,
+                humanizedTitle : o.humanizedTitle || DEFAULT_HUMANIZED_TITLE
+            });
             
-            return html.toString();
-        },
-        initializeDOMReferences : function () {
-            var b = this.buttons, 
-                s = this.selects,
-                t = this.tabs, 
-                d = this.domReferences = {};
-            d.buttons = {};
-            d.tabs = {};
-            d.selects = {};
+            
 
-            this.container = $('#toolBarPanel' + this._uid);
+            this.registerChild(innerPanel);
+            this.type = 'container:toolbar';
 
-            O.each(b, function (button) {
-                var title = button.title;
-                d.buttons[title] = $('#button' + title + this._uid);
-            }, this);
-            O.each(s, function (select) {
-                var title = select.title;
-                d.selects[title] = $('#select' + title + this._uid);
-            }, this);
-            O.each(t, function (tab) {
-                var title = tab.title;
-                d.tabs[title] = $('#tab' + title + this._uid);
-            }, this);
-        },
-        initializeGUI : function () {
-            var b = this.buttons, 
-                t = this.tabs, 
-                d = this.domReferences,
-                activeButtonCssClass = this.conf.activeButtonCssClass,
-                self = this;
-            // create functions 'make button active' and 'tab active'. 
-            O.each(b, function (button) {
-                var title = button.title;
-                button.active = false;
-                button.highlighted = false;
-                button.highlight = function () {
-                    if (button.highlighted) return;
-                    button.highlighted = true;
-                    d.buttons[title].addClass(activeButtonCssClass);
-                };
-                button.turnOffHighlight = function () {
-                    if (!button.highlighted) return;
-                    button.highlighted = false;
-                    d.buttons[title].removeClass(activeButtonCssClass);
-                };
-                button.activate = function () {
-                    if (button.active) return;
-                    button.active = true;
-                    button.highlight();
-                    button.onActivateCallback.call(self, button); // call button callback
-                };
-                
-                button.deactivate = function () {
-                    if (!button.active) return;
-                    button.active = false;
-                    button.turnOffHighlight();
-                    button.onDeactivateCallback.call(self, button);
-                };
-                d.buttons[title].click(function (e) {
-                    if (!button.active) {
-                        button.activate();
-                    } else {
-                        button.deactivate();
-                    }
-                });
-            }, this);
-            // initialize tab triggers
-            O.each(t, function (tab, title) {
-                var content = t[title].content,
-                    activeTabCssClass = this.conf.activeTabCssClass;
-                    
-                content.setToolBar(this); // todo remove
-                
-                d.tabs[title].click(function (e) {
-                    
-                    // if correspond tab is hidden, than show it, otherwise, hide it
-                    tab.visible = content.visible;
-                    
-                    O.each(t, function (anotherTab, index) {
-                        if (index != title) {
-                            anotherTab.content.hide();
-                            d.tabs[anotherTab.title].removeClass(activeTabCssClass);
-                        }
-                    }, this);
-                    
-                    if (tab.visible) {
-                        content.hide('fast');
+            // register panels as children
+            Ar.each(tabPanels, function (item) {
+                // prepare panel to render:
+                var cssClasses = item.panel.cssClass.split(' ');
+                if (((cssClasses.length == 1) && (cssClasses[0] != DEFAULT_HIDDEN_CLASS)) ||
+                  !Ar.some(cssClasses, function (item) { return item === DEFAULT_HIDDEN_CLASS; }, this)) {
                         
-                        $(this).removeClass(activeTabCssClass);
-                    } else {
-                        content.show('fast');
-                        $(this).addClass(activeTabCssClass);
-                    }
-                });
-            }, this);
-        },
-        initializeCallbacks : function () {
-            var s = this.selects,
-                d = this.domReferences,
-                self = this;
+                    cssClasses.push(DEFAULT_HIDDEN_CLASS);
+                    item.panel.cssClass = cssClasses.join(' ');
+                    item.panel.dataForTemplate[0].cssClass = item.panel.cssClass;
+                }
+                
+                this.registerChild(item.panel);
+            }, this);            
             
-            O.each(s, function (select, title) {
-                d.selects[title].change(function (e) { return select.onChange.call(self, d.selects[title][0]); });
-            }, this);
-            // initialize button callback
-            // initialize tabs content event listeners and so on
+            this.currentOpenTabMeta = '';
         },
-        addButton : function (button) {
-            this.buttons[button.title] = button;
+        openTab : function (eventName) {
+            var meta = eventName.replace(tabActivationRegexp, '');
+            if (meta) {
+                this.changeTabState(meta);
+            }
         },
-        addSelect : function (select) {
-            this.selects[select.title] = select;
+        closeTab : function (eventName) {
+            var meta = eventName.replace(tabDeActivationRegexp, '');
+            if (meta) {
+                this.changeTabState(meta);
+            }
         },
-        addTab : function (tab) {
-            this.tabs[tab.title] = tab;
+        changeTabState : function (meta) {
+            var panel, toolbarPanel = this.children.get('toolbarMainPanel'), trigger;
+            // there are three possible cases:
+            // 1) another one tab are open, so that hide another tab and show that. (all without animation)
+            // 2) no one tab are open, so that open provided tab with animation
+            // 3) provided tab are already open, so that we need to close it with animation
+            
+            if (this.currentOpenTabMeta) {
+                if (this.currentOpenTabMeta == meta) {
+                    trigger = toolbarPanel.children.get(meta + 'Trigger');
+                    trigger.DOM.removeClass(DEFAULT_OPEN_TAB_CSS_CLASS);
+                    
+                    panel = this.children.get(meta + 'Panel');
+                    panel.hide('fast');
+                    this.currentOpenTabMeta = '';
+                } else {
+                    trigger = toolbarPanel.children.get(this.currentOpenTabMeta + 'Trigger');
+                    trigger.DOM.removeClass(DEFAULT_OPEN_TAB_CSS_CLASS);
+                    trigger = toolbarPanel.children.get(meta + 'Trigger');
+                    trigger.DOM.addClass(DEFAULT_OPEN_TAB_CSS_CLASS);
+                    
+                    panel = this.children.get(this.currentOpenTabMeta + 'Panel');
+                    panel.hide();
+                    panel = this.children.get(meta + 'Panel');
+                    panel.show();
+                    this.currentOpenTabMeta = meta;
+                }
+            } else {
+                trigger = toolbarPanel.children.get(meta + 'Trigger');
+                
+                
+                trigger.DOM.addClass(DEFAULT_OPEN_TAB_CSS_CLASS);
+                
+                panel = this.children.get(meta + 'Panel');
+                
+                panel.show('fast');
+                this.currentOpenTabMeta = meta;
+            }
         },
-        show : function () {
-            if (!this.rendered) this.render();
-            this.container.show();
+        show : function (animate) {
+            var toolbarPanel = this.children.get('toolbarMainPanel');
+            if (animate) {
+                toolbarPanel.DOM.show(70);
+            } else {
+                toolbarPanel.DOM.show();
+            }
         },
-        hide : function () {
-            var t = this.tabs, d = this.domReferences, activeTabCssClass = this.conf.activeTabCssClass;
-            O.each(t, function (tab, title) {
-                d.tabs[title].removeClass(activeTabCssClass);
-                tab.content.hide();
-            }, this);
-            this.container.hide();
+        hide : function (animate) {
+            var toolbarPanel = this.children.get('toolbarMainPanel');
+            if (animate) {
+                this.closeTab(this.currentOpenTabMeta);
+                toolbarPanel.DOM.hide(70);
+            } else {
+                this.closeTab(this.currentOpenTabMeta);
+                toolbarPanel.DOM.hide();
+            }
         },
-        setMediator : function (mediator) {
-            this.mediator = mediator;
-        }
+        className : 'toolbar'
     });
+
 }, '0.0.1', [
-    { name : 'lang', minVersion : '0.0.3' },
-    { name : 'object', minVersion : '0.0.1' },
-    { name : 'stringBuffer', minVersion : '1.0.3' }
+    { name : 'widget-container', minVersion : '0.0.1' }
 ]);

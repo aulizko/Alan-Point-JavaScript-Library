@@ -166,7 +166,9 @@ AP.add("json-encode", function(A) {
  */
 A.JSON = A.JSON || {};
 
-var isA = A.Lang.isArray;
+var isA = A.Lang.isArray,
+     _IS_BROWSER_SUPPORT_NATIVE = typeof JSON !== 'undefined';
+
 
 
 

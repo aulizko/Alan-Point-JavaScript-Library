@@ -3,11 +3,12 @@ AP.add('widget-container', function (A) {
         Ar = A.Array,
         CONTAINER_TEMPLATE = { 
             name : 'container:default',
-            body : '<div class="container" id="%{title}%{uniqueId}">%{content}</div>'
+            body : '<div class="container" id="%{title}:%{uniqueId}">%{content}</div>'
         };
 
     A.Widget.Container = A.Widget.Component.extend({
         init : function (o) {
+            this.children = new AP.data.Map();
             this.template = ((this.template) ? this.template : (o.template || CONTAINER_TEMPLATE));
 
             if (o.target) {
@@ -45,7 +46,8 @@ AP.add('widget-container', function (A) {
         generateHTML : function () {
             var innerHTML = new A.StringBuffer('');
             this.children.each(function (child, title) {
-                innerHTML.add(T.processTemplate(child.template.name, child.dataForTemplate));
+                // innerHTML.add(T.processTemplate(child.template.name, child.dataForTemplate));
+                innerHTML.add(child.generateHTML());
             }, this); 
             this.dataForTemplate = [A.OOP.mix(this.dataForTemplate[0], {
                 content : innerHTML.toString()
@@ -61,11 +63,11 @@ AP.add('widget-container', function (A) {
             this.children.each(function (child) {
                 child.initializeLogic();
             }, this);
+            
             this.base();
         },
         mixins : A.util.Event.Observable,
-        className : 'container', 
-        children : new A.data.Map()
+        className : 'container'
 
     });
 }, '0.0.1', [
