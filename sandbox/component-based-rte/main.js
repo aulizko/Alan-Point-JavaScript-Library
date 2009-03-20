@@ -4,6 +4,20 @@
         toolbarButtonTemplate = {
             name : 'component:toolbarButton',
             body : '<div id="%{title}:%{uniqueId}" class="panelItem"><div class="panelIcon %{cssClass}"></div></div>'
+        },
+        CherInfo = AP.namespace('CherInfo'),
+        windowCheckboxTemplate = {
+            name : 'checkbox',
+            body : '<div class="windowElement" id="%{title}:%{uniqueId}">\
+                        <input class="windowCheckbox" type="checkbox">%{humanizedTitle}\
+                    </div>'
+        },
+        windowTextareaTemplate = {
+            name : 'textarea',
+            body : '<div class="windowElement" id="%{title}:%{uniqueId}">\
+                        <h3 class="miniLabel">%{humanizedTitle}</h3>\
+                        <textarea class="windowTextArea"></textarea>\
+                    </div>'
         };
     
 
@@ -97,8 +111,35 @@
         trigger : imageTrigger,
         triggerOpenCssClass : 'activePage'
     });
-
-    var CherInfo = AP.namespace('CherInfo');
+    
+    
+    var windowCheckbox = new AP.Widget.Input({
+        title : 'windowCheckbox',
+        humanizedTitle : 'Какой-то инпут',
+        type : 'checkbox',
+        template : windowCheckboxTemplate
+    });
+    
+    var windowTextarea = new AP.Widget.Input({
+        title : 'windowTextarea',
+        type : 'textarea',
+        humanizedTitle : 'Какая-то текстарея',
+        template : windowTextareaTemplate
+    });
+    
+    var humanWindow = new AP.Widget.Window({
+        title : 'people',
+        humananizedTitle : 'Добавить человека',
+        target : $('.cmsHeader'),
+        items : [
+            windowCheckbox,
+            windowTextarea
+        ]
+    });
+    
+    
+    
+    
     CherInfo.toolbar = new AP.Widget.ToolBar({
         title : 'text',
         items : [

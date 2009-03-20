@@ -1708,6 +1708,7 @@ body {
 
             .windowClose {
                 background: url("images/cms/cmsImages.gif") -208px -22px no-repeat;
+                display : block;
                 width: 9px;
                 height: 9px;
                 float: right;
