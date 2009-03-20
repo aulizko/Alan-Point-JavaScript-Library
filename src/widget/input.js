@@ -5,27 +5,37 @@ AP.add('widget-input', function (A) {
         DEFAULT_TYPE_PREFIX = 'component',
         INPUT_CONTAINER_CSS_CLASS = 'settingsInput', 
         INPUT_COMPONENT_CSS_CLASS = 'settingInput',
-        DEFAULT_INPUT_TEMPLATE = { 
-            name : 'component:input',
-            body : '<div id="%{title}:%{uniqueId}" class="%{cssClass}"><div class="panelIcon %{title}Icon"></div></div>'
+        DEFAULT_INPUT_TEMPLATE = {
+            name : 'component:input:text',
+            body : '<div class="%{containerCssClass}" id="%{title}:%{uniqueId}">\
+                        <div class="settingsInputLabel">%{humanizedTitle}</div>\
+                        <input value="%{defaultValue}"/>\
+                    </div>'
         },
         OOP = A.OOP,
         L = A.Lang,
-        DEFAULT_HUMANIZED_TITLE = 'Инпут';
+        DEFAULT_HUMANIZED_TITLE = 'Инпут',
+        DEFAULT_TYPE_PREFIX = 'component:input:',
+        DEFAULT_TYPE = 'text';
 
     A.Widget.Input = A.Widget.Component.extend({
         init : function (o) {
             this.template = o.template || DEFAULT_INPUT_TEMPLATE;
             this.base(OOP.mix(o, {
-                type : ((/Input/ig.test(o.type)) ? (o.type) : (o.type + ':input')),
-                cssClass : ((o.cssClass) ? o.cssClass : INPUT_COMPONENT_CSS_CLASS),
-                defaultValue : ((o.defaultValue) ? o.defaultValue : ''),
-                containerCssClass : ((o.containerCssClass) ? o.containerCssClass : INPUT_CONTAINER_CSS_CLASS)
+                cssClass : ((o.cssClass) ? o.cssClass : INPUT_COMPONENT_CSS_CLASS)
             }));
             
+            this.containerCssClass = ((o.containerCssClass) ? o.containerCssClass : INPUT_CONTAINER_CSS_CLASS);
+            this.defaultValue = ((o.defaultValue) ? o.defaultValue : '');
+            
+            
             this.dataForTemplate = [OOP.mix(this.dataForTemplate[0], {
-                humanizedTitle : o.humanizedTitle || DEFAULT_HUMANIZED_TITLE
+                containerCssClass : this.containerCssClass,
+                humanizedTitle : o.humanizedTitle || DEFAULT_HUMANIZED_TITLE,
+                containerCssClass : this.containerCssClass
             })];
+            
+            this.type = (o.type) ? (DEFAULT_TYPE_PREFIX + o.type) : (DEFAULT_TYPE_PREFIX + DEFAULT_TYPE);
             
             this.defaultValue = o.defaultValue || '';
         },
