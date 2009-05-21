@@ -44,7 +44,6 @@
             c.publish('customEvent');
 
             value_of(trigger).should_be_true();
-            value_of(c._subscribers.customEvent.length).should_be(1);
         },
 
         /* publish */
@@ -74,16 +73,18 @@
         /* unsubscribe */
         'should erase function from event listeners' : function () {
             var c = new Component(o),
-
+            trigger = 1,
             a = function () {
-                alert(true);
+                trigger = 2;
             };
 
             c.subscribe('customEvent', a);
 
             c.unsubscribe('customEvent', a);
-
-            value_of(c._subscribers.customEvent.length).should_be(0);
+            
+            c.publish('customEvent');
+            
+            value_of(trigger).should_be(1);
         }
     });    
 })();
