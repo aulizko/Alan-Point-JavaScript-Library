@@ -1,5 +1,0 @@
-1) component may be separator, button, and input. We can specify its dom event listeners (like 'click', 'mousemove' and so on)
-2) there are three main component holders: panel and two his descendants: toolbar and tabPanel. (actually, I plan many more others component, but let's be quiete now)
-3) each component register on the root component or house on some container (like panel or so)
-4) each component can throw event which will bubble up till the main root component;
-5) when GUI receive "doLayout" message, it build all layout as it passed in.
