@@ -23,7 +23,7 @@ AP.add('object', function (A) {
         return new F();
     };
     
-    var O = A.Object, L = A.Lang;
+    var O = A.Object;
     
     /**
      * Returns an array containing the object's keys
@@ -50,9 +50,9 @@ AP.add('object', function (A) {
      * @method Object.each
      * @static
      * @param o the object to iterate
-     * @param f {function} the function to execute
+     * @param f {Function} the function to execute
      * @param c the execution context
-     * @param proto {boolean} include proto
+     * @param proto {Boolean} include proto
      * @return {AP} the AP instance
      */
     O.each = function (o, f, c, proto) {

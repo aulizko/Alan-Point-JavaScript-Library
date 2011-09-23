@@ -30,7 +30,7 @@ AP.add('browser', function (A) {
             presto:0,
 
             /**
-             * Gecko engine revision number.  Will evaluate to 1 if Gecko 
+             * Gecko engine revision number.  Will evaluate to 1 if Gecko
              * is detected but the revision could not be found. Other browsers
              * will be 0.  Example: 1.8
              * <pre>
@@ -46,10 +46,10 @@ AP.add('browser', function (A) {
             gecko:0,
 
             /**
-             * AppleWebKit version.  KHTML browsers that are not WebKit browsers 
+             * AppleWebKit version.  KHTML browsers that are not WebKit browsers
              * will evaluate to 1, other browsers 0.  Example: 418.9.1
              * <pre>
-             * Safari 1.3.2 (312.6): 312.8.1 <-- Reports 312.8 -- currently the 
+             * Safari 1.3.2 (312.6): 312.8.1 <-- Reports 312.8 -- currently the
              *                                   latest available for Mac OSX 10.3.
              * Safari 2.0.2:         416     <-- hasOwnProperty introduced
              * Safari 2.0.4:         418     <-- preventDefault fixed
@@ -62,7 +62,7 @@ AP.add('browser', function (A) {
              *                                   and many major issues fixed).
              * Safari 3.0.4 (523.12) 523.12  <-- First Tiger release - automatic update
              *                                   from 2.x via the 10.4.11 OS patch
-             *                                   
+             *
              * </pre>
              * http://developer.apple.com/internet/safari/uamatrix.html
              * @property webkit
@@ -70,20 +70,31 @@ AP.add('browser', function (A) {
              * @static
              */
             webkit:0,
-            
+
             /**
              * The platform property will be set to a string containing any relevant
              * user agent information.
              * Currently limited ipod/win/mac/linux/other.
-             * @property platform 
-             * @type string
+             * @property platform
+             * @type String
              * @static
              */
-            platform : ((window.orientation != undefined) ? 'ipod' : (navigator.platform.match(/mac|win|linux/i) || ['other'])[0].toLowerCase())
+            platform : ((window.orientation != undefined) ? 'ipod' : (navigator.platform.match(/mac|win|linux/i) || ['other'])[0].toLowerCase()),
+
+            plugins : {
+                flash : (function(){
+                    var version = (AP.tryThese(function(){
+                        return navigator.plugins['Shockwave Flash'].description;
+                    }, function(){
+                        return new ActiveXObject('ShockwaveFlash.ShockwaveFlash').GetVariable('$version');
+                    }) || '0 r0').match(/\d+/g);
+                    return {version: parseInt(version[0] || 0 + '.' + version[1], 10) || 0, build: parseInt(version[2], 10) || 0};
+                })()
+            }
         };
-        
+
         var ua=navigator.userAgent, m;
-        
+
         // Modern KHTML browsers should qualify as Safari X-Grade
         if ((/KHTML/).test(ua)) {
             o.webkit=1;
@@ -119,7 +130,7 @@ AP.add('browser', function (A) {
                 }
             }
         }
-        
+
         return o;
     }();
-}, '0.0.2');
+}, '0.0.3');

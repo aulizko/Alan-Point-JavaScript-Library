@@ -9,17 +9,17 @@ AP.add('oop', function (A) {
      * @class AP~OOP
      */
     A.OOP = A.OOP || {};
-    
+
     var O = A.OOP,
-        OP = Object.prototype, 
-        IEF = ["toString", "valueOf"], 
+        OP = Object.prototype,
+        IEF = ["toString", "valueOf"],
         PROTO = 'prototype',
         L = A.Lang,
-    
+
     /**
      * IE will not enumerate native functions in a derived object even if the
-     * function was overridden.  This is a workaround for specific functions 
-     * we care about on the Object prototype. 
+     * function was overridden.  This is a workaround for specific functions
+     * we care about on the Object prototype.
      * @property _iefix
      * @param {Function} r  the object to receive the augmentation
      * @param {Function} s  the object that supplies the properties to augment
@@ -38,7 +38,7 @@ AP.add('oop', function (A) {
                 }
             }
         } : function() {};
-    
+
     /**
      * Returns a new object containing all of the properties of
      * all the supplied objects.  The properties from later objects
@@ -59,7 +59,7 @@ AP.add('oop', function (A) {
         }
         return o;
     };
-    
+
     /**
      * Applies the supplier's properties to the receiver.  By default
      * all prototype and static propertes on the supplier are applied
@@ -73,7 +73,7 @@ AP.add('oop', function (A) {
      * @param {Function} s  the object that supplies the properties to augment
      * @param ov {boolean} if true, properties already on the receiver
      * will be overwritten if found on the supplier.
-     * @param wl {string[]} a whitelist.  If supplied, only properties in 
+     * @param wl {string[]} a whitelist.  If supplied, only properties in
      * this list will be applied to the receiver.
      * @param {int} mode what should be copies, and to where
      *        default(0): object to object
@@ -98,7 +98,7 @@ AP.add('oop', function (A) {
 
                  var arr = m && L.isArray(fr);
 
-                 for (var i in fs) { 
+                 for (var i in fs) {
 
                      if (fs.hasOwnProperty(i)) {
 
@@ -115,7 +115,6 @@ AP.add('oop', function (A) {
                              // if the receiver has this property, it is an object,
                              // and merge is specified, merge the two objects.
                              if (m && L.isObject(fr[i], true)) {
-                                 // console.log('aggregate RECURSE: ' + i);
                                  // @TODO recursive or no?
                                  // Y.mix(fr[i], fs[i]); // not recursive
                                  f(fr[i], fs[i], proto, true); // recursive
@@ -123,12 +122,10 @@ AP.add('oop', function (A) {
                              // is specified or the receiver doesn't have one.
                              // @TODO make sure the 'arr' check isn't desructive
                              } else if (!arr && (ov || !(i in fr))) {
-                                 // console.log('hash: ' + i);
                                  fr[i] = fs[i];
                              // if merge is specified and the receiver is an array,
                              // append the array item
                              } else if (arr) {
-                                 // console.log('array: ' + i);
                                  // @TODO probably will need to remove dups
                                  fr.push(fs[i]);
                              }
@@ -161,7 +158,7 @@ AP.add('oop', function (A) {
 
          return r;
      };
-     
+
      /**
       * Applies prototype properties from the supplier to the receiver.
       * The receiver can be a constructor or an instance.
@@ -170,7 +167,7 @@ AP.add('oop', function (A) {
       * @param {Function} s  the object that supplies the properties to augment
       * @param ov {boolean} if true, properties already on the receiver
       * will be overwritten if found on the supplier.
-      * @param wl {string[]} a whitelist.  If supplied, only properties in 
+      * @param wl {string[]} a whitelist.  If supplied, only properties in
       * this list will be applied to the receiver.
       * @param args {Array | Any} arg or arguments to apply to the supplier
       * constructor when initializing.
@@ -178,8 +175,8 @@ AP.add('oop', function (A) {
       */
      O.augment = function(r, s, ov, wl, args) {
 
-         var sProto = s.prototype, newProto = null, construct = s, 
-             a = (args) ? A.Array(args) : [], rProto = r.prototype, 
+         var sProto = s.prototype, newProto = null, construct = s,
+             a = (args) ? A.Array(args) : [], rProto = r.prototype,
              target =  rProto || r, applyConstructor = false;
 
          // working on a class, so apply constructor infrastructure
@@ -254,7 +251,7 @@ AP.add('oop', function (A) {
 
          return r;
      };
-     
+
      /**
       * Utility to set up the prototype, constructor and superclass properties to
       * support an inheritance strategy that can chain constructors and methods.
@@ -268,7 +265,7 @@ AP.add('oop', function (A) {
       * @return {AP} new class
       */
      O.extend = function(r, s, px, sx) {
-         var sp = s.prototype, rp=A.Object(sp), i;
+         var sp = s.prototype, rp=A.Object(sp);
          r.prototype=rp;
 
          rp.constructor=r;
@@ -288,7 +285,7 @@ AP.add('oop', function (A) {
          // reason.
          // A.mix(r, s);
 
-         // Add superclass convienience functions 
+         // Add superclass convienience functions
          // TODO: revisit when we have something that works
          // A.augment(r, Ext);
 

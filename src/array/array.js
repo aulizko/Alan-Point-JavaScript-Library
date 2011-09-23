@@ -1,11 +1,11 @@
 /*
  * Array utilities
  * Inspired by YUI 3.0.0.pr2 Array submodule
- * 
+ *
  * @module ap
  */
 AP.add('array', function (A) {
-    
+
     var L = A.Lang, Native = Array.prototype;
 
     /**
@@ -35,14 +35,11 @@ AP.add('array', function (A) {
      */
     A.Array = function(o, i, al) {
         var t = (al) ? 2 : AP.Array.test(o);
-        switch (t) {
-            case 1:
-                // return (i) ? o.slice(i) : o;
-            case 2:
-                return Native.slice.call(o, i || 0);
-            default:
-                return [o];
-        }       
+        if (t) {
+            return Native.slice.call(o, i || 0);
+        } else {
+            return [o];
+        }
     };
 
     var A = A.Array;
@@ -70,9 +67,13 @@ AP.add('array', function (A) {
                 r = 1;
             } else {
                 try {
+                    
                     // indexed, but no tagName (element) or alert (window)
-                    if ("length" in o && !("tagName" in o)  && !("alert" in o)) {
-                        r = 2;
+                    if ("length" in o &&
+                        !("tagName" in o) &&
+                        !("alert" in o) /*&&
+                        (!A.Lang.isFunction(o.size) || o.size() > 1)*/) {
+                            r = 2;
                     }
 
                 } catch(ex) {}
@@ -102,10 +103,10 @@ AP.add('array', function (A) {
             }
             return A;
         };
-        
+
     /**
      * Executes the supplied function on each item in the array.
-     * Returning true from the processing function will stop the 
+     * Returning true from the processing function will stop the
      * processing of the remaining
      * items.
      * @method Array.some
@@ -113,10 +114,10 @@ AP.add('array', function (A) {
      * @param f {Function} the function to execute on each item
      * @param o Optional context object
      * @static
-     * @return {boolean} true if the 
+     * @return {boolean} true if the
      */
      A.some = (Native.some) ?
-        function (a, f, o) { 
+        function (a, f, o) {
             return a.some(f, o || AP.config.win);
         } :
         function (a, f, o) {
@@ -153,22 +154,36 @@ AP.add('array', function (A) {
      * Returns the index of the first item in the array
      * that contains the specified value, -1 if the
      * value isn't found.
-     * todo use native method if avail
      * @method Array.indexOf
      * @static
      * @param a {Array} the array to search
      * @param val {Mixed} the value to search for
+     * @param from {Number} where from start search
      * @return {int} the index of the item that contains the value or -1
      */
-    A.indexOf = function(a, val) {
-        for (var i=0; i<a.length; i=i+1) {
-            if (a[i] === val) {
-                return i;
-            }
-        }
+    A.indexOf = (Array.prototype.indexOf) ?
+        function (a, val, from) {
+            return (from) ? a.indexOf(val, from) : a.indexOf(val);
+        } :
+        function(a, val, from) {
+            var length = a.length;
 
-        return -1;
-    };
+            var whereFrom = Number(from) || 0;
+            whereFrom = (whereFrom < 0)
+                 ? Math.ceil(whereFrom)
+                 : Math.floor(whereFrom);
+            if (whereFrom < 0)
+              whereFrom += length;
+
+
+            for (; whereFrom < length; whereFrom++) {
+              if (whereFrom in a &&
+                  a[whereFrom] === val) {
+                  return whereFrom;
+              }
+            }
+            return -1;
+        };
 
     /**
      * Creates a new array with all elements that pass the test implemented by the provided function
@@ -186,12 +201,22 @@ AP.add('array', function (A) {
         function (a, fn, c) {
             return a.filter(fn, c || AP.config.win);
         } :
-        function (a, func, c) {
-            var result = [], i = a.length;
-            while(i--) {
-                if (i in a && fn.call(c || AP.conf.win, a[i], i, a)) result.push(a[i]);
+        function (a, fn, c) {
+            var len = a.length >>> 0;
+            if (typeof fn != "function")
+              throw new TypeError();
+
+            var res = new Array();
+            var context = c || AP.config.win;
+            for (var i = 0; i < len; i++) {
+              if (i in a) {
+                var val = a[i]; // in case fun mutates this
+                if (fn.call(context, val, i, a))
+                  res.push(val);
+              }
             }
-            return result;
+
+            return res;
         };
 
     /**
@@ -229,9 +254,9 @@ AP.add('array', function (A) {
             }
             return result;
         };
-    
+
     /**
-     * Clean input array from undefined, null values. 
+     * Clean input array from undefined, null values.
      * Inspired with MooTools clean method.
      * @method clean
      * @static
@@ -241,7 +266,7 @@ AP.add('array', function (A) {
     A.clean = function (input) {
         return this.filter(input, function (item) { return AP.Lang.isValue(item); }, this);
     };
-    
+
     /**
      * Return true if every element of the array, evaluated with fn, return true @see MDC every method
      * @method every
@@ -251,7 +276,7 @@ AP.add('array', function (A) {
      * @param c {Object} Context of the function
      * @return {Boolean} true if every elements match.
      */
-    A.every = (Native.every) ? 
+    A.every = (Native.every) ?
         function (a, fn, c) {
             return a.every(fn, c || AP.config.win);
         } :
@@ -263,7 +288,7 @@ AP.add('array', function (A) {
             }
             return true;
         };
-    
+
     /**
      * Remove from the input array values, equal passed
      * TODO: review to use AP.Lang.compare method to check equality
@@ -280,4 +305,20 @@ AP.add('array', function (A) {
         }
         return a;
     };
-}, '1.0.0', [ { name : 'lang', minversion : '0.0.3' } ]);
+
+    /**
+     * Extends an array with all the items of another
+     * Inspired by mootools extend method
+     * @method extend
+     * @static
+     * @param old {Array} old array
+     * @param input {Array} input array
+     * @return {Array} old array with new array also;
+     */
+    A.extend = function (old, input) {
+        old = old ? old : [];
+        input = input ? input : [];
+        for (var i = 0, j = input.length; i < j; i++) old.push(input[i]);
+        return old;
+    };
+}, '1.1.0', [ { name : 'lang', minVersion : '0.0.3' } ]);

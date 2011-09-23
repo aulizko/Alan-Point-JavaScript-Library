@@ -4282,4 +4282,10 @@ jQuery.each([ "Height", "Width" ], function(i, name){
 });})();
 
 
-AP.Query = jQuery.noConflict();
+if (typeof AP !== 'undefined') {
+    AP.add('query', function (A) {
+
+        A.Query = jQuery.noConflict();
+
+    }, '0.0.1', []);
+}

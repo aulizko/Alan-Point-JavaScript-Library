@@ -4,14 +4,14 @@
  * @submodule string
  */
 AP.add('string', function (A) {
-    
+
     /**
      * Misc string utilites
      * @class String
      */
     A.String = A.String || {};
-    var S = A.String, L = A.Lang;
-    
+    var S = A.String, L = A.Lang, __link;
+
     /**
      * replace escaped HTML entities such as &amp;gt; to the valid html symbols
      * @method unescapeHTML
@@ -38,7 +38,7 @@ AP.add('string', function (A) {
            return a.charAt(0).toUpperCase() + a.substr(1).toLowerCase();
         });
     };
-    
+
     /**
      * Return pluralized string
      * @method pluralize
@@ -56,26 +56,34 @@ AP.add('string', function (A) {
         if (number == 1) return safeNumber + ' ' + forms[1];
         return safeNumber + ' ' + forms[5];
     };
-    
-    
+
+
     /**
-     * Returns a string without any leading or trailing whitespace.  If 
+     * Returns a string without any leading or trailing whitespace.  If
      * the input is not a string, the input will be returned untouched.
      * Realization taken from Steven Levitahn trim11 implementation http://blog.stevenlevithan.com/archives/faster-trim-javascript
      * @method trim
      * @static
-     * @param s {string} the string to trim
+     * @param s {String} the string to trim
      * @return {string} the trimmed string
      */
-    S.trim = function (str) {
-    	var	str = str.replace(/^\s\s*/, ''),
-    		ws = /\s/,
-    		i = str.length;
-    	while (ws.test(str.charAt(--i)));
-    	return str.slice(0, i + 1);
+    S.trim = function (s) {
+        var str = s.replace(/^\s\s*/, ''),
+            ws = /\s/,
+            i = str.length;
+        while (ws.test(str.charAt(--i))) {};
+        return str.slice(0, i + 1);
     };
-    
-}, '0.0.1', [
+
+    S.qualifyPath = function (source) {
+        if (!__link) {
+            __link = document.createElement('a');
+        }
+        __link.href = source;
+        return __link.href;
+    };
+
+}, '0.0.2', [
     {
         name : 'lang',
         minVersion : '0.0.1'

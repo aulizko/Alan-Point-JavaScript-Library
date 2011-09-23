@@ -4,6 +4,47 @@
  * @author Alexander <xan> Ulizko
  */
 (function () {
+    // Few function to make live easier a while:
+    Function.prototype.memoize = function () {
+        var pad  = {};
+        var self = this;
+        var obj  = arguments.length > 0 ? arguments[i] : null;
+
+        var memoizedFn = function() {
+            // Copy the arguments object into an array: allows it to be used as
+            // a cache key.
+            var args = [];
+            for (var i = 0; i < arguments.length; i++) {
+                args[i] = arguments[i];
+            }
+
+            // Evaluate the memoized function if it hasn't been evaluated with
+            // these arguments before.
+            if (!(args in pad)) {
+                pad[args] = self.apply(obj, arguments);
+            }
+
+            return pad[args];
+        };
+
+        memoizedFn.unmemoize = function() {
+            return self;
+        };
+
+        return memoizedFn;
+    };
+
+    if (!Function.prototype.bind) {
+        Function.prototype.bind = function (context) {
+            if (typeof context === 'undefined') { return this; }
+
+            var __method = this;
+            return function() {
+              return __method.apply(context, arguments);
+            };
+        };
+    }
+
     if (typeof AP === 'undefined' || !AP) {
         /**
          * The AP global namespace object. If AP is already defined,
@@ -153,6 +194,28 @@
             }
 
             return uid;
+        },
+
+        /**
+         * Tries to execute a number of functions.
+         * Returns immediately the return value of the first non-failed function without executing successive functions, or null.
+         * @method tryThese
+         * @return {Mixed} Result of the function (if any) or null
+         */
+        tryThese : function () {
+            for (var i = 0, l = arguments.length; i < l; i++){
+                try {
+                    return arguments[i]();
+                } catch(e){}
+            }
+            return null;
+        },
+        /**
+         * Usefull to build some random params to break cache or make unique id.
+         * @method random
+         */
+        random : function () {
+            return (new Date()).valueOf() + '_' + Math.floor(Math.random()*1000);
         },
 
         /**

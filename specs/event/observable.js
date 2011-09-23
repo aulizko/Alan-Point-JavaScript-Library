@@ -56,7 +56,7 @@
             b = function () {
                 dump *= 3;
             },
-            d = function () {
+            d = function (e) {
                 dump *= 5;
             },
 
