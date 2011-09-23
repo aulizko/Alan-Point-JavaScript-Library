@@ -12,7 +12,8 @@ AP.add('templateEngine', function (A) {
         templates : {}
     };
     
-    var T = A.TemplateEngine, L = A.Lang, Ar = A.Array, O = A.Object;
+    var T = A.TemplateEngine, Ar = A.Array, O = A.Object;
+
     /**
      * Convert template from the string to the json object for fast processing
      * Register result json object as inner "template" in the templates field
@@ -21,40 +22,49 @@ AP.add('templateEngine', function (A) {
      * @param templateName {String} name of the template. If there is template with same name, TemplateEngine shouldn't register new template
      */
     T.compileTemplate = function (templateHolder, templateName) {
+        if (this.templates[templateName]) { return; } // to avoid double work
+
         templateHolder = (templateHolder.value) ? templateHolder.value : ( (templateHolder.nodeName && templateHolder.nodeName.toLowerCase() == 'script') ? templateHolder.innerHTML : templateHolder);
-        var instructionRegex = /%\{[%\s\w,'\(\)=\{\}\.]+\}/gim,
+//        var instructionRegex = /%\{[%\s\w,'\(\)=\{\}\.]+\}/gim,
+        //var instructionRegex = /%\{[%\s\w,'\(\)=\{\}\."]+?\}+/gim,
+        var instructionRegex = /%\{.+?\}+/gim,
             rawTemplateText = templateHolder.replace(/<\!--\s*<\!\[CDATA\[\s*|\s*\]\]>\s*-->/gim, '').replace(/\s{2,}/gim, ' '),
             stringFragments = rawTemplateText.split(instructionRegex), 
-            stringFragment, instruction,
+            stringFragment,
             instructions = [], 
             index = 0,
             tree = [],
             treeIndex = 0;
-        
+
         // try to search instructions into the raw template
         while ((processingArray = instructionRegex.exec(rawTemplateText)) != null) {
             // process instruction into the node
             var instruction = processingArray[0], node = {};
             
-            var fillRegex = /([^%{}]+[\w\.]+)/, includeRegex = /%include\s+([\w]+),\s+([\w]+)/,
-                evalRegex = /%eval\s+([\w\s\.%=\!\[\]']+)/, 
-                conditionalRegex = /%if\s+\(([\w\s\.%=\!\[\]']+)\)\s+\{([\w\.\s']+)\}/,
-                nestedConditionRegex = /%elseif\s+\(([\w\s\.%=\!\[\]']+)\)\s+\{([\w\s\.']+)\}/,
-                alternateConditionalRegex = /%else\s+\{([\w\s\.=']+)\}/;
-            
+            var fillRegex = /([^%{}]+[\w\.]+)/,
+//                includeRegex = /%include\s+([\w]+),\s+([\w]+)/,
+                includeRegex = /%include\s+([\w]+)(,\s+[\w]+|)/,
+                evalRegex = /%eval\s+([\w\s\.%=\!\[\]']+)/,
+//                conditionalRegex = /%if\s+\(([\w\s\.%=\!\[\]']+)\)\s+\{([\w\.\s']+)\}/,
+                conditionalRegex = /%if\s+\(([\w\s\.%=\!\[\]']+)\)\s+\{('[^\']+'|[^\}]+)\}/,
+//                nestedConditionRegex = /%elseif\s+\(([\w\s\.%=\!\[\]']+)\)\s+\{([\w\s\.']+)\}/,
+                nestedConditionRegex = /%elseif\s+\(([\w\s\.%=\!\[\]']+)\)\s+\{('[^\']+'|[^\}]+)\}/,
+//                alternateConditionalRegex = /%else\s+\{([\w\s\.=']+)\}/;
+                alternateConditionalRegex = /%else\s+\{('[^\']+'|[^\}]+)\}/;
+
             // include instruction
 
             if (includeRegex.test(instruction)) {
                 var tempArray = includeRegex.exec(instruction);
                 node.type = 'include';
                 node.template = tempArray[1];
-                node.data = tempArray[2];
+                node.data = tempArray[2] ? tempArray[2].replace(/^,\s+/, '') : null;
             } else if (evalRegex.test(instruction)) { // eval instruction
-                var tempArray = evalRegex.exec(instruction);
+                tempArray = evalRegex.exec(instruction);
                 node.type = 'eval';
                 node.expression = tempArray[1];
             } else if (conditionalRegex.test(instruction)) { // conditional instruction
-                var tempArray = conditionalRegex.exec(instruction);
+                tempArray = conditionalRegex.exec(instruction);
                 node.type = 'if';
                 node.expression = tempArray[1];
                 node.positive = {};
@@ -88,7 +98,7 @@ AP.add('templateEngine', function (A) {
                 
                 // else instruction
                 if (alternateConditionalRegex.test(instruction)) {
-                    var anotherTempArray = alternateConditionalRegex.exec(instruction);
+                    anotherTempArray = alternateConditionalRegex.exec(instruction);
                     var nestedNode = {};
                     if (/^'[\w\W]+'$/.test(anotherTempArray[1])) {
                         nestedNode.type = 'text';
@@ -108,7 +118,7 @@ AP.add('templateEngine', function (A) {
                     node.negative.value = '';
                 }
             } else if (fillRegex.test(instruction)) { // simple 'fill' instruction
-                var tempArray = fillRegex.exec(instruction);
+                tempArray = fillRegex.exec(instruction);
                 node.type = 'fill';
                 node.value = tempArray[1];
             }
@@ -118,16 +128,16 @@ AP.add('templateEngine', function (A) {
         
         // construct tree from the stringFragments and instructions
         index = 0;
-        while (stringFragment = stringFragments[index]) {
-            var item = {
+        while (AP.Lang.isValue(stringFragment = stringFragments[index])) {
+            tree[treeIndex++] = {
                 type : 'text',
                 value : stringFragment
             };
-            tree[treeIndex++] = item;
             if (instruction = instructions[index++]) {
                 tree[treeIndex++] = instruction;
             }
         }
+
         this.templates[templateName] = tree;
     };
     
@@ -142,7 +152,7 @@ AP.add('templateEngine', function (A) {
         var result = new A.StringBuffer();
         // get compiled template 
         var template = this.templates[name];
-        
+
         if ((data instanceof Object) && O.keys(data).length > 1) {
 
             O.each(data, function (item) {
@@ -152,7 +162,7 @@ AP.add('templateEngine', function (A) {
                 }
             }, A);
         } else {
-            var data = Ar(data);
+            data = Ar(data);
             Ar.each(data, function (item) {
                 var node, i = 0;
                 while (node = template[i++]) {
@@ -179,7 +189,8 @@ AP.add('templateEngine', function (A) {
             case 'fill' :
                 return T.evaluateSimpleExpression(node.value, data);
             case 'include' :
-                return T.processTemplate(node.template, T.evaluateSimpleExpression(node.data, data));
+//                return T.processTemplate(node.template, T.evaluateSimpleExpression(node.data, data));
+                return node.data ? T.processTemplate(node.template, T.evaluateSimpleExpression(node.data, data)) : T.processTemplate(node.template);
             case 'if' :
                 if (T.evaluateToughExpression(node.expression, data)) {
                     return T.processNode(node.positive, data);
@@ -236,24 +247,15 @@ AP.add('templateEngine', function (A) {
                 return ' ' + T.evaluateSimpleExpression(v, data) + ' ';
             });
             try{ return eval(pExp); } 
-			catch (e) {
-			    throw 'Cannot evaluate ' + pExp;
+            catch (e) {
+                throw 'Cannot evaluate ' + pExp;
             }
         } else {
             return T.evaluateSimpleExpression(exp, data);
         }
     };
-    /**
-     * Render template into container
-     * @method render
-     * @param template {String} name of the compiled template
-     * @param el {String} container which innerHTML should be replaced with result of template processing
-     * @param data {Mixed} data to fill in template
-     */
-    T.render = function (template, el, data) {
-        T.replaceHTML(el, T.processTemplate(template, data));
-    };
-}, '0.0.1', [
+    
+}, '0.0.2', [
     { name : 'array', minVersion : '1.0.0' },
     { name : 'object', minVersion : '0.0.1' },
     { name : 'stringBuffer', minVersion : '1.0.3' }

@@ -1,17 +1,17 @@
 AP.add('map', function (A) {
 
-    var data = A.namespace('data'), O = A.Object, L = A.Lang, OOP = A.OOP;
+    var data = A.namespace('data'), O = A.Object, L = A.Lang, R = A.Reflection;
 
     /**
-     * List implementation for javascript. 
-     * I tryed to preserve java List api.
+     * Java HashMap implementation for JavaScript. 
+     * I tried to preserve Java Map API.
      * @class Map 
      * @module data
      */ 
     data.Map = function () {
-        var t = function () {
-            
-            var silo = OOP.merge({}, arguments[0]);
+        return function () {
+
+            var silo = R.deepCopy(arguments[0]) || {};
 
             function length () {
                 return O.keys(silo).length;
@@ -28,7 +28,7 @@ AP.add('map', function (A) {
                     if (L.isValue(key)) {
                         silo[key] = value;
                     }
-                    this.length = length();
+                    this.length++;
                     return this;
                 },
 
@@ -41,12 +41,9 @@ AP.add('map', function (A) {
                 remove : function (key) {
                     if (L.isValue(key)) {
                         var value = silo[key];
-                        var temp = {};
-                        O.each(silo, function (item, name) {
-                            if (name !== key) temp[name] = item;
-                        }, this);
-                        silo = temp;
-                        this.length = length();
+                        silo[key] = null;
+                        delete silo[key];
+                        this.length--;
                         if (L.isValue(value)) return value;
                     }
                     return null;
@@ -57,7 +54,7 @@ AP.add('map', function (A) {
                  * @return {Boolean} is silo empty or not
                  */
                 isEmpty : function () {
-                    return length() === 0; 
+                    return this.length === 0;
                 },
                 /**
                  * Clear silo, strip all keys and values
@@ -65,7 +62,7 @@ AP.add('map', function (A) {
                  */
                 empty : function () {
                     silo = {};
-                    this.length = length();
+                    this.length = 0;
                 },
 
                 /**
@@ -85,7 +82,7 @@ AP.add('map', function (A) {
                  */
                 get : function (key) {
                     if (L.isValue(key) && L.isValue(silo[key])) return silo[key];
-                    return null; 
+                    return null;
                 },
 
                 /**
@@ -98,7 +95,6 @@ AP.add('map', function (A) {
                 set : function (key, value) {
                     var dump = (silo[key]) ? silo[key] : null;
                     silo[key] = value;
-                    this.length = length();
                     return dump;
                 },
 
@@ -120,7 +116,7 @@ AP.add('map', function (A) {
                 },
 
                 length : length(),
-                
+
                 /**
                  * This method used to dump values into json object and all that
                  * @method valueOf
@@ -130,10 +126,10 @@ AP.add('map', function (A) {
                     return silo.valueOf();
                 },
                 /**
-                 * Compare list with another one list. If the keys and appropriate values are equal, then, returns true. 
+                 * Compare list with another one list. If the keys and appropriate values are equal, then, returns true.
                  * Otherwise - false. Used AP~Lang~compare method
                  * @method equal
-                 * @param that {List} list to compare with
+                 * @param that {Map} list to compare with
                  * @return {Boolean} true if lists are equal and false otherwise
                  */
                 equal : function (that) {
@@ -149,15 +145,13 @@ AP.add('map', function (A) {
                 each : function (fn, context) {
                     O.each(silo, fn, context);
                 }
-            };    
+            };
 
-        }(arguments[0]);
-
-        return t;
+        }(arguments[0]);;
     };
 }, '0.0.1', [
     { name : 'lang', minVersion : '0.0.1' },
     { name : 'object', minVersion : '0.0.1' },
-    { name : 'oop', minVersion : '0.0.1' },
-    { name : 'json-encode', minVersion : '0.0.1' } 
+    { name : 'json', minVersion : '0.0.1' },
+    { name : 'reflection', minVersion : '0.0.1' } 
 ]);

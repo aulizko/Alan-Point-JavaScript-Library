@@ -1,15 +1,11 @@
-AP.add('widget-toolbarButton', function (A) {
-    var $ = A.Query,
-        T = A.TemplateEngine,
-        TOOLBAR_COMPONENT_CSS_CLASS = 'toolbarItem',
+AP.add('widget.toolbarButton', function (A) {
+    var TOOLBAR_COMPONENT_CSS_CLASS = 'toolbarItem',
         DEFAULT_TYPE_PREFIX = 'component',
         DEFAULT_TOOLBAR_BUTTON_TEMPLATE = { 
             name : 'component:toolbarButton',
             body : '<div id="%{title}:%{uniqueId}" class="%{cssClass}"><div class="panelIcon %{title}Icon"></div></div>'
         },
-        DEFAULT_CSS_PRESSED = 'activeItem',
-        OOP = A.OOP,
-        L = A.Lang;
+        DEFAULT_CSS_PRESSED = 'activeButton';
 
     A.Widget.ToolbarButton = A.Widget.Component.extend({
         init : function (o) {
@@ -18,70 +14,63 @@ AP.add('widget-toolbarButton', function (A) {
                 pressed : (o.css) ? ((o.css.pressed) ? o.css.pressed : DEFAULT_CSS_PRESSED) : DEFAULT_CSS_PRESSED
             };
             
-            // todo: review
-            var self = this;
-            o.handlers = OOP.mix((o.handlers) ? o.handlers : {}, {
-                click : {
-                    context : this,
-                    fn : function (e, el) {
-                        if (!self.pressed) {
-                            self.DOM.addClass(self.css.pressed);
-                            self.pressed = true;
-                        } else {
-                            self.DOM.removeClass(self.css.pressed);
-                            self.pressed = false;
-                        }
-                        if (!self.active) {
-                            self.publish(self.title + '.activate');
-                            self.active = true;
-                        } else {
-                            self.publish(self.title + '.deactivate');
-                            self.active = false;
-                        }
+            o.handlers = A.extend({
+                click : function () {
+                    if (!this.pressed) {
+                        this.press();
+                        this.publish('activate');
+                    } else {
+                        this.release();
+                        this.publish('deactivate');
                     }
-                },
-                mouseout : function (e, el) {
-                    $(el).removeClass(self.hoverCssClass);
-                },
-                mouseover : function (e, el) {
-                    $(el).addClass(self.hoverCssClass);
-                },
-                self : this
-            });
+                }.bind(this)
+            }, (o.handlers) ? o.handlers : {});
             
-            this.base(OOP.mix(o, {
-                type : DEFAULT_TYPE_PREFIX + ':toolbarButton',
+            this.base(A.extend({
+                type : ((o.type) ? (DEFAULT_TYPE_PREFIX + ':' + o.type) : (DEFAULT_TYPE_PREFIX + ':toolbarButton')),
                 cssClass : ((o.cssClass) ? o.cssClass : TOOLBAR_COMPONENT_CSS_CLASS)
-            })); 
-        },
-        active : false,
-        visualState : {
-            hover : false,
-            visible : true,
-            pressed : false
+            }, o));
+
+            if (o.humanizedTitle) {
+                this.supplyDataForTemplatesWithValues({
+                    humanizedTitle : o.humanizedTitle
+                });
+            }
         },
         setParent : function (parent) {
             this.base(parent);
-            this.subscribe(this.title + '.activate', parent);
-            this.subscribe(this.title + '.deactivate', parent);
         },
         representState : function () {
             for (var prop in this.state) {
-                if (this.state[prop]) { this.dom.addClass(prop); }
-                else { this.dom.removeClass(prop); }
+                if (this.state[prop]) { this.DOM.addClass(prop); }
+                else { this.DOM.removeClass(prop); }
             }
         },
         /**
          * Make toolbar button active - set inner variable 'active' to true and change state to 'pressed' (and also call 'represent state method')
-         * @method makeActive
-         * @TODO: consider does we need it at all 
+         * @method press
          */
-        makeActive : function () {
+        press : function () {
+            if (this.DOM) {
+                this.DOM.addClass(this.css.pressed);
+            }
+            this.pressed = true;
             this.active = true;
-            this.visualState.pressed = true;
-            this.representState();
         },
+        /**
+         * Make toolbar button inactive - set inner variable 'active' to false and change state to 'pressed' (and also call 'represent state method')
+         * @method release
+         */
+        release : function () {
+            if (this.DOM) {
+                this.DOM.removeClass(this.css.pressed);
+            }
+            this.pressed = false;
+            this.active = false;
+        },
+        active : false,
+        pressed : false,
         className : 'toolbarButton'
     });
 
-}, '0.0.1', [{ name : 'widget-component', minVersion : '0.0.1' }]);
+}, '0.0.1', [{ name : 'widget.component', minVersion : '0.0.1' }]);

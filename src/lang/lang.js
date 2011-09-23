@@ -1,4 +1,4 @@
-/*
+/**
  * AP lang utils
  * Inspired by YUI lang module
  * @module ap
@@ -15,6 +15,7 @@ AP.add('lang', function (A) {
     var L = A.Lang,
         ARRAY_TOSTRING = '[object Array]',
         FUNCTION_TOSTRING = '[object Function]',
+        REGEXP_TOSTRING = '[object RegExp]',
         PRIMITIVES = { 'string' : 'string', 'boolean' : 'boolean', 'number' : 'number'},
         OBJECT = 'object',
         UNDEFINED = 'undefined',
@@ -153,6 +154,18 @@ AP.add('lang', function (A) {
     };
 
     /**
+     * Determines whether or not the provided object is a RegExp object
+     * @method isRegExp
+     * @static
+     * @param o The object to test
+     * @return {boolean} true if o is a regexp
+     * @param o
+     */
+    L.isRegExp = function (o) {
+        return typeof(o) === REGEXP_TOSTRING;
+    };
+
+    /**
      * Deep compare of array, object, function, string and number. If value of object are equal, return true.
      * Otherwise, return false.
      * TODO: review maybe it is better to update this method in MochiKit way - to return -1,0,1 and being able to sort.
@@ -201,7 +214,7 @@ AP.add('lang', function (A) {
             if (count != b.length) { return false; }
             // recursive call compare onto each element
             while(count--) {
-                if (L.compare(a[count], b[count]) == false) {
+                if (!L.compare(a[count], b[count])) {
                     return false;
                 }
             }
@@ -217,7 +230,7 @@ AP.add('lang', function (A) {
             if (lengthOfA != lengthOfB) { return false; }
             // recursive call compare method for every property
             for (i in a) {
-                if (L.compare(a[i], b[i]) == false) { return false; }
+                if (!L.compare(a[i], b[i])) { return false; }
             }
             return true;
         }

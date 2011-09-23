@@ -1,4 +1,4 @@
-AP.add('widget-tabPanel', function (A) {
+AP.add('widget.tabPanel', function (A) {
     var DEFAULT_PANEL_TITLE = 'defaultPanel',
         DEFAULT_TRIGGER_TITLE = 'defaultTrigger';
     
@@ -14,6 +14,6 @@ AP.add('widget-tabPanel', function (A) {
     });
 
 }, '0.0.1', [
-    { name : 'widget-container', minVersion : '0.0.1' },
+    { name : 'widget.container', minVersion : '0.0.1' },
     { name : 'widget', minVersion : '0.0.1' }
 ]);

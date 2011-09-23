@@ -1,4 +1,4 @@
-AP.add('widget-container', function (A) {
+AP.add('widget.container', function (A) {
     var T = A.TemplateEngine,
         Ar = A.Array,
         CONTAINER_TEMPLATE = { 
@@ -14,21 +14,14 @@ AP.add('widget-container', function (A) {
             if (o.target) {
                 this.target = o.target;
             }
-
             this.base(o);
             this.type = 'container:general';
             if (o.items) {
-                var items = Ar(o.items);
+                var items = Ar.clean(Ar(o.items));
                 Ar.each(items, function (item) {
                     this.registerChild(item);
                 }, this);
             }
-
-            // register parent
-            this.dataForTemplate = [{
-                title : this.title,
-                uniqueId : this._uid
-            }];
         },
 
         registerChild : function (child) {
@@ -38,25 +31,62 @@ AP.add('widget-container', function (A) {
         },
 
         removeChild : function (child) {
-            if (this.children.get(child.title)) {
-                this.children.remove(child.title);
+            var title = child.title || child, childComponent = this.children.get(title);
+            if (childComponent) {
+                this.children.remove(title);
+                if (childComponent.setParent) childComponent.setParent(null);
             }
+        },
+
+        clear : function () {
+            var keys = this.children.keys(), i;
+            for (i = 0; i < keys.length; i ++) {
+
+            }
+            if (this.DOM) {
+                this.DOM.empty();
+            }
+        },
+
+        accept : function(children) {
+            A.each(children, function (child) {
+                this.addAndRenderChild(child);
+            }, this);
         },
 
         generateHTML : function () {
             var innerHTML = new A.StringBuffer('');
-            this.children.each(function (child, title) {
-                // innerHTML.add(T.processTemplate(child.template.name, child.dataForTemplate));
+            this.children.each(function (child) {
                 innerHTML.add(child.generateHTML());
-            }, this); 
-            this.dataForTemplate = [A.OOP.mix(this.dataForTemplate[0], {
+            }, this);
+            this.supplyDataForTemplatesWithValues({
                 content : innerHTML.toString()
-            })];
+            });
             return T.processTemplate(this.template.name, this.dataForTemplate);
         },
 
         setTarget : function (el) {
             this.target = $(el);
+        },
+
+        remove : function () {
+            this.children.each(function (child) {
+                child.removeEventListeners();
+            });
+
+            this.base();
+        },
+        
+        addAndRenderChild : function (child) {
+            this.registerChild(child);
+
+            child.render();
+        },
+        
+        hideAndRemoveChild : function(child) {
+            this.removeChild(child);
+
+            child.remove();
         },
 
         initializeLogic : function () {
@@ -66,13 +96,13 @@ AP.add('widget-container', function (A) {
             
             this.base();
         },
+
         mixins : A.util.Event.Observable,
         className : 'container'
 
     });
 }, '0.0.1', [
     { name : 'array', minVersion : '0.0.1' },
-    { name : 'oop', minVersion : '0.0.1' },
     { name : 'widget', minVersion : '0.0.1' },
     { name : 'observable', minVersion : '0.0.1' },
     { name : 'map', minVersion : '0.0.1' },

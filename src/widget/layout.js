@@ -8,86 +8,104 @@ AP.add('layout', function (A) {
    * @class Layout
    */
 A.Layout = A.Widget.Layout = new (A.Class.extend({
-        _components : new A.data.Map(),
+        body : null,
+        children : new A.data.Map(),
 
-        /**
-         * Stub for the method which will being invocated while window resizing
-         * todo: pending
-         * @method onResize
-         */
-        onResize : function () {},
         mixins : A.util.Event.Observable,
+
+        renderAllAtOnce : false,
+
+        componentsToRenderFirst : [],
+
+        setComponentsToRenderFirst : function (o) {
+            if (L.isString(o)) {
+                this.componentsToRenderFirst = [o];
+            } else {
+                this.componentsToRenderFirst = o;
+            }
+        },
 
         /**
          * Render all child components html,
          * and bind their DOM reference and event listeners
          * @method render
-         * @throws Layout.initialized event
          */
         render : function () {
-            this.appendHTML();
-            
-            this.publish('layout:htmlReady');
-            
-            this.initializeComponents();
-            
-            //this.initializeCallbacks(); // wtf? What did I mean? %)
-            this.publish('layout:ready');
+            if (this.renderAllAtOnce) {
+                this.appendHTML();
+                this.publish('layout:htmlReady');
+
+                this.initializeComponents();
+                this.publish('layout:ready');
+            } else {
+                A.each(this.children, function (child, title) {
+                    if (A.Array.indexOf(this.componentsToRenderFirst, title) != -1) {
+                        child.render();
+                    }
+                }, this);
+                this.publish('layout:htmlReady');
+                this.publish('layout:ready');
+            }
         },
 
         initializeComponents : function () {
-            this._components.each(function (component) {
+            this.children.each(function (component) {
                 component.initializeDOMReference();
             }, this);
             
             this.publish('layout:domReferencesReady');
-            this._components.each(function (component) {
+            this.children.each(function (component) {
                 component.initializeEventListeners();
             }, this);
 
             this.publish('layout:eventListenersReady');
-            this._components.each(function (component) {
-                component.initializeLogic(); // I mean: I obey you, nasty components, to initialize your business logic!
+            this.children.each(function (component) {
+                component.initializeLogic();
             }, this);
 
             this.publish('layout:businessLogicReady');
-            $(A.config.win).bind('resize', this.onResize);
         },
 
         /**
          * Add component to the layout (assume that you should add different containers to the layout
          * and components to the particular containers)
          * @method registerChild 
-         * @param {Component} component
+         * @param component
          */
         registerChild : function (component) {
-              this._components.add(component.title, component);
+              this.children.add(component.title, component);
               // we need to subscribe layout someway to the events of the components
               component.setParent(this);
         },
 
         removeChild : function (component) {
-            this._components.remove(component.title);
+            this.children.remove(component.title);
+        },
+
+        getBody : function () {
+            if (!this.body) {
+                this.body = $(A.config.doc.body);
+            }
+
+            return this.body;
         },
 
         appendHTML : function () {
             var layoutHTML = new A.StringBuffer(''), containerRegex = /container/;
-            this._components.each(function (component, index) {
+            this.children.each(function (component) {
                 if (containerRegex.test(component.type) && component.target && component.target[0]) {
                     component.target.append(component.generateHTML());
                 }
+                
                 if (containerRegex.test(component.type) && component.parent === this && L.isUndefined(component.target)) {
                     layoutHTML.add(component.generateHTML());
                 }
-                // TODO: what shall we do if meet component which hasn't parent or target?
             }, this);
-            $(A.config.doc.body).append(layoutHTML.toString());
+            this.getBody().append(layoutHTML.toString());
         },
 
         registerTemplateForCompilation : function (component) {
-
             if (L.isValue(T.templates[component.template.name])) { return; }
-
             T.compileTemplate(component.template.body, component.template.name);
         }
     }))();

@@ -83,6 +83,20 @@ AP.add('string', function (A) {
         return __link.href;
     };
 
+    S.convertHtmlEntities = function (value) {
+        return value
+            .replace(/&laquo;/g, '«').replace(/&raquo;/g, '»')
+            .replace(/&bdquo;/g, '„').replace(/&ldquo;/g, '“')
+            .replace(/&mdash;/g, '—').replace(/&ndash;/g, '–').replace(/&minus;/g, '−')
+            .replace(/&amp;/g, '&')
+            .replace(/&quot;/g, '"')
+            .replace(/&lsquo;/g, '‘').replace(/&rsquo;/g, '’')
+            .replace(/&nbsp;/g, ' ')
+            .replace(/&trade;/g, '™').replace(/&reg;/g, '®').replace(/&copy;/g, '©')
+            .replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&apos;/g, '\'')
+            .replace(/&[a-z]+;/ig, '');
+    };
+
 }, '0.0.2', [
     {
         name : 'lang',

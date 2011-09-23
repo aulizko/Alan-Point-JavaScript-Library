@@ -1,8 +1,9 @@
-AP.add('widget-customHTML', function (A) {
+AP.add('widget.customHTML', function (A) {
     var TEMPLATE = {
-        name : 'component:customHTML',
-        body : ' %{content} '
-    }, OOP = A.OOP;
+            name : 'component:customHTML',
+            body : ' %{content} '
+        },
+        DEFAULT_TITLE_PREFIX = 'customHTML:';
     
     A.Widget.CustomHTML = A.Widget.Component.extend({
         /**
@@ -12,11 +13,12 @@ AP.add('widget-customHTML', function (A) {
          */
         init : function (o) {
             this.template = o.template || TEMPLATE;
-            this.type = 'component:customHTML';
+            o.title = o.title || (DEFAULT_TITLE_PREFIX + (new Date()).getTime());
             this.base(o);
-            this.dataForTemplate = [OOP.mix(this.dataForTemplate[0], {
+            this.type = 'component:customHTML';
+            this.supplyDataForTemplatesWithValues({
                 content : o.html
-            })];
+            });
         }
     });
     
